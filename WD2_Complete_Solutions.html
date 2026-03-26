@@ -3534,7 +3534,56 @@ document.getElementById("exam-mode").addEventListener("change", function(){
   document.body.classList.toggle("exam-mode", this.checked);
 });
 
+    
 </script>
+
+<script>
+
+// ===== CURRENT SECTION TRACKING =====
+const sections = document.querySelectorAll(".q-section");
+const currentTopic = document.getElementById("current-topic");
+const currentTopicInline = document.getElementById("current-topic-inline");
+
+window.addEventListener("scroll", () => {
+  let current = "";
+
+  sections.forEach(sec => {
+    const top = sec.offsetTop - 180;
+    if (window.scrollY >= top) {
+      current = sec;
+    }
+  });
+
+  if(current){
+    const title = current.querySelector(".q-title").innerText;
+
+    currentTopic.innerText = title;
+    currentTopicInline.innerText = title;
+  }
+});
+
+
+  const progressFill = document.getElementById("progress-fill");
+const progressCount = document.getElementById("progress-count");
+
+window.addEventListener("scroll", () => {
+  let total = sections.length;
+  let currentIndex = 0;
+
+  sections.forEach((sec, i) => {
+    if (window.scrollY >= sec.offsetTop - 180) {
+      currentIndex = i + 1;
+    }
+  });
+
+  let percent = (currentIndex / total) * 100;
+
+  progressFill.style.width = percent + "%";
+  progressCount.innerText = currentIndex + " / " + total + " sections";
+});
+
+</script>
+
   
 </body>
 </html>
