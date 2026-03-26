@@ -265,15 +265,7 @@ H<!DOCTYPE html>
   ::-webkit-scrollbar-thumb{background:var(--border);border-radius:10px}
 
   /* ── FLOATING NAV ── */
-  #back-top{
-    position:fixed;bottom:24px;right:20px;z-index:200;
-    background:var(--accent);color:#fff;border:none;border-radius:50%;
-    width:44px;height:44px;font-size:1.2rem;cursor:pointer;
-    box-shadow:0 4px 20px rgba(79,140,255,0.4);
-    display:flex;align-items:center;justify-content:center;
-    transition:background 0.2s,transform 0.2s;
-  }
-  #back-top:hover{background:var(--accent2);transform:translateY(-2px)}
+  
 
   /* Revision UI Enhancements */
   :root {
@@ -732,12 +724,7 @@ H<!DOCTYPE html>
   .assign-card h4{
     font-size:0.9rem;
   }
-  #back-top{
-    box-shadow:0 8px 20px rgba(79,140,255,0.25);
-    transition:background 0.2s,transform 0.2s,box-shadow 0.2s;
-  }
-  #back-top:hover{
-    box-shadow:0 10px 22px rgba(79,140,255,0.24);
+
   }
   @media(max-width:1080px){
     .page-layout{grid-template-columns:1fr}
@@ -813,7 +800,7 @@ H<!DOCTYPE html>
       white-space:nowrap;
     }
     pre{font-size:0.76rem}
-    #back-top{bottom:18px;right:14px}
+  
    
   }
   @media(prefers-reduced-motion:reduce){
@@ -2924,7 +2911,7 @@ xhr.<span class="fn">send</span>();</pre>
 </div>
 </main>
 
-<button id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Back to top">&#8593;</button>
+
 <div class="mobile-sidebar-backdrop" id="sidebar-backdrop"></div>
 
 <script>
