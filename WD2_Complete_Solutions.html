@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+H<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -60,7 +60,9 @@
   /* ── TABS ── */
   .tab-bar{
     display:flex;gap:6px;flex-wrap:wrap;padding:10px 20px;
-    position:sticky;top:60px;z-index:90;
+    position:relative;top:0;
+    margin-top: 0;
+    z-index:120;
     background:rgba(5,7,15,0.88);backdrop-filter:blur(14px);
     border-bottom:1px solid var(--border);
   }
@@ -285,7 +287,7 @@
     --glow: 0 0 16px rgba(79, 140, 255, 0.14);
     --shadow: 0 14px 34px rgba(0, 0, 0, 0.32);
   }
-  html{scroll-padding-top:152px}
+  html{scroll-padding-top:160px}
   body{
     font-size:16px;
     line-height:1.6;
@@ -608,139 +610,7 @@
     opacity:1;
     pointer-events:auto;
   }
-  .promo-modal{
-    position:fixed;
-    inset:0;
-    z-index:260;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    padding:20px;
-    opacity:0;
-    pointer-events:none;
-    transition:opacity 0.25s ease;
-  }
-  .promo-modal.show{
-    opacity:1;
-    pointer-events:auto;
-  }
-  .promo-modal-backdrop{
-    position:absolute;
-    inset:0;
-    background:rgba(3, 5, 14, 0.76);
-    backdrop-filter:blur(8px);
-  }
-  .promo-modal-card{
-    position:relative;
-    width:min(100%, 440px);
-    background:linear-gradient(160deg, rgba(13,18,34,0.98), rgba(19,24,44,0.96));
-    border:1px solid rgba(255,255,255,0.08);
-    border-radius:24px;
-    padding:24px;
-    box-shadow:0 24px 60px rgba(0,0,0,0.42);
-    overflow:hidden;
-  }
-  .promo-modal-card::before{
-    content:'';
-    position:absolute;
-    inset:0 0 auto 0;
-    height:3px;
-    background:linear-gradient(90deg,#ff7a59,#ff4fa0,#7d7bff,#00d5ff);
-  }
-  .promo-badge{
-    display:inline-flex;
-    align-items:center;
-    gap:8px;
-    padding:6px 12px;
-    border-radius:999px;
-    background:rgba(255,255,255,0.05);
-    border:1px solid rgba(255,255,255,0.08);
-    color:#ffd7ea;
-    font-size:0.78rem;
-    font-weight:700;
-    margin-bottom:16px;
-  }
-  .promo-modal-card h3{
-    font-size:1.45rem;
-    line-height:1.2;
-    margin-bottom:10px;
-    color:#fff;
-  }
-  .promo-modal-card p{
-    color:var(--muted);
-    font-size:0.95rem;
-    line-height:1.75;
-    margin-bottom:16px;
-  }
-  .promo-handle{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:12px;
-    padding:14px 16px;
-    border-radius:16px;
-    background:rgba(255,255,255,0.04);
-    border:1px solid rgba(255,255,255,0.08);
-    margin-bottom:18px;
-  }
-  .promo-handle strong{
-    font-family:'Space Mono',monospace;
-    font-size:0.98rem;
-    color:#fff;
-    letter-spacing:0.04em;
-  }
-  .promo-handle span{
-    color:#ff95c4;
-    font-size:0.82rem;
-    font-weight:700;
-  }
-  .promo-actions{
-    display:flex;
-    gap:10px;
-    flex-wrap:wrap;
-  }
-  .promo-btn{
-    flex:1 1 180px;
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-    gap:8px;
-    text-decoration:none;
-    border:none;
-    border-radius:14px;
-    padding:12px 14px;
-    font-family:'Syne',sans-serif;
-    font-size:0.9rem;
-    font-weight:700;
-    cursor:pointer;
-    transition:transform 0.2s ease,box-shadow 0.2s ease,background 0.2s ease,border-color 0.2s ease;
-  }
-  .promo-btn:hover{
-    transform:translateY(-1px);
-  }
-  .promo-btn-primary{
-    background:linear-gradient(135deg,#ff6a88,#ff4fa0);
-    color:#fff;
-    box-shadow:0 14px 28px rgba(255,79,160,0.24);
-  }
-  .promo-btn-secondary{
-    background:rgba(255,255,255,0.04);
-    color:var(--text);
-    border:1px solid rgba(255,255,255,0.08);
-  }
-  .promo-close{
-    position:absolute;
-    top:14px;
-    right:14px;
-    width:36px;
-    height:36px;
-    border:none;
-    border-radius:50%;
-    background:rgba(255,255,255,0.05);
-    color:var(--text);
-    cursor:pointer;
-    font-size:1rem;
-  }
+
   .hero{
     border-radius:20px;
     padding:30px 30px 24px;
@@ -767,6 +637,11 @@
     border-color:rgba(0,213,255,0.28);
     box-shadow:0 0 0 1px rgba(0,213,255,0.12);
   }
+
+  .q-section.is-current {
+  outline: 1px solid rgba(0,213,255,0.2);
+  border-radius: 12px;
+}
   .q-header{
     border-radius:12px;
     padding:14px 18px;
@@ -939,24 +814,7 @@
     }
     pre{font-size:0.76rem}
     #back-top{bottom:18px;right:14px}
-    .promo-modal{padding:14px}
-    .promo-modal-card{
-      border-radius:20px;
-      padding:20px 16px 16px;
-    }
-    .promo-modal-card h3{
-      font-size:1.25rem;
-    }
-    .promo-handle{
-      align-items:flex-start;
-      flex-direction:column;
-    }
-    .promo-actions{
-      flex-direction:column;
-    }
-    .promo-btn{
-      width:100%;
-    }
+   
   }
   @media(prefers-reduced-motion:reduce){
     html{scroll-behavior:auto}
@@ -973,23 +831,6 @@
   </div>
 </header>
 
-<div class="promo-modal" id="promo-modal" aria-hidden="true">
-  <div class="promo-modal-backdrop" data-close-promo="true"></div>
-  <div class="promo-modal-card" role="dialog" aria-modal="true" aria-labelledby="promo-title">
-    <button class="promo-close" id="promo-close" type="button" aria-label="Close popup">X</button>
-    <div class="promo-badge">Creative Corner</div>
-    <h3 id="promo-title">Follow me on Instagram</h3>
-    <p>For more creative web ideas, study updates, and design inspiration, connect with my Instagram page.</p>
-    <div class="promo-handle">
-      <strong>@USMAN_SONI_26</strong>
-      <span>Instagram Handle</span>
-    </div>
-    <div class="promo-actions">
-      <a class="promo-btn promo-btn-primary" href="https://www.instagram.com/usman_soni_26/" target="_blank" rel="noopener noreferrer">Open Instagram</a>
-      <button class="promo-btn promo-btn-secondary" id="promo-later" type="button">Continue to Site</button>
-    </div>
-  </div>
-</div>
 
 <!-- TAB BAR -->
 <div class="tab-bar">
@@ -3108,9 +2949,6 @@ const expandAllButton = document.getElementById('expand-all');
 const collapseAllButton = document.getElementById('collapse-all');
 const sidebarToggle = document.getElementById('sidebar-toggle');
 const sidebarBackdrop = document.getElementById('sidebar-backdrop');
-const promoModal = document.getElementById('promo-modal');
-const promoClose = document.getElementById('promo-close');
-const promoLater = document.getElementById('promo-later');
 let scrollTicking = false;
 
 function getTopTabButtons() {
@@ -3353,25 +3191,7 @@ function showTab(id) {
   requestAnimationFrame(refreshCurrentSection);
 }
 
-function openPromoModal() {
-  if (!promoModal) {
-    return;
-  }
-  promoModal.classList.add('show');
-  promoModal.setAttribute('aria-hidden', 'false');
-  document.body.classList.add('menu-open');
-}
 
-function closePromoModal() {
-  if (!promoModal) {
-    return;
-  }
-  promoModal.classList.remove('show');
-  promoModal.setAttribute('aria-hidden', 'true');
-  if (!sidebar.classList.contains('open')) {
-    document.body.classList.remove('menu-open');
-  }
-}
 
 function setExamMode(enabled, persist) {
   document.body.classList.toggle('exam-mode', enabled);
@@ -3407,13 +3227,7 @@ function initializeStudyUI() {
   examModeToggle.addEventListener('change', event => setExamMode(event.target.checked, true));
   sidebarToggle.addEventListener('click', () => setSidebarOpen(!sidebar.classList.contains('open')));
   sidebarBackdrop.addEventListener('click', () => setSidebarOpen(false));
-  promoClose.addEventListener('click', closePromoModal);
-  promoLater.addEventListener('click', closePromoModal);
-  promoModal.addEventListener('click', event => {
-    if (event.target.hasAttribute('data-close-promo')) {
-      closePromoModal();
-    }
-  });
+
 
   window.addEventListener('resize', () => {
     if (window.innerWidth > 1080) {
@@ -3433,17 +3247,257 @@ function initializeStudyUI() {
     });
   }, { passive: true });
 
-  document.addEventListener('keydown', event => {
-    if (event.key === 'Escape') {
-      setSidebarOpen(false);
-      closePromoModal();
+
+
+ 
+
+initializeStudyUI();
+
+const sections = document.querySelectorAll(".q-section");
+
+window.addEventListener("scroll", () => {
+  let current = "";
+
+  sections.forEach(sec => {
+    const top = sec.offsetTop - 180;
+    if (scrollY >= top) {
+      current = sec;
     }
   });
 
-  window.setTimeout(openPromoModal, 350);
+  sections.forEach(sec => sec.classList.remove("is-current"));
+  if (current) current.classList.add("is-current");
+});
+  
+</script>
+
+
+<!-- ========== INSTAGRAM INSANE SYSTEM ========== -->
+
+<style>
+/* Floating Button */
+.ig-float {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ff4ecd, #7a5cff);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 22px;
+  cursor: pointer;
+  box-shadow: 0 8px 25px rgba(255,78,205,0.5);
+  z-index: 998;
+  transition: 0.3s;
+  animation: pulse 2s infinite;
 }
 
-initializeStudyUI();
+.ig-float:hover {
+  transform: scale(1.1);
+}
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(255,78,205,0.6); }
+  70% { box-shadow: 0 0 0 14px rgba(255,78,205,0); }
+  100% { box-shadow: 0 0 0 0 rgba(255,78,205,0); }
+}
+
+/* Popup */
+.ig-popup {
+  position: fixed;
+  bottom: 100px;
+  right: 20px;
+  width: 360px;
+  max-width: 92%;
+  background: rgba(10, 14, 30, 0.96);
+  border: 1px solid rgba(79,140,255,0.25);
+  border-radius: 18px;
+  padding: 18px;
+  backdrop-filter: blur(18px);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+  z-index: 999;
+  display: none;
+  animation: popupIn 0.4s ease;
+  font-family: 'Syne', sans-serif;
+
+}
+
+@keyframes popupIn {
+  from { transform: translateY(60px) scale(0.95); opacity: 0; }
+  to { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+/* Close */
+.ig-close {
+  position: absolute;
+  top: 10px;
+  right: 14px;
+  color: #8892b0;
+  cursor: pointer;
+  font-size: 16px;
+}
+.ig-close:hover {
+  color: #fff;
+}
+
+/* Header */
+.ig-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+/* Avatar */
+.ig-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-size: cover;
+  border: 2px solid #ff4ecd;
+}
+
+/* Info */
+.ig-info h4 {
+  color: #fff;
+  font-size: 14px;
+  margin: 0;
+}
+.ig-info span {
+  font-size: 12px;
+  color: #a0a8c5;
+}
+
+/* Social proof */
+.ig-proof {
+  font-size: 12px;
+  color: #7ee787;
+  margin: 6px 0 10px;
+}
+
+/* Text */
+.ig-desc {
+  font-size: 13px;
+  color: #b6c0df;
+  margin-bottom: 14px;
+  line-height: 1.5;
+}
+
+/* Button */
+.ig-btn {
+  display: block;
+  text-align: center;
+  background: linear-gradient(135deg, #ff4ecd, #7a5cff);
+  color: #fff;
+  padding: 11px;
+  border-radius: 10px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: 0.3s;
+}
+.ig-btn:hover {
+  transform: translateY(-2px);
+}
+
+/* Badge */
+.ig-badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  background: #ff4ecd;
+  color: #fff;
+  font-size: 10px;
+  padding: 3px 6px;
+  border-radius: 10px;
+}
+
+/* Mobile */
+@media(max-width:480px){
+  .ig-popup {
+    right: 12px;
+    bottom: 85px;
+  }
+}
+
+  .ig-popup:hover {
+  box-shadow: 0 25px 70px rgba(255,78,205,0.2);
+}
+</style>
+
+<!-- Floating Button -->
+<div class="ig-float" onclick="toggleIG()">
+  📸
+  <div class="ig-badge">NEW</div>
+</div>
+
+<!-- Popup -->
+<div class="ig-popup" id="igPopup">
+  <span class="ig-close" onclick="closeIG()">✕</span>
+
+  <div class="ig-head">
+    <div class="ig-avatar" style="background-image:url('https://instagram.fstv3-1.fna.fbcdn.net/v/t51.82787-19/623806025_18169022479389386_5575492349114906488_n.jpg?efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=instagram.fstv3-1.fna.fbcdn.net&_nc_cat=102&_nc_oc=Q6cZ2gEoeaRKlHt8nHEVefsIW2Se2lsrFUjToFmHZT2BW06TB6Mob_lQDeVUs6gsf0ufx40&_nc_ohc=_7sW-0mkhiEQ7kNvwEkvF-G&_nc_gid=yt0Cjx6odGwTpwiSF9r-gA&edm=ALGbJPMBAAAA&ccb=7-5&oh=00_AfwIZ4WzCjyNZT4Zp09ri_dhx8ngh57jzfJpod9rdnHNXQ&oe=69CB2B27&_nc_sid=7d3ac5');"></div>
+    <div class="ig-info">
+      <h4>@USMAN_SONI_26</h4>
+    </div>
+  </div>
+
+
+
+  <div class="ig-desc">
+    FOLLOW ME FOR MORE AMAZING CONTENTS :)
+  </div>
+
+  <a href="https://instagram.com/usman_soni_26" target="_blank" class="ig-btn">
+    Follow Now
+  </a>
+</div>
+
+<script>
+function toggleIG(){
+  let p = document.getElementById("igPopup");
+  p.style.display = (p.style.display === "block") ? "none" : "block";
+}
+
+function closeIG(){
+  document.getElementById("igPopup").style.display = "none";
+  localStorage.setItem("igClosed","true");
+}
+
+window.addEventListener("scroll", () => {
+  let scroll = window.scrollY;
+
+  if(scroll > 400 && !localStorage.getItem("igClosed")){
+    document.getElementById("igPopup").style.display = "block";
+  }
+});
+
+/* Prevent re-show after close */
+if(localStorage.getItem("igClosed")){
+  document.getElementById("igPopup").style.display = "none";
+}
+
+setTimeout(() => {
+  if(!localStorage.getItem("igClosed")){
+    document.getElementById("igPopup").style.display = "block";
+  }
+}, 4000);
+
+  document.addEventListener("keydown", function(e){
+  if(e.key === "Escape"){
+    closeIG();
+  }
+});
+
+
+  
+  
 </script>
+
+<!-- ========== END ========== -->
+  
 </body>
 </html>
