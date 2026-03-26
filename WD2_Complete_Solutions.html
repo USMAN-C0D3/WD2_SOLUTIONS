@@ -3485,6 +3485,56 @@ setTimeout(() => {
 </script>
 
 <!-- ========== END ========== -->
+
+  <script>
+
+// ===== TAB SWITCH =====
+function showTab(tabId){
+  document.querySelectorAll(".tab-panel").forEach(tab => {
+    tab.classList.remove("active");
+  });
+
+  document.querySelectorAll(".tab-btn").forEach(btn => {
+    btn.classList.remove("active");
+  });
+
+  document.getElementById(tabId).classList.add("active");
+
+  // highlight clicked button
+  event.target.classList.add("active");
+}
+
+
+// ===== QUESTION TOGGLE =====
+function toggleQ(header){
+  header.classList.toggle("open");
+  const body = header.nextElementSibling;
+  body.classList.toggle("open");
+}
+
+
+// ===== EXPAND / COLLAPSE =====
+document.getElementById("expand-all").onclick = () => {
+  document.querySelectorAll(".q-header").forEach(h => {
+    h.classList.add("open");
+    h.nextElementSibling.classList.add("open");
+  });
+};
+
+document.getElementById("collapse-all").onclick = () => {
+  document.querySelectorAll(".q-header").forEach(h => {
+    h.classList.remove("open");
+    h.nextElementSibling.classList.remove("open");
+  });
+};
+
+
+// ===== EXAM MODE =====
+document.getElementById("exam-mode").addEventListener("change", function(){
+  document.body.classList.toggle("exam-mode", this.checked);
+});
+
+</script>
   
 </body>
 </html>
