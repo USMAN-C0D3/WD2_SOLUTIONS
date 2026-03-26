@@ -3265,159 +3265,7 @@ window.addEventListener("scroll", () => {
 
 <!-- ========== INSTAGRAM INSANE SYSTEM ========== -->
 
-<style>
-/* Floating Button */
-.ig-float {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #ff4ecd, #7a5cff);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #fff;
-  font-size: 22px;
-  cursor: pointer;
-  box-shadow: 0 8px 25px rgba(255,78,205,0.5);
-  z-index: 998;
-  transition: 0.3s;
-  animation: pulse 2s infinite;
-}
 
-.ig-float:hover {
-  transform: scale(1.1);
-}
-
-@keyframes pulse {
-  0% { box-shadow: 0 0 0 0 rgba(255,78,205,0.6); }
-  70% { box-shadow: 0 0 0 14px rgba(255,78,205,0); }
-  100% { box-shadow: 0 0 0 0 rgba(255,78,205,0); }
-}
-
-/* Popup */
-.ig-popup {
-  position: fixed;
-  bottom: 100px;
-  right: 20px;
-  width: 360px;
-  max-width: 92%;
-  background: rgba(10, 14, 30, 0.96);
-  border: 1px solid rgba(79,140,255,0.25);
-  border-radius: 18px;
-  padding: 18px;
-  backdrop-filter: blur(18px);
-  box-shadow: 0 20px 60px rgba(0,0,0,0.8);
-  z-index: 999;
-  display: none;
-  animation: popupIn 0.4s ease;
-  font-family: 'Syne', sans-serif;
-
-}
-
-@keyframes popupIn {
-  from { transform: translateY(60px) scale(0.95); opacity: 0; }
-  to { transform: translateY(0) scale(1); opacity: 1; }
-}
-
-/* Close */
-.ig-close {
-  position: absolute;
-  top: 10px;
-  right: 14px;
-  color: #8892b0;
-  cursor: pointer;
-  font-size: 16px;
-}
-.ig-close:hover {
-  color: #fff;
-}
-
-/* Header */
-.ig-head {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 12px;
-}
-
-/* Avatar */
-.ig-avatar {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  background-size: cover;
-  border: 2px solid #ff4ecd;
-}
-
-/* Info */
-.ig-info h4 {
-  color: #fff;
-  font-size: 14px;
-  margin: 0;
-}
-.ig-info span {
-  font-size: 12px;
-  color: #a0a8c5;
-}
-
-/* Social proof */
-.ig-proof {
-  font-size: 12px;
-  color: #7ee787;
-  margin: 6px 0 10px;
-}
-
-/* Text */
-.ig-desc {
-  font-size: 13px;
-  color: #b6c0df;
-  margin-bottom: 14px;
-  line-height: 1.5;
-}
-
-/* Button */
-.ig-btn {
-  display: block;
-  text-align: center;
-  background: linear-gradient(135deg, #ff4ecd, #7a5cff);
-  color: #fff;
-  padding: 11px;
-  border-radius: 10px;
-  font-weight: 600;
-  text-decoration: none;
-  transition: 0.3s;
-}
-.ig-btn:hover {
-  transform: translateY(-2px);
-}
-
-/* Badge */
-.ig-badge {
-  position: absolute;
-  top: -4px;
-  right: -4px;
-  background: #ff4ecd;
-  color: #fff;
-  font-size: 10px;
-  padding: 3px 6px;
-  border-radius: 10px;
-}
-
-/* Mobile */
-@media(max-width:480px){
-  .ig-popup {
-    right: 12px;
-    bottom: 85px;
-  }
-}
-
-  .ig-popup:hover {
-  box-shadow: 0 25px 70px rgba(255,78,205,0.2);
-}
-</style>
 
 <!-- Floating Button -->
 <div class="ig-float" onclick="toggleIG()">
@@ -3431,62 +3279,14 @@ window.addEventListener("scroll", () => {
 
   <div class="ig-head">
   
-    <div class="ig-info">
-      <h4>@USMAN_SONI_26</h4>
-    </div>
+  
   </div>
 
 
 
-  <div class="ig-desc">
-    Follow for more study resources and updates
-  </div>
-
- <a href="https://instagram.com/usman_soni_26" target="_blank" rel="noopener noreferrer"> 
-    VIEW INSTAGRAM PROFILE
-  </a>
-</div>
-
-<script>
-function toggleIG(){
-  let p = document.getElementById("igPopup");
-  p.style.display = (p.style.display === "block") ? "none" : "block";
-}
-
-function closeIG(){
-  document.getElementById("igPopup").style.display = "none";
-  localStorage.setItem("igClosed","true");
-}
-
-window.addEventListener("scroll", () => {
-  let scroll = window.scrollY;
-
-  if(scroll > 400 && !localStorage.getItem("igClosed")){
-    document.getElementById("igPopup").style.display = "block";
-  }
-});
-
-/* Prevent re-show after close */
-if(localStorage.getItem("igClosed")){
-  document.getElementById("igPopup").style.display = "none";
-}
-
-setTimeout(() => {
-  if(!localStorage.getItem("igClosed")){
-    document.getElementById("igPopup").style.display = "block";
-  }
-}, 4000);
-
-  document.addEventListener("keydown", function(e){
-  if(e.key === "Escape"){
-    closeIG();
-  }
-});
 
 
-  
-  
-</script>
+
 
 <!-- ========== END ========== -->
 
