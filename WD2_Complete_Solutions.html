@@ -1,0 +1,3449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Web Designing II – Complete Solutions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #05070f;
+    --bg2: #0a0e1a;
+    --card: rgba(16, 22, 40, 0.85);
+    --border: rgba(80, 140, 255, 0.18);
+    --accent: #4f8cff;
+    --accent2: #a259ff;
+    --accent3: #00e5ff;
+    --gold: #ffd166;
+    --green: #06d6a0;
+    --red: #ef476f;
+    --text: #e8eaf6;
+    --muted: #7b8aab;
+    --code-bg: rgba(0,0,0,0.55);
+    --glow: 0 0 24px rgba(79,140,255,0.22);
+    --shadow: 0 8px 40px rgba(0,0,0,0.55);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--text);font-family:'Syne',sans-serif;min-height:100vh;overflow-x:hidden}
+
+  /* ── BG MESH ── */
+  body::before{
+    content:'';position:fixed;inset:0;z-index:0;
+    background:
+      radial-gradient(ellipse 60% 40% at 20% 0%, rgba(79,140,255,0.10) 0%, transparent 70%),
+      radial-gradient(ellipse 50% 35% at 80% 100%, rgba(162,89,255,0.10) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 30% at 50% 50%, rgba(0,229,255,0.04) 0%, transparent 70%);
+    pointer-events:none;
+  }
+
+  /* ── HEADER ── */
+  header{
+    position:sticky;top:0;z-index:100;
+    background:rgba(5,7,15,0.92);
+    border-bottom:1px solid var(--border);
+    backdrop-filter:blur(18px);
+    padding:0 20px;
+  }
+  .header-inner{
+    max-width:1200px;margin:0 auto;
+    display:flex;align-items:center;justify-content:space-between;
+    min-height:60px;gap:12px;flex-wrap:wrap;
+  }
+  .logo{
+    font-family:'Space Mono',monospace;font-size:1rem;font-weight:700;
+    color:var(--accent);letter-spacing:0.04em;white-space:nowrap;
+  }
+  .logo span{color:var(--accent3)}
+
+  /* ── TABS ── */
+  .tab-bar{
+    display:flex;gap:6px;flex-wrap:wrap;padding:10px 20px;
+    position:sticky;top:60px;z-index:90;
+    background:rgba(5,7,15,0.88);backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--border);
+  }
+  .tab-btn{
+    background:rgba(79,140,255,0.06);border:1px solid var(--border);
+    color:var(--muted);padding:6px 14px;border-radius:8px;
+    font-family:'Syne',sans-serif;font-size:0.78rem;font-weight:600;
+    cursor:pointer;transition:all 0.22s;letter-spacing:0.03em;white-space:nowrap;
+  }
+  .tab-btn.active,.tab-btn:hover{
+    background:rgba(79,140,255,0.18);color:var(--accent);
+    border-color:var(--accent);box-shadow:var(--glow);
+  }
+
+  /* ── MAIN CONTENT ── */
+  main{max-width:1100px;margin:0 auto;padding:30px 16px 60px;}
+  .tab-panel{display:none}
+  .tab-panel.active{display:block;animation:fadeUp 0.35s ease}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+
+  /* ── PAGE HERO ── */
+  .hero{
+    background:linear-gradient(135deg,rgba(79,140,255,0.12),rgba(162,89,255,0.10));
+    border:1px solid var(--border);border-radius:18px;
+    padding:28px 28px 22px;margin-bottom:28px;
+    position:relative;overflow:hidden;
+  }
+  .hero::after{
+    content:'';position:absolute;right:-40px;top:-40px;
+    width:200px;height:200px;
+    background:radial-gradient(circle,rgba(79,140,255,0.15) 0%,transparent 70%);
+    border-radius:50%;pointer-events:none;
+  }
+  .hero h1{font-size:clamp(1.3rem,3vw,1.9rem);font-weight:800;color:#fff;line-height:1.2;margin-bottom:8px}
+  .hero p{color:var(--muted);font-size:0.88rem;line-height:1.6}
+  .badge{
+    display:inline-block;background:rgba(255,209,102,0.12);
+    color:var(--gold);border:1px solid rgba(255,209,102,0.28);
+    border-radius:6px;padding:3px 10px;font-size:0.75rem;font-weight:700;margin-right:8px;
+  }
+  .badge.blue{background:rgba(79,140,255,0.12);color:var(--accent);border-color:rgba(79,140,255,0.3)}
+  .badge.green{background:rgba(6,214,160,0.12);color:var(--green);border-color:rgba(6,214,160,0.3)}
+  .badge.purple{background:rgba(162,89,255,0.12);color:var(--accent2);border-color:rgba(162,89,255,0.3)}
+
+  /* ── Q-SECTION ── */
+  .q-section{margin-bottom:24px}
+  .q-header{
+    background:linear-gradient(90deg,rgba(79,140,255,0.14),rgba(162,89,255,0.08));
+    border:1px solid var(--border);border-left:4px solid var(--accent);
+    border-radius:10px;padding:12px 18px;margin-bottom:14px;
+    display:flex;align-items:center;gap:12px;cursor:pointer;
+    transition:background 0.2s;
+  }
+  .q-header:hover{background:rgba(79,140,255,0.18)}
+  .q-num{
+    background:var(--accent);color:#fff;
+    width:34px;height:34px;border-radius:8px;
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Space Mono',monospace;font-size:0.85rem;font-weight:700;flex-shrink:0;
+  }
+  .q-title{font-size:0.95rem;font-weight:700;color:#fff;flex:1}
+  .q-marks{
+    background:rgba(255,209,102,0.14);color:var(--gold);
+    border:1px solid rgba(255,209,102,0.3);border-radius:6px;
+    padding:3px 10px;font-size:0.75rem;font-weight:700;font-family:'Space Mono',monospace;
+  }
+  .chevron{color:var(--muted);transition:transform 0.25s;font-size:1rem}
+  .q-header.open .chevron{transform:rotate(180deg)}
+
+  .q-body{display:none;padding:4px 0 10px}
+  .q-body.open{display:block;animation:fadeUp 0.3s ease}
+
+  /* ── ANSWER CARD ── */
+  .ans-card{
+    background:var(--card);border:1px solid var(--border);
+    border-radius:14px;padding:22px;margin-bottom:14px;
+    box-shadow:var(--shadow);position:relative;overflow:hidden;
+    transform:perspective(600px) rotateX(0deg);
+    transition:transform 0.3s,box-shadow 0.3s;
+  }
+  .ans-card:hover{
+    transform:perspective(600px) translateY(-3px);
+    box-shadow:0 16px 60px rgba(79,140,255,0.18);
+  }
+  .ans-card::before{
+    content:'';position:absolute;top:0;left:0;right:0;height:2px;
+    background:linear-gradient(90deg,var(--accent),var(--accent2),var(--accent3));
+    border-radius:14px 14px 0 0;
+  }
+  .q-label{
+    font-family:'Space Mono',monospace;font-size:0.78rem;
+    color:var(--accent3);font-weight:700;margin-bottom:10px;letter-spacing:0.06em;
+  }
+  .ans-card h3{font-size:1rem;font-weight:700;color:#fff;margin-bottom:10px}
+  .ans-card p{font-size:0.88rem;color:var(--muted);line-height:1.75;margin-bottom:10px}
+  .ans-card ul,.ans-card ol{padding-left:20px;margin-bottom:10px}
+  .ans-card li{font-size:0.87rem;color:var(--muted);line-height:1.7;margin-bottom:4px}
+  .ans-card strong{color:var(--text)}
+
+  /* ── MCQ CARD ── */
+  .mcq-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;margin-bottom:14px}
+  .mcq-item{
+    background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;
+    box-shadow:var(--shadow);transition:transform 0.25s,box-shadow 0.25s;
+  }
+  .mcq-item:hover{transform:translateY(-2px) scale(1.01);box-shadow:0 8px 30px rgba(79,140,255,0.15)}
+  .mcq-q{font-size:0.82rem;color:var(--text);margin-bottom:10px;font-weight:600;line-height:1.5}
+  .mcq-ans{
+    display:flex;align-items:center;gap:8px;
+    background:rgba(6,214,160,0.08);border:1px solid rgba(6,214,160,0.25);
+    border-radius:8px;padding:7px 12px;
+  }
+  .mcq-tick{color:var(--green);font-size:1rem;font-weight:700}
+  .mcq-val{font-size:0.83rem;color:var(--green);font-weight:700}
+
+  /* ── CODE BLOCK ── */
+  pre{
+    background:var(--code-bg);border:1px solid rgba(79,140,255,0.15);
+    border-radius:10px;padding:16px;overflow-x:auto;margin:12px 0;
+    font-family:'JetBrains Mono',monospace;font-size:0.8rem;
+    line-height:1.6;color:#c9d1d9;
+    box-shadow:inset 0 2px 8px rgba(0,0,0,0.3);
+    position:relative;
+  }
+  pre::before{
+    content:'CODE';position:absolute;top:8px;right:12px;
+    font-size:0.65rem;color:var(--muted);letter-spacing:0.1em;font-family:'Space Mono',monospace;
+  }
+  .kw{color:#ff7b72}
+  .str{color:#a5d6ff}
+  .cm{color:#8b949e}
+  .fn{color:#d2a8ff}
+  .tag{color:#7ee787}
+  .attr{color:#ffa657}
+  .num{color:#79c0ff}
+
+  /* ── DIFF TABLE ── */
+  .diff-table{width:100%;border-collapse:collapse;margin:12px 0;font-size:0.83rem}
+  .diff-table th{
+    background:rgba(79,140,255,0.14);color:var(--accent);
+    padding:10px 14px;text-align:left;font-family:'Space Mono',monospace;font-size:0.78rem;
+    border:1px solid var(--border);
+  }
+  .diff-table td{
+    padding:9px 14px;border:1px solid var(--border);color:var(--muted);
+    vertical-align:top;line-height:1.6;
+  }
+  .diff-table tr:nth-child(even) td{background:rgba(255,255,255,0.02)}
+  .diff-table tr:hover td{background:rgba(79,140,255,0.05)}
+
+  /* ── DIAGRAM ── */
+  .diagram-box{
+    background:var(--code-bg);border:1px solid var(--border);
+    border-radius:12px;padding:20px;margin:12px 0;text-align:center;
+    overflow-x:auto;
+  }
+  .diagram-box svg{max-width:100%;height:auto}
+
+  /* ── NOTE BOX ── */
+  .note{
+    background:rgba(255,209,102,0.07);border:1px solid rgba(255,209,102,0.22);
+    border-left:3px solid var(--gold);border-radius:8px;
+    padding:10px 14px;margin:10px 0;font-size:0.84rem;color:var(--muted);
+    line-height:1.6;
+  }
+  .note strong{color:var(--gold)}
+  .tip{
+    background:rgba(6,214,160,0.07);border:1px solid rgba(6,214,160,0.22);
+    border-left:3px solid var(--green);border-radius:8px;
+    padding:10px 14px;margin:10px 0;font-size:0.84rem;color:var(--muted);
+  }
+  .tip strong{color:var(--green)}
+
+  /* ── SECTION DIVIDER ── */
+  .divider{height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);margin:24px 0}
+
+  /* ── ASSIGN CARD ── */
+  .assign-card{
+    background:var(--card);border:1px solid var(--border);border-radius:14px;
+    padding:20px;margin-bottom:16px;
+    box-shadow:var(--shadow);
+  }
+  .assign-card h4{color:var(--accent);font-size:0.88rem;font-family:'Space Mono',monospace;margin-bottom:12px}
+
+  /* ── RESPONSIVE ── */
+  @media(max-width:640px){
+    .tab-btn{font-size:0.72rem;padding:5px 10px}
+    main{padding:16px 10px 50px}
+    .hero{padding:18px 14px}
+    .ans-card{padding:14px}
+    .mcq-grid{grid-template-columns:1fr}
+    .diff-table{font-size:0.76rem}
+    pre{font-size:0.73rem}
+    .q-title{font-size:0.85rem}
+  }
+
+  /* ── SCROLL BAR ── */
+  ::-webkit-scrollbar{width:6px;height:6px}
+  ::-webkit-scrollbar-track{background:var(--bg2)}
+  ::-webkit-scrollbar-thumb{background:var(--border);border-radius:10px}
+
+  /* ── FLOATING NAV ── */
+  #back-top{
+    position:fixed;bottom:24px;right:20px;z-index:200;
+    background:var(--accent);color:#fff;border:none;border-radius:50%;
+    width:44px;height:44px;font-size:1.2rem;cursor:pointer;
+    box-shadow:0 4px 20px rgba(79,140,255,0.4);
+    display:flex;align-items:center;justify-content:center;
+    transition:background 0.2s,transform 0.2s;
+  }
+  #back-top:hover{background:var(--accent2);transform:translateY(-2px)}
+
+  /* Revision UI Enhancements */
+  :root {
+    --card: rgba(13, 18, 34, 0.9);
+    --border: rgba(91, 139, 240, 0.22);
+    --accent2: #8f6bff;
+    --accent3: #00d5ff;
+    --text: #edf1ff;
+    --muted: #b2bdd7;
+    --code-bg: rgba(3, 6, 16, 0.78);
+    --glow: 0 0 16px rgba(79, 140, 255, 0.14);
+    --shadow: 0 14px 34px rgba(0, 0, 0, 0.32);
+  }
+  html{scroll-padding-top:152px}
+  body{
+    font-size:16px;
+    line-height:1.6;
+  }
+  body.menu-open{overflow:hidden}
+  body::before{
+    background:
+      radial-gradient(ellipse 60% 40% at 20% 0%, rgba(79,140,255,0.08) 0%, transparent 70%),
+      radial-gradient(ellipse 50% 35% at 80% 100%, rgba(143,107,255,0.08) 0%, transparent 70%),
+      radial-gradient(ellipse 42% 30% at 52% 48%, rgba(0,213,255,0.03) 0%, transparent 72%);
+  }
+  body.exam-mode{
+    --card: rgba(10, 14, 26, 0.97);
+    --border: rgba(154, 176, 228, 0.18);
+    --code-bg: rgba(2, 5, 14, 0.92);
+    --glow: 0 0 0 rgba(0, 0, 0, 0);
+    --shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
+  }
+  body.exam-mode::before{opacity:0.45}
+  body.exam-mode header,
+  body.exam-mode .tab-bar,
+  body.exam-mode .hero,
+  body.exam-mode .ans-card,
+  body.exam-mode .assign-card,
+  body.exam-mode .mcq-item,
+  body.exam-mode .sidebar-card,
+  body.exam-mode .utility-bar{
+    backdrop-filter:none;
+    box-shadow:none;
+  }
+  body.exam-mode .tab-panel.active,
+  body.exam-mode .q-body.open{animation:none}
+  body.exam-mode .ans-card:hover,
+  body.exam-mode .mcq-item:hover,
+  body.exam-mode .sidebar-tab:hover,
+  body.exam-mode .section-link:hover{
+    transform:none;
+    box-shadow:none;
+  }
+  .header-inner{max-width:1380px}
+  .tab-bar{
+    gap:8px;
+    z-index:110;
+    background:rgba(5,7,15,0.86);
+    overflow-x:auto;
+  }
+  .tab-btn{
+    padding:8px 14px;
+    border-radius:10px;
+    font-size:0.8rem;
+    font-weight:700;
+    transition:background 0.2s,border-color 0.2s,color 0.2s,box-shadow 0.2s,transform 0.2s;
+  }
+  .tab-btn.active,.tab-btn:hover{
+    border-color:rgba(79,140,255,0.5);
+    transform:translateY(-1px);
+  }
+  main{
+    max-width:1380px;
+    padding:28px 18px 72px;
+    position:relative;
+    z-index:1;
+  }
+  .page-layout{
+    display:grid;
+    grid-template-columns:280px minmax(0, 1fr);
+    gap:24px;
+    align-items:start;
+  }
+  .study-sidebar{
+    position:sticky;
+    top:134px;
+    display:flex;
+    flex-direction:column;
+    gap:16px;
+    align-self:start;
+  }
+  .sidebar-card{
+    background:rgba(11, 16, 30, 0.9);
+    border:1px solid var(--border);
+    border-radius:18px;
+    padding:18px;
+    box-shadow:var(--shadow);
+  }
+  .sidebar-eyebrow{
+    font-family:'Space Mono',monospace;
+    color:var(--accent3);
+    font-size:0.75rem;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    margin-bottom:10px;
+  }
+  .sidebar-card h2{
+    font-size:1.15rem;
+    line-height:1.3;
+    margin-bottom:8px;
+  }
+  .sidebar-card p{
+    font-size:0.9rem;
+    color:var(--muted);
+    line-height:1.7;
+  }
+  .progress-panel{
+    margin-top:16px;
+    padding:14px;
+    border-radius:14px;
+    background:rgba(79,140,255,0.08);
+    border:1px solid rgba(79,140,255,0.16);
+  }
+  .progress-label{
+    display:block;
+    font-size:0.75rem;
+    color:var(--accent3);
+    font-family:'Space Mono',monospace;
+    margin-bottom:8px;
+    letter-spacing:0.06em;
+  }
+  .progress-panel strong{
+    display:block;
+    font-size:0.95rem;
+    line-height:1.5;
+    margin-bottom:10px;
+  }
+  .progress-track{
+    height:8px;
+    border-radius:999px;
+    background:rgba(255,255,255,0.06);
+    overflow:hidden;
+    margin-bottom:8px;
+  }
+  .progress-track span{
+    display:block;
+    width:0;
+    height:100%;
+    background:linear-gradient(90deg,var(--accent),var(--accent3));
+    border-radius:999px;
+    transition:width 0.25s ease;
+  }
+  #progress-count{
+    font-size:0.78rem;
+    color:var(--muted);
+  }
+  .sidebar-head{
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap:12px;
+    margin-bottom:12px;
+  }
+  .sidebar-head h3{
+    font-size:0.95rem;
+    color:#fff;
+  }
+  .sidebar-head span{
+    font-size:0.75rem;
+    color:var(--muted);
+    text-align:right;
+  }
+  .sidebar-tabs,
+  .sidebar-links{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+  }
+  .sidebar-tab,
+  .section-link{
+    background:rgba(255,255,255,0.02);
+    border:1px solid rgba(255,255,255,0.05);
+    color:var(--muted);
+    border-radius:12px;
+    padding:10px 12px;
+    text-align:left;
+    text-decoration:none;
+    cursor:pointer;
+    transition:transform 0.2s,border-color 0.2s,background 0.2s,box-shadow 0.2s,color 0.2s;
+  }
+  .sidebar-tab strong,
+  .section-link strong{
+    display:block;
+    color:var(--text);
+    font-size:0.84rem;
+    line-height:1.45;
+  }
+  .sidebar-tab span,
+  .section-link span{
+    display:block;
+    margin-top:4px;
+    font-size:0.76rem;
+    color:var(--muted);
+    line-height:1.45;
+  }
+  .sidebar-tab:hover,
+  .section-link:hover,
+  .sidebar-tab.active,
+  .section-link.active{
+    background:rgba(79,140,255,0.12);
+    border-color:rgba(79,140,255,0.45);
+    box-shadow:var(--glow);
+    color:var(--accent);
+    transform:translateX(2px);
+  }
+  .content-shell{min-width:0}
+  .utility-bar{
+    position:sticky;
+    top:118px;
+    z-index:90;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:14px;
+    flex-wrap:wrap;
+    padding:14px 16px;
+    margin-bottom:20px;
+    background:rgba(11,16,30,0.84);
+    border:1px solid var(--border);
+    border-radius:16px;
+    backdrop-filter:blur(16px);
+    box-shadow:var(--shadow);
+  }
+  .utility-group{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    flex-wrap:wrap;
+  }
+  .utility-btn{
+    border:1px solid var(--border);
+    background:rgba(79,140,255,0.08);
+    color:var(--text);
+    border-radius:10px;
+    padding:10px 14px;
+    font-family:'Syne',sans-serif;
+    font-size:0.84rem;
+    font-weight:700;
+    cursor:pointer;
+    transition:background 0.2s,border-color 0.2s,transform 0.2s,box-shadow 0.2s;
+  }
+  .utility-btn:hover{
+    background:rgba(79,140,255,0.15);
+    border-color:rgba(79,140,255,0.48);
+    transform:translateY(-1px);
+    box-shadow:var(--glow);
+  }
+  .focus-pill{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:10px 14px;
+    border-radius:12px;
+    background:rgba(255,255,255,0.03);
+    border:1px solid rgba(255,255,255,0.05);
+  }
+  .focus-pill span{
+    font-size:0.75rem;
+    color:var(--muted);
+    letter-spacing:0.04em;
+    text-transform:uppercase;
+  }
+  .focus-pill strong{
+    font-size:0.84rem;
+    color:#fff;
+  }
+  .exam-toggle{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    padding:9px 12px;
+    border:1px solid var(--border);
+    border-radius:12px;
+    background:rgba(255,255,255,0.02);
+    color:var(--text);
+    font-size:0.84rem;
+    font-weight:700;
+    cursor:pointer;
+  }
+  .exam-toggle input{
+    position:absolute;
+    opacity:0;
+    pointer-events:none;
+  }
+  .exam-toggle-ui{
+    position:relative;
+    width:46px;
+    height:26px;
+    border-radius:999px;
+    background:rgba(255,255,255,0.12);
+    border:1px solid rgba(255,255,255,0.08);
+    transition:background 0.2s,border-color 0.2s;
+  }
+  .exam-toggle-ui::after{
+    content:'';
+    position:absolute;
+    top:2px;
+    left:2px;
+    width:20px;
+    height:20px;
+    border-radius:50%;
+    background:#fff;
+    transition:transform 0.2s ease;
+  }
+  .exam-toggle input:checked + .exam-toggle-ui{
+    background:rgba(79,140,255,0.28);
+    border-color:rgba(79,140,255,0.5);
+  }
+  .exam-toggle input:checked + .exam-toggle-ui::after{
+    transform:translateX(20px);
+  }
+  .mobile-only{display:none}
+  .mobile-sidebar-backdrop{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(5,7,15,0.56);
+    z-index:140;
+    opacity:0;
+    pointer-events:none;
+    transition:opacity 0.2s ease;
+  }
+  .mobile-sidebar-backdrop.show{
+    opacity:1;
+    pointer-events:auto;
+  }
+  .promo-modal{
+    position:fixed;
+    inset:0;
+    z-index:260;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    opacity:0;
+    pointer-events:none;
+    transition:opacity 0.25s ease;
+  }
+  .promo-modal.show{
+    opacity:1;
+    pointer-events:auto;
+  }
+  .promo-modal-backdrop{
+    position:absolute;
+    inset:0;
+    background:rgba(3, 5, 14, 0.76);
+    backdrop-filter:blur(8px);
+  }
+  .promo-modal-card{
+    position:relative;
+    width:min(100%, 440px);
+    background:linear-gradient(160deg, rgba(13,18,34,0.98), rgba(19,24,44,0.96));
+    border:1px solid rgba(255,255,255,0.08);
+    border-radius:24px;
+    padding:24px;
+    box-shadow:0 24px 60px rgba(0,0,0,0.42);
+    overflow:hidden;
+  }
+  .promo-modal-card::before{
+    content:'';
+    position:absolute;
+    inset:0 0 auto 0;
+    height:3px;
+    background:linear-gradient(90deg,#ff7a59,#ff4fa0,#7d7bff,#00d5ff);
+  }
+  .promo-badge{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:6px 12px;
+    border-radius:999px;
+    background:rgba(255,255,255,0.05);
+    border:1px solid rgba(255,255,255,0.08);
+    color:#ffd7ea;
+    font-size:0.78rem;
+    font-weight:700;
+    margin-bottom:16px;
+  }
+  .promo-modal-card h3{
+    font-size:1.45rem;
+    line-height:1.2;
+    margin-bottom:10px;
+    color:#fff;
+  }
+  .promo-modal-card p{
+    color:var(--muted);
+    font-size:0.95rem;
+    line-height:1.75;
+    margin-bottom:16px;
+  }
+  .promo-handle{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    padding:14px 16px;
+    border-radius:16px;
+    background:rgba(255,255,255,0.04);
+    border:1px solid rgba(255,255,255,0.08);
+    margin-bottom:18px;
+  }
+  .promo-handle strong{
+    font-family:'Space Mono',monospace;
+    font-size:0.98rem;
+    color:#fff;
+    letter-spacing:0.04em;
+  }
+  .promo-handle span{
+    color:#ff95c4;
+    font-size:0.82rem;
+    font-weight:700;
+  }
+  .promo-actions{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+  }
+  .promo-btn{
+    flex:1 1 180px;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    text-decoration:none;
+    border:none;
+    border-radius:14px;
+    padding:12px 14px;
+    font-family:'Syne',sans-serif;
+    font-size:0.9rem;
+    font-weight:700;
+    cursor:pointer;
+    transition:transform 0.2s ease,box-shadow 0.2s ease,background 0.2s ease,border-color 0.2s ease;
+  }
+  .promo-btn:hover{
+    transform:translateY(-1px);
+  }
+  .promo-btn-primary{
+    background:linear-gradient(135deg,#ff6a88,#ff4fa0);
+    color:#fff;
+    box-shadow:0 14px 28px rgba(255,79,160,0.24);
+  }
+  .promo-btn-secondary{
+    background:rgba(255,255,255,0.04);
+    color:var(--text);
+    border:1px solid rgba(255,255,255,0.08);
+  }
+  .promo-close{
+    position:absolute;
+    top:14px;
+    right:14px;
+    width:36px;
+    height:36px;
+    border:none;
+    border-radius:50%;
+    background:rgba(255,255,255,0.05);
+    color:var(--text);
+    cursor:pointer;
+    font-size:1rem;
+  }
+  .hero{
+    border-radius:20px;
+    padding:30px 30px 24px;
+    box-shadow:var(--shadow);
+  }
+  .hero h1{
+    font-size:clamp(1.35rem,3vw,2rem);
+    line-height:1.18;
+    margin-bottom:10px;
+  }
+  .hero p{
+    font-size:0.95rem;
+    line-height:1.75;
+  }
+  .badge{
+    border-radius:7px;
+    padding:4px 10px;
+    margin-bottom:6px;
+  }
+  .q-section{
+    scroll-margin-top:152px;
+  }
+  .q-section.is-current .q-header{
+    border-color:rgba(0,213,255,0.28);
+    box-shadow:0 0 0 1px rgba(0,213,255,0.12);
+  }
+  .q-header{
+    border-radius:12px;
+    padding:14px 18px;
+    transition:background 0.2s,border-color 0.2s,box-shadow 0.2s;
+  }
+  .q-num{
+    width:36px;
+    height:36px;
+    border-radius:10px;
+  }
+  .q-title{
+    font-size:0.98rem;
+    line-height:1.4;
+  }
+  .q-marks{
+    border-radius:7px;
+    padding:4px 10px;
+    white-space:nowrap;
+  }
+  .ans-card,
+  .assign-card{
+    border-radius:16px;
+    box-shadow:var(--shadow);
+  }
+  .ans-card{
+    transition:transform 0.28s,box-shadow 0.28s,border-color 0.2s;
+  }
+  .ans-card:hover{
+    transform:translateY(-2px);
+    box-shadow:0 18px 40px rgba(0,0,0,0.32);
+    border-color:rgba(79,140,255,0.34);
+  }
+  .ans-card::before{
+    border-radius:16px 16px 0 0;
+  }
+  .ans-card p{
+    font-size:0.94rem;
+    line-height:1.82;
+    margin-bottom:12px;
+  }
+  .ans-card ul,.ans-card ol{
+    padding-left:22px;
+    margin-bottom:12px;
+  }
+  .ans-card li{
+    font-size:0.93rem;
+    line-height:1.82;
+    margin-bottom:6px;
+  }
+  .mcq-item{
+    border-radius:14px;
+    transition:transform 0.25s,box-shadow 0.25s,border-color 0.2s;
+  }
+  .mcq-item:hover{
+    transform:translateY(-2px);
+    box-shadow:0 16px 34px rgba(0,0,0,0.28);
+    border-color:rgba(79,140,255,0.32);
+  }
+  .mcq-q{
+    font-size:0.84rem;
+    line-height:1.6;
+  }
+  .mcq-ans{
+    border-radius:10px;
+    padding:8px 12px;
+  }
+  pre{
+    border-radius:12px;
+    padding:18px 16px 16px;
+    font-size:0.83rem;
+    line-height:1.68;
+    box-shadow:inset 0 2px 8px rgba(0,0,0,0.25);
+  }
+  .diff-table{
+    font-size:0.85rem;
+  }
+  .diff-table td{
+    padding:10px 14px;
+    line-height:1.7;
+  }
+  .note,
+  .tip{
+    border-radius:10px;
+    padding:12px 14px;
+    font-size:0.86rem;
+    line-height:1.72;
+  }
+  .assign-card h4{
+    font-size:0.9rem;
+  }
+  #back-top{
+    box-shadow:0 8px 20px rgba(79,140,255,0.25);
+    transition:background 0.2s,transform 0.2s,box-shadow 0.2s;
+  }
+  #back-top:hover{
+    box-shadow:0 10px 22px rgba(79,140,255,0.24);
+  }
+  @media(max-width:1080px){
+    .page-layout{grid-template-columns:1fr}
+    .study-sidebar{
+      position:fixed;
+      top:118px;
+      left:14px;
+      right:14px;
+      z-index:150;
+      max-height:calc(100vh - 138px);
+      overflow:auto;
+      opacity:0;
+      transform:translateY(-12px);
+      pointer-events:none;
+      transition:opacity 0.2s ease,transform 0.2s ease;
+    }
+    .study-sidebar.open{
+      opacity:1;
+      transform:translateY(0);
+      pointer-events:auto;
+    }
+    .mobile-only{display:inline-flex}
+    .mobile-sidebar-backdrop{display:block}
+  }
+  @media(max-width:640px){
+    html{scroll-padding-top:190px}
+    .tab-bar{
+      padding:10px 14px;
+      display:grid;
+      grid-template-columns:repeat(2, minmax(0, 1fr));
+      gap:8px;
+      overflow:visible;
+    }
+    .tab-btn{
+      font-size:0.76rem;
+      padding:9px 10px;
+      white-space:normal;
+      line-height:1.35;
+      min-height:48px;
+      width:100%;
+    }
+    main{padding:18px 12px 64px}
+    .utility-bar{
+      position:static;
+      top:auto;
+      padding:12px;
+      border-radius:14px;
+    }
+    .utility-group{width:100%}
+    .utility-group-main{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      width:100%;
+    }
+    .utility-group-main .mobile-only{grid-column:1 / -1}
+    .utility-btn{
+      width:100%;
+      justify-content:center;
+    }
+    .focus-pill{
+      width:100%;
+      justify-content:space-between;
+    }
+    .hero{padding:20px 16px}
+    .ans-card,.assign-card{padding:16px}
+    .mcq-grid{grid-template-columns:1fr}
+    .q-section{scroll-margin-top:190px}
+    .q-header{padding:12px 14px}
+    .q-title{font-size:0.9rem}
+    .diff-table{
+      display:block;
+      overflow-x:auto;
+      white-space:nowrap;
+    }
+    pre{font-size:0.76rem}
+    #back-top{bottom:18px;right:14px}
+    .promo-modal{padding:14px}
+    .promo-modal-card{
+      border-radius:20px;
+      padding:20px 16px 16px;
+    }
+    .promo-modal-card h3{
+      font-size:1.25rem;
+    }
+    .promo-handle{
+      align-items:flex-start;
+      flex-direction:column;
+    }
+    .promo-actions{
+      flex-direction:column;
+    }
+    .promo-btn{
+      width:100%;
+    }
+  }
+  @media(prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    *{animation:none !important;transition:none !important}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="logo">WD<span>2</span>.solutions</div>
+    <div style="font-size:0.75rem;color:var(--muted)">BCA 4th Sem · Web Designing II</div>
+  </div>
+</header>
+
+<div class="promo-modal" id="promo-modal" aria-hidden="true">
+  <div class="promo-modal-backdrop" data-close-promo="true"></div>
+  <div class="promo-modal-card" role="dialog" aria-modal="true" aria-labelledby="promo-title">
+    <button class="promo-close" id="promo-close" type="button" aria-label="Close popup">X</button>
+    <div class="promo-badge">Creative Corner</div>
+    <h3 id="promo-title">Follow me on Instagram</h3>
+    <p>For more creative web ideas, study updates, and design inspiration, connect with my Instagram page.</p>
+    <div class="promo-handle">
+      <strong>@USMAN_SONI_26</strong>
+      <span>Instagram Handle</span>
+    </div>
+    <div class="promo-actions">
+      <a class="promo-btn promo-btn-primary" href="https://www.instagram.com/usman_soni_26/" target="_blank" rel="noopener noreferrer">Open Instagram</a>
+      <button class="promo-btn promo-btn-secondary" id="promo-later" type="button">Continue to Site</button>
+    </div>
+  </div>
+</div>
+
+<!-- TAB BAR -->
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="showTab('mar25-old')">📄 Mar 2025 (70M)</button>
+  <button class="tab-btn" onclick="showTab('mar25-nep')">📄 Mar 2025 NEP (25M)</button>
+  <button class="tab-btn" onclick="showTab('apr24')">📄 Apr 2024 (70M)</button>
+  <button class="tab-btn" onclick="showTab('assign')">📚 Assignments</button>
+</div>
+
+<main>
+<div class="page-layout">
+  <aside class="study-sidebar" id="study-sidebar">
+    <div class="sidebar-card">
+      <div class="sidebar-eyebrow">Revision Toolkit</div>
+      <h2>Quick Navigation</h2>
+      <p>Switch papers, jump to exact question groups, and keep track of the section you are revising.</p>
+      <div class="progress-panel">
+        <span class="progress-label">Current focus</span>
+        <strong id="current-topic">Loading current section...</strong>
+        <div class="progress-track"><span id="progress-fill"></span></div>
+        <span id="progress-count">0 / 0 sections</span>
+      </div>
+    </div>
+    <div class="sidebar-card">
+      <div class="sidebar-head">
+        <h3>Paper Switcher</h3>
+        <span id="active-paper-label">Mar 2025 (70M)</span>
+      </div>
+      <nav class="sidebar-tabs" id="sidebar-tabs" aria-label="Paper navigation"></nav>
+    </div>
+    <div class="sidebar-card">
+      <div class="sidebar-head">
+        <h3>Question Links</h3>
+        <span id="section-count">0 sections</span>
+      </div>
+      <nav class="sidebar-links" id="section-nav" aria-label="Question navigation"></nav>
+    </div>
+  </aside>
+
+  <section class="content-shell">
+    <div class="utility-bar">
+      <div class="utility-group utility-group-main">
+        <button class="utility-btn mobile-only" id="sidebar-toggle" type="button" aria-expanded="false" aria-controls="study-sidebar">Sections</button>
+        <button class="utility-btn" id="expand-all" type="button">Expand All</button>
+        <button class="utility-btn" id="collapse-all" type="button">Collapse All</button>
+      </div>
+      <div class="utility-group">
+        <div class="focus-pill" aria-live="polite">
+          <span>Now viewing</span>
+          <strong id="current-topic-inline">Loading current section...</strong>
+        </div>
+        <label class="exam-toggle" for="exam-mode">
+          <input type="checkbox" id="exam-mode">
+          <span class="exam-toggle-ui" aria-hidden="true"></span>
+          <span>Exam Mode</span>
+        </label>
+      </div>
+    </div>
+
+<!-- ======================= PAPER 1 : MAR 2025 OLD (70M) ======================= -->
+<div class="tab-panel active" id="mar25-old">
+  <div class="hero">
+    <div style="margin-bottom:10px">
+      <span class="badge">March 2025</span>
+      <span class="badge blue">Old Scheme</span>
+      <span class="badge">70 Marks</span>
+    </div>
+    <h1>Web Designing – II (OLD) Paper-405-1</h1>
+    <p>Code: 2111000104050002 · BCA Fourth Semester · Complete Solutions</p>
+  </div>
+
+  <!-- Q1-A MCQ -->
+  <div class="q-section">
+    <div class="q-header open" onclick="toggleQ(this)">
+      <div class="q-num">Q1A</div>
+      <div class="q-title">MCQ – Answer the following (10 Questions)</div>
+      <div class="q-marks">10 M</div>
+      <div class="chevron">▼</div>
+    </div>
+    <div class="q-body open">
+      <div class="mcq-grid">
+        <div class="mcq-item">
+          <div class="mcq-q">1. Which is correct for adding XML element?</div>
+          <div class="mcq-ans"><span class="mcq-tick">✓</span><span class="mcq-val">(c) &lt;bookList&gt;....&lt;/bookList&gt;</span></div>
+          <p style="font-size:0.76rem;color:var(--muted);margin-top:6px">XML is case-sensitive. Opening and closing tags must match exactly.</p>
+        </div>
+        <div class="mcq-item">
+          <div class="mcq-q">2. Correct syntax of defining XML version?</div>
+          <div class="mcq-ans"><span class="mcq-tick">✓</span><span class="mcq-val">(c) &lt;?xml version="version_no" ?&gt;</span></div>
+          <p style="font-size:0.76rem;color:var(--muted);margin-top:6px">XML declaration starts with &lt;? and ends with ?&gt;</p>
+        </div>
+        <div class="mcq-item">
+          <div class="mcq-q">3. jQuery DOM method to set/return content including HTML markup?</div>
+          <div class="mcq-ans"><span class="mcq-tick">✓</span><span class="mcq-val">(d) html()</span></div>
+          <p style="font-size:0.76rem;color:var(--muted);margin-top:6px">html() gets/sets innerHTML. text() only gets text content.</p>
+        </div>
+        <div class="mcq-item">
+          <div class="mcq-q">4. jQuery to hide the current element?</div>
+          <div class="mcq-ans"><span class="mcq-tick">✓</span><span class="mcq-val">(d) $(this).hide()</span></div>
+        </div>
+        <div class="mcq-item">
+          <div class="mcq-q">5. Correct symbol to insert comment in JSON?</div>
+          <div class="mcq-ans"><span class="mcq-tick">✓</span><span class="mcq-val">(b) JSON doesn't support comments</span></div>
+          <p style="font-size:0.76rem;color:var(--muted);margin-top:6px">JSON has NO comment syntax – it is purely a data format.</p>
+        </div>
+        <div class="mcq-item">
+          <div class="mcq-q">6. Function to convert JavaScript object into string?</div>
+          <div class="mcq-ans"><span class="mcq-tick">✓</span><span class="mcq-val">(c) JSON.stringify()</span></div>
+        </div>
+        <div class="mcq-item">
+          <div class="mcq-q">7. Formats supported by AJAX to send/receive information?</div>
+          <div class="mcq-ans"><span class="mcq-tick">✓</span><span class="mcq-val">(c) JSON, XML, HTML, and Text files</span></div>
+        </div>
+        <div class="mcq-item">
+          <div class="mcq-q">8. Correct syntax to create XMLHttpRequest object?</div>
+          <div class="mcq-ans"><span class="mcq-tick">✓</span><span class="mcq-val">(d) variable = new XMLHttpRequest();</span></div>
+        </div>
+        <div class="mcq-item">
+          <div class="mcq-q">9. fs module method used to create file?</div>
+          <div class="mcq-ans"><span class="mcq-tick">✓</span><span class="mcq-val">(d) All of the Above</span></div>
+          <p style="font-size:0.76rem;color:var(--muted);margin-top:6px">writeFile(), appendFile() and open() can all create files.</p>
+        </div>
+        <div class="mcq-item">
+          <div class="mcq-q">10. Module that splits web address into readable parts?</div>
+          <div class="mcq-ans"><span class="mcq-tick">✓</span><span class="mcq-val">(c) URL</span></div>
+          <p style="font-size:0.76rem;color:var(--muted);margin-top:6px">The URL module parses query strings, pathnames, protocols etc.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q1-B Short Answers -->
+  <div class="q-section">
+    <div class="q-header" onclick="toggleQ(this)">
+      <div class="q-num">Q1B</div>
+      <div class="q-title">Short Answers (Any Five)</div>
+      <div class="q-marks">10 M</div>
+      <div class="chevron">▼</div>
+    </div>
+    <div class="q-body">
+
+      <div class="ans-card">
+        <div class="q-label">Q1B.1 — JQUERY + text() Method</div>
+        <h3>What is jQuery? Which jQuery method sets text content?</h3>
+        <p><strong>jQuery</strong> is a fast, small, and feature-rich JavaScript library. It makes things like HTML document traversal, manipulation, event handling, and Ajax much simpler with an easy-to-use API that works across browsers.</p>
+        <p>It uses the <strong>$</strong> sign as a shortcut: <code style="background:var(--code-bg);padding:1px 6px;border-radius:4px;font-family:'JetBrains Mono',monospace">$(selector).action()</code></p>
+        <p>The <strong>text()</strong> method is used to set or return the text content of selected elements (without HTML tags).</p>
+        <pre>// Get text content
+var t = $("p").text();
+
+// Set text content
+$("p").text("Hello World!");</pre>
+      </div>
+
+      <div class="ans-card">
+        <div class="q-label">Q1B.2 — XML + Declaration</div>
+        <h3>What is XML? Write XML declaration syntax.</h3>
+        <p><strong>XML (eXtensible Markup Language)</strong> is a markup language designed to store and transport data. Unlike HTML, XML has no predefined tags — you define your own tags to describe data.</p>
+        <ul>
+          <li>XML is both human-readable and machine-readable</li>
+          <li>XML is platform-independent and self-descriptive</li>
+          <li>XML separates data from presentation</li>
+        </ul>
+        <pre><span class="cm">&lt;!-- XML Declaration Syntax --&gt;</span>
+<span class="tag">&lt;?xml</span> <span class="attr">version</span>=<span class="str">"1.0"</span> <span class="attr">encoding</span>=<span class="str">"UTF-8"</span> <span class="attr">standalone</span>=<span class="str">"yes"</span><span class="tag">?&gt;</span>
+
+<span class="cm">&lt;!-- version is mandatory, encoding & standalone are optional --&gt;</span></pre>
+      </div>
+
+      <div class="ans-card">
+        <div class="q-label">Q1B.3 — NODE.JS</div>
+        <h3>What is Node.js? How to run a Node.js application?</h3>
+        <p><strong>Node.js</strong> is an open-source, cross-platform JavaScript runtime environment built on Chrome's V8 engine. It allows JavaScript to run on the server side, enabling building of fast, scalable network applications.</p>
+        <p><strong>Key Features:</strong> Event-driven, Non-blocking I/O, Single-threaded, Asynchronous.</p>
+        <p><strong>How to Run:</strong></p>
+        <pre><span class="cm"># Step 1: Install Node.js from nodejs.org</span>
+<span class="cm"># Step 2: Create a file (e.g., app.js)</span>
+<span class="kw">console</span>.<span class="fn">log</span>(<span class="str">"Hello, Node.js!"</span>);
+
+<span class="cm"># Step 3: Open terminal and run:</span>
+node app.js
+
+<span class="cm"># Output: Hello, Node.js!</span></pre>
+      </div>
+
+      <div class="ans-card">
+        <div class="q-label">Q1B.4 — JSON Usage</div>
+        <h3>What can JSON format be used for?</h3>
+        <p><strong>JSON (JavaScript Object Notation)</strong> is a lightweight data-interchange format. Uses:</p>
+        <ul>
+          <li><strong>Data Exchange:</strong> Transfer data between client (browser) and server</li>
+          <li><strong>API Responses:</strong> REST APIs return data in JSON format</li>
+          <li><strong>Configuration Files:</strong> package.json, settings files</li>
+          <li><strong>Data Storage:</strong> NoSQL databases like MongoDB store data in JSON-like format</li>
+          <li><strong>AJAX Requests:</strong> Sending/receiving structured data asynchronously</li>
+          <li><strong>Cross-platform:</strong> Language-independent, supported by all modern languages</li>
+        </ul>
+      </div>
+
+      <div class="ans-card">
+        <div class="q-label">Q1B.5 — JSON.stringify()</div>
+        <h3>Function to convert JavaScript Object to JSON with syntax</h3>
+        <p><strong>JSON.stringify()</strong> converts a JavaScript object or value to a JSON string.</p>
+        <pre><span class="cm">// Syntax</span>
+<span class="fn">JSON.stringify</span>(value, replacer, space)
+
+<span class="cm">// Example</span>
+<span class="kw">var</span> person = {
+  <span class="str">"name"</span>: <span class="str">"Raj"</span>,
+  <span class="str">"age"</span>: <span class="num">21</span>,
+  <span class="str">"city"</span>: <span class="str">"Surat"</span>
+};
+
+<span class="kw">var</span> jsonStr = <span class="fn">JSON.stringify</span>(person);
+<span class="cm">// Output: {"name":"Raj","age":21,"city":"Surat"}</span>
+
+<span class="cm">// Reverse: JSON.parse() converts JSON string back to object</span>
+<span class="kw">var</span> obj = <span class="fn">JSON.parse</span>(jsonStr);</pre>
+      </div>
+
+      <div class="ans-card">
+        <div class="q-label">Q1B.6 — Node.js Modules + require()</div>
+        <h3>What are modules in Node.js? What is require()?</h3>
+        <p>A <strong>Module</strong> in Node.js is a reusable block of code. Node.js has three types of modules:</p>
+        <ul>
+          <li><strong>Core Modules:</strong> Built-in (http, fs, url, path, os)</li>
+          <li><strong>Local Modules:</strong> User-created custom modules</li>
+          <li><strong>Third-party Modules:</strong> Installed via NPM (express, mongoose)</li>
+        </ul>
+        <p>The <strong>require()</strong> function is used to include/import a module into the current file.</p>
+        <pre><span class="kw">var</span> http = <span class="fn">require</span>(<span class="str">'http'</span>);   <span class="cm">// Core module</span>
+<span class="kw">var</span> fs   = <span class="fn">require</span>(<span class="str">'fs'</span>);     <span class="cm">// File system module</span>
+<span class="kw">var</span> myMod= <span class="fn">require</span>(<span class="str">'./myModule'</span>); <span class="cm">// Local module</span></pre>
+      </div>
+
+      <div class="ans-card">
+        <div class="q-label">Q1B.7 — AJAX Full Form + Applications</div>
+        <h3>Full form of AJAX & Real-world Applications</h3>
+        <p><strong>AJAX = Asynchronous JavaScript And XML</strong></p>
+        <p>Real-world AJAX applications currently running in the market:</p>
+        <ul>
+          <li><strong>Google Search:</strong> Auto-complete/suggestions as you type</li>
+          <li><strong>Gmail:</strong> Inbox refreshes without page reload</li>
+          <li><strong>Facebook / Instagram:</strong> Like, comment, infinite scroll without reloading</li>
+          <li><strong>Google Maps:</strong> Map tiles load dynamically as you pan/zoom</li>
+          <li><strong>YouTube:</strong> Comments and video suggestions load asynchronously</li>
+          <li><strong>Amazon / Flipkart:</strong> Add to cart, filters, product ratings update live</li>
+          <li><strong>Online Banking:</strong> Balance check and transaction history without full reload</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="q-section">
+    <div class="q-header" onclick="toggleQ(this)">
+      <div class="q-num">Q2</div>
+      <div class="q-title">Attempt the following (Any Two)</div>
+      <div class="q-marks">14 M</div>
+      <div class="chevron">▼</div>
+    </div>
+    <div class="q-body">
+
+      <div class="ans-card">
+        <div class="q-label">Q2.1 — XML Declaration Rules + Document Structure</div>
+        <h3>XML Declaration Rules & Document Structure with Example</h3>
+        <p><strong>XML Declaration Rules:</strong></p>
+        <ul>
+          <li>Must be the very first line in the XML file (no whitespace before it)</li>
+          <li>It is enclosed in <code style="background:var(--code-bg);padding:0 4px;border-radius:3px;font-family:'JetBrains Mono',monospace">&lt;?xml ... ?&gt;</code></li>
+          <li><strong>version</strong> attribute is mandatory (usually "1.0")</li>
+          <li><strong>encoding</strong> defines character set (default UTF-8)</li>
+          <li><strong>standalone</strong> = "yes" means document doesn't rely on external DTD</li>
+          <li>All XML tags are case-sensitive</li>
+          <li>Every opening tag must have a corresponding closing tag</li>
+          <li>Tags must be properly nested</li>
+          <li>There must be exactly ONE root element</li>
+          <li>Attribute values must be enclosed in quotes</li>
+        </ul>
+        <p><strong>XML Document Structure:</strong> An XML document has two parts:</p>
+        <ul>
+          <li><strong>Prolog:</strong> XML declaration + optional DOCTYPE + processing instructions + comments</li>
+          <li><strong>Document Body:</strong> Root element containing all child elements</li>
+        </ul>
+        <pre><span class="cm">&lt;!-- XML Declaration (Prolog) --&gt;</span>
+<span class="tag">&lt;?xml</span> <span class="attr">version</span>=<span class="str">"1.0"</span> <span class="attr">encoding</span>=<span class="str">"UTF-8"</span><span class="tag">?&gt;</span>
+
+<span class="cm">&lt;!-- Root Element (only ONE root allowed) --&gt;</span>
+<span class="tag">&lt;students&gt;</span>
+
+  <span class="cm">&lt;!-- Child Elements --&gt;</span>
+  <span class="tag">&lt;student&gt;</span>
+    <span class="tag">&lt;id&gt;</span>101<span class="tag">&lt;/id&gt;</span>
+    <span class="tag">&lt;name&gt;</span>Raj Patel<span class="tag">&lt;/name&gt;</span>
+    <span class="tag">&lt;branch&gt;</span>BCA<span class="tag">&lt;/branch&gt;</span>
+    <span class="tag">&lt;sem&gt;</span>4<span class="tag">&lt;/sem&gt;</span>
+  <span class="tag">&lt;/student&gt;</span>
+
+  <span class="tag">&lt;student&gt;</span>
+    <span class="tag">&lt;id&gt;</span>102<span class="tag">&lt;/id&gt;</span>
+    <span class="tag">&lt;name&gt;</span>Priya Shah<span class="tag">&lt;/name&gt;</span>
+    <span class="tag">&lt;branch&gt;</span>BCA<span class="tag">&lt;/branch&gt;</span>
+    <span class="tag">&lt;sem&gt;</span>4<span class="tag">&lt;/sem&gt;</span>
+  <span class="tag">&lt;/student&gt;</span>
+
+<span class="tag">&lt;/students&gt;</span></pre>
+        <div class="note"><strong>📌 Structure Summary:</strong> Prolog → Root Element → Child Elements → Sub-child Elements → Text Nodes</div>
+      </div>
+
+      <div class="ans-card">
+        <div class="q-label">Q2.2 — jQuery Events</div>
+        <h3>jQuery Events — Detail with Syntax and Examples</h3>
+        <p>jQuery events are user interactions or browser actions that jQuery can detect and respond to. They are triggered by clicking, hovering, typing, loading, etc.</p>
+        <p><strong>General Syntax:</strong></p>
+        <pre>$(selector).<span class="fn">event</span>(<span class="kw">function</span>() {
+  <span class="cm">// code to execute when event fires</span>
+});</pre>
+        <p><strong>Categories of jQuery Events:</strong></p>
+        <table class="diff-table">
+          <tr><th>Category</th><th>Events</th><th>Description</th></tr>
+          <tr><td>Mouse</td><td>click, dblclick, mouseenter, mouseleave, mouseover, mouseout, hover</td><td>Triggered by mouse actions</td></tr>
+          <tr><td>Keyboard</td><td>keypress, keydown, keyup</td><td>Triggered by keyboard input</td></tr>
+          <tr><td>Form</td><td>submit, change, focus, blur</td><td>Triggered by form interactions</td></tr>
+          <tr><td>Document</td><td>ready, load, unload, resize, scroll</td><td>Triggered by window/document</td></tr>
+        </table>
+        <pre><span class="cm">// 1. click() event</span>
+$(<span class="str">"#btn"</span>).<span class="fn">click</span>(<span class="kw">function</span>() {
+  $(<span class="str">"p"</span>).<span class="fn">text</span>(<span class="str">"Button was clicked!"</span>);
+});
+
+<span class="cm">// 2. mouseenter() event</span>
+$(<span class="str">"h1"</span>).<span class="fn">mouseenter</span>(<span class="kw">function</span>() {
+  $(<span class="kw">this</span>).<span class="fn">css</span>(<span class="str">"color"</span>, <span class="str">"red"</span>);
+});
+
+<span class="cm">// 3. dblclick() event</span>
+$(<span class="str">"p"</span>).<span class="fn">dblclick</span>(<span class="kw">function</span>() {
+  $(<span class="kw">this</span>).<span class="fn">hide</span>();
+});
+
+<span class="cm">// 4. Document ready event</span>
+$(<span class="fn">document</span>).<span class="fn">ready</span>(<span class="kw">function</span>() {
+  <span class="cm">// DOM is fully loaded</span>
+  <span class="fn">alert</span>(<span class="str">"Page loaded!"</span>);
+});
+
+<span class="cm">// 5. on() method – attach multiple events</span>
+$(<span class="str">"p"</span>).<span class="fn">on</span>({
+  mouseenter: <span class="kw">function</span>() { $(<span class="kw">this</span>).<span class="fn">css</span>(<span class="str">"color"</span>, <span class="str">"blue"</span>); },
+  mouseleave: <span class="kw">function</span>() { $(<span class="kw">this</span>).<span class="fn">css</span>(<span class="str">"color"</span>, <span class="str">"black"</span>); }
+});</pre>
+      </div>
+
+      <div class="ans-card">
+        <div class="q-label">Q2.3 — JSON + JSON Arrays</div>
+        <h3>What is JSON? JSON Array in Detail</h3>
+        <p><strong>JSON (JavaScript Object Notation)</strong> is a lightweight, text-based data format used to store and exchange data. It is easy for humans to read/write and for machines to parse/generate.</p>
+        <ul>
+          <li>Based on JavaScript object syntax but language-independent</li>
+          <li>File extension: <strong>.json</strong></li>
+          <li>MIME type: <strong>application/json</strong></li>
+        </ul>
+        <p><strong>JSON Array:</strong> An ordered collection of values enclosed in square brackets <code style="background:var(--code-bg);padding:0 4px;border-radius:3px;font-family:'JetBrains Mono',monospace">[ ]</code>. Values are separated by commas.</p>
+        <pre><span class="cm">// Simple JSON Array</span>
+{
+  <span class="str">"fruits"</span>: [<span class="str">"Apple"</span>, <span class="str">"Mango"</span>, <span class="str">"Banana"</span>],
+  <span class="str">"numbers"</span>: [<span class="num">1</span>, <span class="num">2</span>, <span class="num">3</span>, <span class="num">4</span>, <span class="num">5</span>]
+}
+
+<span class="cm">// Array of Objects (most common in APIs)</span>
+{
+  <span class="str">"students"</span>: [
+    { <span class="str">"id"</span>: <span class="num">1</span>, <span class="str">"name"</span>: <span class="str">"Raj"</span>,   <span class="str">"marks"</span>: <span class="num">85</span> },
+    { <span class="str">"id"</span>: <span class="num">2</span>, <span class="str">"name"</span>: <span class="str">"Priya"</span>, <span class="str">"marks"</span>: <span class="num">92</span> },
+    { <span class="str">"id"</span>: <span class="num">3</span>, <span class="str">"name"</span>: <span class="str">"Karan"</span>, <span class="str">"marks"</span>: <span class="num">78</span> }
+  ]
+}
+
+<span class="cm">// Accessing array values in JavaScript</span>
+<span class="kw">var</span> obj = <span class="fn">JSON.parse</span>(jsonString);
+obj.students[<span class="num">0</span>].name;  <span class="cm">// "Raj"</span>
+obj.students[<span class="num">1</span>].marks; <span class="cm">// 92</span></pre>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="q-section">
+    <div class="q-header" onclick="toggleQ(this)">
+      <div class="q-num">Q3</div>
+      <div class="q-title">Attempt the following (Any Two)</div>
+      <div class="q-marks">14 M</div>
+      <div class="chevron">▼</div>
+    </div>
+    <div class="q-body">
+
+      <div class="ans-card">
+        <div class="q-label">Q3.1 — JSON Data Types</div>
+        <h3>Basic Data Types in JSON with Syntax and Examples</h3>
+        <p>JSON supports <strong>6 data types</strong>:</p>
+        <table class="diff-table">
+          <tr><th>Type</th><th>Syntax</th><th>Example</th></tr>
+          <tr><td><strong>String</strong></td><td>Enclosed in double quotes</td><td>"name": "Raj"</td></tr>
+          <tr><td><strong>Number</strong></td><td>Integer or float, no quotes</td><td>"age": 21, "gpa": 8.5</td></tr>
+          <tr><td><strong>Boolean</strong></td><td>true or false (lowercase)</td><td>"isActive": true</td></tr>
+          <tr><td><strong>Null</strong></td><td>null (lowercase)</td><td>"middleName": null</td></tr>
+          <tr><td><strong>Array</strong></td><td>[ ] square brackets</td><td>"hobbies": ["cricket","coding"]</td></tr>
+          <tr><td><strong>Object</strong></td><td>{ } curly braces</td><td>"address": {"city":"Surat"}</td></tr>
+        </table>
+        <pre>{
+  <span class="str">"studentName"</span>: <span class="str">"Raj Patel"</span>,        <span class="cm">// String</span>
+  <span class="str">"rollNo"</span>:     <span class="num">101</span>,               <span class="cm">// Number (integer)</span>
+  <span class="str">"percentage"</span>: <span class="num">85.5</span>,              <span class="cm">// Number (float)</span>
+  <span class="str">"isPassed"</span>:   <span class="kw">true</span>,              <span class="cm">// Boolean</span>
+  <span class="str">"middleName"</span>: <span class="kw">null</span>,              <span class="cm">// Null</span>
+  <span class="str">"subjects"</span>:   [<span class="str">"WD2"</span>, <span class="str">"DBMS"</span>, <span class="str">"OS"</span>], <span class="cm">// Array</span>
+  <span class="str">"address"</span>: {                   <span class="cm">// Object</span>
+    <span class="str">"city"</span>:    <span class="str">"Surat"</span>,
+    <span class="str">"pincode"</span>: <span class="str">"395001"</span>
+  }
+}</pre>
+      </div>
+
+      <div class="ans-card">
+        <div class="q-label">Q3.2 — jQuery Manipulation Insert Methods</div>
+        <h3>jQuery Insert Manipulation Methods in Detail</h3>
+        <p>jQuery provides several methods to insert content into the DOM:</p>
+        <table class="diff-table">
+          <tr><th>Method</th><th>Description</th><th>Position</th></tr>
+          <tr><td>append()</td><td>Inserts content at the END inside selected element</td><td>Last child</td></tr>
+          <tr><td>prepend()</td><td>Inserts content at the BEGINNING inside selected element</td><td>First child</td></tr>
+          <tr><td>after()</td><td>Inserts content AFTER the selected element (outside)</td><td>Next sibling</td></tr>
+          <tr><td>before()</td><td>Inserts content BEFORE the selected element (outside)</td><td>Previous sibling</td></tr>
+          <tr><td>appendTo()</td><td>Inserts element at the end of selected (reverse of append)</td><td>Last child</td></tr>
+          <tr><td>prependTo()</td><td>Inserts element at the beginning of selected</td><td>First child</td></tr>
+          <tr><td>insertAfter()</td><td>Reverse of after()</td><td>Next sibling</td></tr>
+          <tr><td>insertBefore()</td><td>Reverse of before()</td><td>Previous sibling</td></tr>
+        </table>
+        <pre><span class="cm">// append() – adds INSIDE, at END</span>
+$(<span class="str">"ul"</span>).<span class="fn">append</span>(<span class="str">"&lt;li&gt;New Last Item&lt;/li&gt;"</span>);
+
+<span class="cm">// prepend() – adds INSIDE, at BEGINNING</span>
+$(<span class="str">"ul"</span>).<span class="fn">prepend</span>(<span class="str">"&lt;li&gt;New First Item&lt;/li&gt;"</span>);
+
+<span class="cm">// after() – adds AFTER the element (outside)</span>
+$(<span class="str">"p"</span>).<span class="fn">after</span>(<span class="str">"&lt;p&gt;This goes after&lt;/p&gt;"</span>);
+
+<span class="cm">// before() – adds BEFORE the element (outside)</span>
+$(<span class="str">"p"</span>).<span class="fn">before</span>(<span class="str">"&lt;p&gt;This goes before&lt;/p&gt;"</span>);</pre>
+        <div class="note"><strong>Memory Tip:</strong> append/prepend = INSIDE the element. after/before = OUTSIDE the element.</div>
+      </div>
+
+      <div class="ans-card">
+        <div class="q-label">Q3.3 — XMLHttpRequest Object</div>
+        <h3>XMLHttpRequest Object — Properties & Methods</h3>
+        <p>The <strong>XMLHttpRequest (XHR)</strong> object is the core of AJAX. It allows web pages to request data from a server without reloading the page.</p>
+        <p><strong>Creating XHR Object:</strong></p>
+        <pre><span class="kw">var</span> xhttp = <span class="kw">new</span> <span class="fn">XMLHttpRequest</span>();</pre>
+        <p><strong>Important Properties:</strong></p>
+        <table class="diff-table">
+          <tr><th>Property</th><th>Description</th></tr>
+          <tr><td>readyState</td><td>Holds the status of request (0–4)</td></tr>
+          <tr><td>status</td><td>HTTP status code (200=OK, 404=Not Found)</td></tr>
+          <tr><td>statusText</td><td>Returns status text ("OK", "Not Found")</td></tr>
+          <tr><td>responseText</td><td>Returns response as a string</td></tr>
+          <tr><td>responseXML</td><td>Returns response as XML data</td></tr>
+          <tr><td>onreadystatechange</td><td>Function called when readyState changes</td></tr>
+        </table>
+        <p><strong>readyState Values:</strong> 0=UNSENT, 1=OPENED, 2=HEADERS_RECEIVED, 3=LOADING, 4=DONE</p>
+        <p><strong>Important Methods:</strong></p>
+        <table class="diff-table">
+          <tr><th>Method</th><th>Description</th></tr>
+          <tr><td>open(method, url, async)</td><td>Initialises the request</td></tr>
+          <tr><td>send(body)</td><td>Sends the request to server</td></tr>
+          <tr><td>setRequestHeader(header, value)</td><td>Sets HTTP request header</td></tr>
+          <tr><td>getResponseHeader(name)</td><td>Returns specific header info</td></tr>
+          <tr><td>abort()</td><td>Cancels current request</td></tr>
+        </table>
+        <pre><span class="kw">var</span> xhttp = <span class="kw">new</span> <span class="fn">XMLHttpRequest</span>();
+
+xhttp.onreadystatechange = <span class="kw">function</span>() {
+  <span class="kw">if</span> (<span class="kw">this</span>.readyState == <span class="num">4</span> && <span class="kw">this</span>.status == <span class="num">200</span>) {
+    document.<span class="fn">getElementById</span>(<span class="str">"demo"</span>).innerHTML
+      = <span class="kw">this</span>.responseText;
+  }
+};
+
+xhttp.<span class="fn">open</span>(<span class="str">"GET"</span>, <span class="str">"data.txt"</span>, <span class="kw">true</span>);
+xhttp.<span class="fn">send</span>();</pre>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Q4 -->
+  <div class="q-section">
+    <div class="q-header" onclick="toggleQ(this)">
+      <div class="q-num">Q4</div>
+      <div class="q-title">Attempt the following (Any Two)</div>
+      <div class="q-marks">14 M</div>
+      <div class="chevron">▼</div>
+    </div>
+    <div class="q-body">
+
+      <div class="ans-card">
+        <div class="q-label">Q4.1 — Node.js Modules (Detail)</div>
+        <h3>Modules in Node.js — All Types Explained</h3>
+        <p>A <strong>module</strong> is a reusable block of code. Node.js uses the <strong>CommonJS</strong> module system.</p>
+        <p><strong>1. Core (Built-in) Modules</strong> — Available without installing:</p>
+        <table class="diff-table">
+          <tr><th>Module</th><th>Usage</th></tr>
+          <tr><td>http</td><td>Create HTTP server/client</td></tr>
+          <tr><td>fs</td><td>File system operations (read, write, delete)</td></tr>
+          <tr><td>url</td><td>Parse and format URL strings</td></tr>
+          <tr><td>path</td><td>Work with file and directory paths</td></tr>
+          <tr><td>os</td><td>Get operating system information</td></tr>
+          <tr><td>events</td><td>Handle events with EventEmitter</td></tr>
+          <tr><td>querystring</td><td>Parse URL query strings</td></tr>
+        </table>
+        <pre><span class="kw">var</span> http = <span class="fn">require</span>(<span class="str">'http'</span>);
+<span class="kw">var</span> fs   = <span class="fn">require</span>(<span class="str">'fs'</span>);
+<span class="kw">var</span> os   = <span class="fn">require</span>(<span class="str">'os'</span>);
+<span class="kw">console</span>.<span class="fn">log</span>(os.<span class="fn">platform</span>()); <span class="cm">// win32 / linux</span></pre>
+        <p><strong>2. Local (User-defined) Modules:</strong></p>
+        <pre><span class="cm">// myModule.js</span>
+<span class="kw">var</span> greet = <span class="kw">function</span>(name) {
+  <span class="kw">return</span> <span class="str">"Hello, "</span> + name;
+};
+module.exports = greet;
+
+<span class="cm">// app.js (using the module)</span>
+<span class="kw">var</span> g = <span class="fn">require</span>(<span class="str">'./myModule'</span>);
+<span class="kw">console</span>.<span class="fn">log</span>(<span class="fn">g</span>(<span class="str">"Raj"</span>)); <span class="cm">// Hello, Raj</span></pre>
+        <p><strong>3. Third-party Modules</strong> — Installed via NPM:</p>
+        <pre>npm install express    <span class="cm"># Install</span>
+<span class="kw">var</span> express = <span class="fn">require</span>(<span class="str">'express'</span>); <span class="cm"># Use</span></pre>
+      </div>
+
+      <div class="ans-card">
+        <div class="q-label">Q4.2 — File System (fs) Module</div>
+        <h3>File System Module of Node.js with Example</h3>
+        <p>The <strong>fs (File System)</strong> module allows Node.js to interact with the file system — reading, writing, updating, renaming and deleting files.</p>
+        <pre><span class="kw">var</span> fs = <span class="fn">require</span>(<span class="str">'fs'</span>);</pre>
+        <p><strong>Important fs Methods:</strong></p>
+        <table class="diff-table">
+          <tr><th>Method</th><th>Description</th></tr>
+          <tr><td>fs.readFile(path, cb)</td><td>Read file asynchronously</td></tr>
+          <tr><td>fs.writeFile(path, data, cb)</td><td>Write/Create file (overwrites)</td></tr>
+          <tr><td>fs.appendFile(path, data, cb)</td><td>Append data to file (creates if not exists)</td></tr>
+          <tr><td>fs.rename(old, new, cb)</td><td>Rename a file</td></tr>
+          <tr><td>fs.unlink(path, cb)</td><td>Delete a file</td></tr>
+          <tr><td>fs.open(path, flags, cb)</td><td>Open file with flags (r, w, a, etc.)</td></tr>
+        </table>
+        <pre><span class="kw">var</span> fs = <span class="fn">require</span>(<span class="str">'fs'</span>);
+
+<span class="cm">// 1. Write (Create) File</span>
+fs.<span class="fn">writeFile</span>(<span class="str">'demo.txt'</span>, <span class="str">'Hello Node.js!'</span>,
+  <span class="kw">function</span>(err) {
+    <span class="kw">if</span>(err) <span class="kw">throw</span> err;
+    <span class="kw">console</span>.<span class="fn">log</span>(<span class="str">'File created!'</span>);
+  });
+
+<span class="cm">// 2. Read File</span>
+fs.<span class="fn">readFile</span>(<span class="str">'demo.txt'</span>, <span class="str">'utf8'</span>,
+  <span class="kw">function</span>(err, data) {
+    <span class="kw">if</span>(err) <span class="kw">throw</span> err;
+    <span class="kw">console</span>.<span class="fn">log</span>(data); <span class="cm">// Hello Node.js!</span>
+  });
+
+<span class="cm">// 3. Append to File</span>
+fs.<span class="fn">appendFile</span>(<span class="str">'demo.txt'</span>, <span class="str">' More data.'</span>,
+  <span class="kw">function</span>(err) {
+    <span class="kw">if</span>(err) <span class="kw">throw</span> err;
+    <span class="kw">console</span>.<span class="fn">log</span>(<span class="str">'Data appended!'</span>);
+  });
+
+<span class="cm">// 4. Delete File</span>
+fs.<span class="fn">unlink</span>(<span class="str">'demo.txt'</span>, <span class="kw">function</span>(err) {
+  <span class="kw">if</span>(err) <span class="kw">throw</span> err;
+  <span class="kw">console</span>.<span class="fn">log</span>(<span class="str">'File deleted!'</span>);
+});</pre>
+      </div>
+
+      <div class="ans-card">
+        <div class="q-label">Q4.3 — Synchronous vs Asynchronous</div>
+        <h3>Synchronous vs Asynchronous Web Application Model with Diagram</h3>
+        <table class="diff-table">
+          <tr><th>Feature</th><th>Synchronous</th><th>Asynchronous (AJAX)</th></tr>
+          <tr><td>Page Reload</td><td>Full page reloads on every request</td><td>No page reload; partial update</td></tr>
+          <tr><td>User Experience</td><td>Page goes blank during request</td><td>Page remains interactive</td></tr>
+          <tr><td>Data Transfer</td><td>Entire page HTML sent</td><td>Only required data sent/received</td></tr>
+          <tr><td>Server Load</td><td>Higher (full HTML each time)</td><td>Lower (just data)</td></tr>
+          <tr><td>Speed</td><td>Slower</td><td>Faster</td></tr>
+          <tr><td>Example</td><td>Old PHP pages</td><td>Gmail, Google Maps</td></tr>
+        </table>
+        <div class="diagram-box">
+<svg viewBox="0 0 700 300" xmlns="http://www.w3.org/2000/svg" style="max-width:100%">
+  <defs>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#4f8cff"/>
+    </marker>
+  </defs>
+  <!-- SYNC side -->
+  <text x="100" y="22" fill="#fff" font-family="Syne" font-size="13" font-weight="700" text-anchor="middle">SYNCHRONOUS</text>
+  <!-- Browser box -->
+  <rect x="20" y="35" width="80" height="36" rx="8" fill="rgba(79,140,255,0.18)" stroke="#4f8cff" stroke-width="1.5"/>
+  <text x="60" y="57" fill="#4f8cff" font-family="Syne" font-size="11" text-anchor="middle">Browser</text>
+  <!-- Arrow down -->
+  <line x1="60" y1="71" x2="60" y2="100" stroke="#4f8cff" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="85" y="90" fill="#8b949e" font-family="Syne" font-size="9">HTTP Req</text>
+  <!-- Server -->
+  <rect x="20" y="102" width="80" height="36" rx="8" fill="rgba(162,89,255,0.18)" stroke="#a259ff" stroke-width="1.5"/>
+  <text x="60" y="124" fill="#a259ff" font-family="Syne" font-size="11" text-anchor="middle">Server</text>
+  <!-- Arrow -->
+  <line x1="60" y1="138" x2="60" y2="167" stroke="#4f8cff" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="85" y="157" fill="#8b949e" font-family="Syne" font-size="9">Full HTML</text>
+  <!-- Browser 2 -->
+  <rect x="20" y="169" width="80" height="36" rx="8" fill="rgba(79,140,255,0.18)" stroke="#4f8cff" stroke-width="1.5"/>
+  <text x="60" y="191" fill="#4f8cff" font-family="Syne" font-size="11" text-anchor="middle">Reload</text>
+  <!-- X mark -->
+  <text x="60" y="240" fill="#ef476f" font-family="Syne" font-size="11" text-anchor="middle" font-weight="700">Page Reloads!</text>
+
+  <!-- divider -->
+  <line x1="200" y1="10" x2="200" y2="290" stroke="rgba(255,255,255,0.08)" stroke-width="1" stroke-dasharray="4,4"/>
+
+  <!-- ASYNC side -->
+  <text x="460" y="22" fill="#fff" font-family="Syne" font-size="13" font-weight="700" text-anchor="middle">ASYNCHRONOUS (AJAX)</text>
+  <!-- Browser box -->
+  <rect x="250" y="35" width="80" height="36" rx="8" fill="rgba(6,214,160,0.15)" stroke="#06d6a0" stroke-width="1.5"/>
+  <text x="290" y="57" fill="#06d6a0" font-family="Syne" font-size="11" text-anchor="middle">Browser</text>
+  <!-- Arrow to XHR -->
+  <line x1="330" y1="53" x2="395" y2="53" stroke="#06d6a0" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="355" y="46" fill="#8b949e" font-family="Syne" font-size="9">Event</text>
+  <!-- XHR -->
+  <rect x="397" y="35" width="80" height="36" rx="8" fill="rgba(255,209,102,0.15)" stroke="#ffd166" stroke-width="1.5"/>
+  <text x="437" y="57" fill="#ffd166" font-family="Syne" font-size="10" text-anchor="middle">XHR Obj</text>
+  <!-- Arrow to Server -->
+  <line x1="477" y1="53" x2="560" y2="53" stroke="#ffd166" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="512" y="46" fill="#8b949e" font-family="Syne" font-size="9">AJAX Req</text>
+  <!-- Server -->
+  <rect x="562" y="35" width="80" height="36" rx="8" fill="rgba(162,89,255,0.18)" stroke="#a259ff" stroke-width="1.5"/>
+  <text x="602" y="57" fill="#a259ff" font-family="Syne" font-size="11" text-anchor="middle">Server</text>
+  <!-- Arrow back -->
+  <line x1="562" y1="80" x2="477" y2="100" stroke="#a259ff" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="510" y="90" fill="#8b949e" font-family="Syne" font-size="9">JSON/XML</text>
+  <!-- XHR back -->
+  <line x1="397" y1="90" x2="330" y2="110" stroke="#06d6a0" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="345" y="95" fill="#8b949e" font-family="Syne" font-size="9">Callback</text>
+  <!-- Update partial -->
+  <rect x="250" y="115" width="80" height="36" rx="8" fill="rgba(6,214,160,0.15)" stroke="#06d6a0" stroke-width="1.5"/>
+  <text x="290" y="131" fill="#06d6a0" font-family="Syne" font-size="10" text-anchor="middle">Update</text>
+  <text x="290" y="144" fill="#06d6a0" font-family="Syne" font-size="10" text-anchor="middle">Partial DOM</text>
+  <!-- Check mark -->
+  <text x="290" y="200" fill="#06d6a0" font-family="Syne" font-size="11" text-anchor="middle" font-weight="700">No Reload ✓</text>
+  <!-- Stays active -->
+  <text x="290" y="220" fill="#8b949e" font-family="Syne" font-size="10" text-anchor="middle">Page stays active!</text>
+</svg>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Q5 -->
+  <div class="q-section">
+    <div class="q-header" onclick="toggleQ(this)">
+      <div class="q-num">Q5</div>
+      <div class="q-title">Short Notes (Any Two)</div>
+      <div class="q-marks">8 M</div>
+      <div class="chevron">▼</div>
+    </div>
+    <div class="q-body">
+
+      <div class="ans-card">
+        <div class="q-label">Q5.1 — AJAX Architecture</div>
+        <h3>AJAX Architecture with Steps and Diagram</h3>
+        <p>AJAX architecture uses the <strong>XMLHttpRequest</strong> object as a bridge between client and server to exchange data without full page reloads.</p>
+        <p><strong>Steps in AJAX:</strong></p>
+        <ol style="margin-left:20px">
+          <li style="margin-bottom:6px;color:var(--muted)"><strong>Event Occurs:</strong> User interaction (click, keypress) triggers event</li>
+          <li style="margin-bottom:6px;color:var(--muted)"><strong>Create XHR:</strong> JavaScript creates an XMLHttpRequest object</li>
+          <li style="margin-bottom:6px;color:var(--muted)"><strong>Open Request:</strong> xhttp.open("GET", "url", true) initialises connection</li>
+          <li style="margin-bottom:6px;color:var(--muted)"><strong>Send Request:</strong> xhttp.send() sends request to web server</li>
+          <li style="margin-bottom:6px;color:var(--muted)"><strong>Server Processes:</strong> Server processes request (DB query, etc.)</li>
+          <li style="margin-bottom:6px;color:var(--muted)"><strong>Server Responds:</strong> Returns data (JSON/XML/HTML/Text)</li>
+          <li style="margin-bottom:6px;color:var(--muted)"><strong>Callback:</strong> onreadystatechange fires when readyState=4 & status=200</li>
+          <li style="margin-bottom:6px;color:var(--muted)"><strong>Update DOM:</strong> JavaScript updates the page with received data</li>
+        </ol>
+        <div class="note"><strong>Key Concept:</strong> Steps 1–4 and 7–8 happen on the client. Step 5–6 happens on the server. The entire process is asynchronous – the user can continue using the page during Steps 5–6.</div>
+      </div>
+
+      <div class="ans-card">
+        <div class="q-label">Q5.2 — JSON vs XML</div>
+        <h3>Similarities and Differences between JSON and XML</h3>
+        <p><strong>Similarities:</strong></p>
+        <ul>
+          <li>Both are used to store and transport data</li>
+          <li>Both are human-readable and self-describing</li>
+          <li>Both are language and platform independent</li>
+          <li>Both can be parsed and generated by most programming languages</li>
+          <li>Both are used extensively with AJAX</li>
+        </ul>
+        <p><strong>Differences:</strong></p>
+        <table class="diff-table">
+          <tr><th>Feature</th><th>JSON</th><th>XML</th></tr>
+          <tr><td>Full Form</td><td>JavaScript Object Notation</td><td>eXtensible Markup Language</td></tr>
+          <tr><td>Syntax</td><td>Key-value pairs, { } and [ ]</td><td>Tag-based markup &lt;tag&gt;</td></tr>
+          <tr><td>Data Types</td><td>Supports 6 types incl. arrays</td><td>Everything is text/string</td></tr>
+          <tr><td>Comments</td><td>NOT supported</td><td>Supported &lt;!-- --&gt;</td></tr>
+          <tr><td>File Size</td><td>Smaller (less verbose)</td><td>Larger (tags add overhead)</td></tr>
+          <tr><td>Parsing</td><td>Faster, uses JSON.parse()</td><td>Slower, XML parser needed</td></tr>
+          <tr><td>DTD/Schema</td><td>Not supported</td><td>Supports DTD and XSD</td></tr>
+          <tr><td>Arrays</td><td>Native support</td><td>No native array support</td></tr>
+          <tr><td>Usage</td><td>APIs, AJAX, configs</td><td>Document storage, configs</td></tr>
+        </table>
+      </div>
+
+      <div class="ans-card">
+        <div class="q-label">Q5.3 — jQuery Effects</div>
+        <h3>jQuery Effects — Complete Overview</h3>
+        <p>jQuery provides several built-in effects for creating animations and transitions:</p>
+        <p><strong>1. Hide / Show / Toggle:</strong></p>
+        <pre>$(<span class="str">"p"</span>).<span class="fn">hide</span>();               <span class="cm">// Instantly hide</span>
+$(<span class="str">"p"</span>).<span class="fn">show</span>(<span class="num">1000</span>);           <span class="cm">// Show in 1 second</span>
+$(<span class="str">"p"</span>).<span class="fn">toggle</span>(<span class="str">"slow"</span>);       <span class="cm">// Toggle visibility</span></pre>
+        <p><strong>2. Fade Effects:</strong></p>
+        <pre>$(<span class="str">"p"</span>).<span class="fn">fadeIn</span>(<span class="str">"slow"</span>);      <span class="cm">// Fade in</span>
+$(<span class="str">"p"</span>).<span class="fn">fadeOut</span>(<span class="num">500</span>);         <span class="cm">// Fade out</span>
+$(<span class="str">"p"</span>).<span class="fn">fadeToggle</span>();          <span class="cm">// Toggle fade</span>
+$(<span class="str">"p"</span>).<span class="fn">fadeTo</span>(<span class="str">"slow"</span>, <span class="num">0.5</span>);  <span class="cm">// Fade to 50% opacity</span></pre>
+        <p><strong>3. Slide Effects:</strong></p>
+        <pre>$(<span class="str">"p"</span>).<span class="fn">slideDown</span>(<span class="str">"slow"</span>);   <span class="cm">// Slide down (show)</span>
+$(<span class="str">"p"</span>).<span class="fn">slideUp</span>(<span class="str">"fast"</span>);     <span class="cm">// Slide up (hide)</span>
+$(<span class="str">"p"</span>).<span class="fn">slideToggle</span>();        <span class="cm">// Toggle slide</span></pre>
+        <p><strong>4. Animate (Custom):</strong></p>
+        <pre>$(<span class="str">"div"</span>).<span class="fn">animate</span>({
+  left:   <span class="str">'250px'</span>,
+  opacity: <span class="num">0.5</span>,
+  height:  <span class="str">'150px'</span>
+}, <span class="num">1000</span>);</pre>
+        <p><strong>Speed values:</strong> "slow" (600ms), "fast" (200ms), or milliseconds (e.g., 1000)</p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ======================= PAPER 2 : MAR 2025 NEP (25M) ======================= -->
+<div class="tab-panel" id="mar25-nep">
+  <div class="hero">
+    <div style="margin-bottom:10px">
+      <span class="badge green">March 2025</span>
+      <span class="badge blue">NCF-NEP</span>
+      <span class="badge">25 Marks</span>
+    </div>
+    <h1>MAJOR-3-405-01 Web Designing – II (TH)</h1>
+    <p>Code: 2511000904033001 · BCA (NCF-NEP) Fourth Semester · Complete Solutions</p>
+  </div>
+
+  <!-- Q1 MCQ -->
+  <div class="q-section">
+    <div class="q-header open" onclick="toggleQ(this)">
+      <div class="q-num">Q1</div>
+      <div class="q-title">MCQ – Any 5 out of 7</div>
+      <div class="q-marks">5 M</div>
+      <div class="chevron">▼</div>
+    </div>
+    <div class="q-body open">
+      <div class="mcq-grid">
+        <div class="mcq-item">
+          <div class="mcq-q">1. XML stands for?</div>
+          <div class="mcq-ans"><span class="mcq-tick">✓</span><span class="mcq-val">(C) eXtensible Markup Language</span></div>
+        </div>
+        <div class="mcq-item">
+          <div class="mcq-q">2. Which statement about XML is correct?</div>
+          <div class="mcq-ans"><span class="mcq-tick">✓</span><span class="mcq-val">(C) All XML elements must have a closing tag</span></div>
+          <p style="font-size:0.76rem;color:var(--muted);margin-top:6px">DTD is optional. Case is case-sensitive but not forced lower. Closing tag is mandatory.</p>
+        </div>
+        <div class="mcq-item">
+          <div class="mcq-q">3. jQuery used to hide the current element?</div>
+          <div class="mcq-ans"><span class="mcq-tick">✓</span><span class="mcq-val">(D) $(this).hide()</span></div>
+        </div>
+        <div class="mcq-item">
+          <div class="mcq-q">4. Which is proper JSON array?</div>
+          <div class="mcq-ans"><span class="mcq-tick">✓</span><span class="mcq-val">(D) { "letters": ["a", "b", "c"]}</span></div>
+          <p style="font-size:0.76rem;color:var(--muted);margin-top:6px">JSON strings need double quotes. Array values separated by commas.</p>
+        </div>
+        <div class="mcq-item">
+          <div class="mcq-q">5. What makes Ajax unique?</div>
+          <div class="mcq-ans"><span class="mcq-tick">✓</span><span class="mcq-val">(D) It makes data requests asynchronously</span></div>
+        </div>
+        <div class="mcq-item">
+          <div class="mcq-q">6. Node.js is perfect for which areas?</div>
+          <div class="mcq-ans"><span class="mcq-tick">✓</span><span class="mcq-val">(D) All of the above</span></div>
+          <p style="font-size:0.76rem;color:var(--muted);margin-top:6px">I/O bound, Data Streaming, and JSON API based apps – all are ideal for Node.js.</p>
+        </div>
+        <div class="mcq-item">
+          <div class="mcq-q">7. What is Callback?</div>
+          <div class="mcq-ans"><span class="mcq-tick">✓</span><span class="mcq-val">(C) Both of the above</span></div>
+          <p style="font-size:0.76rem;color:var(--muted);margin-top:6px">A callback is both a method that calls back the caller AND an async equivalent for a function.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="q-section">
+    <div class="q-header" onclick="toggleQ(this)">
+      <div class="q-num">Q2</div>
+      <div class="q-title">A: XML Characteristics OR XML Tag Rules &nbsp;|&nbsp; B: jQuery Insert OR jQuery Effects</div>
+      <div class="q-marks">4+4 M</div>
+      <div class="chevron">▼</div>
+    </div>
+    <div class="q-body">
+
+      <div class="ans-card">
+        <div class="q-label">Q2-A — Characteristics of XML</div>
+        <h3>Characteristics of XML</h3>
+        <ul>
+          <li><strong>Self-Descriptive:</strong> Data and its description are included together within tags</li>
+          <li><strong>Extensible:</strong> You can create your own tags (unlike HTML which has fixed tags)</li>
+          <li><strong>Platform Independent:</strong> XML works across all platforms and operating systems</li>
+          <li><strong>Unicode Support:</strong> Supports international characters through UTF-8/UTF-16</li>
+          <li><strong>Hierarchical Structure:</strong> Data is organized in tree structure with parent-child relationships</li>
+          <li><strong>Strict Syntax:</strong> All tags must be properly opened, closed, and nested</li>
+          <li><strong>Case-Sensitive:</strong> &lt;Name&gt; and &lt;name&gt; are different elements</li>
+          <li><strong>Validates with DTD/XSD:</strong> Can be validated against a Document Type Definition or XML Schema</li>
+          <li><strong>Data Separation:</strong> Separates data from presentation (unlike HTML)</li>
+          <li><strong>Widely Supported:</strong> Supported by all major languages (Java, Python, PHP, JavaScript)</li>
+        </ul>
+      </div>
+
+      <div class="ans-card">
+        <div class="q-label">Q2-A (OR) — XML Syntax Rules: Tags, Elements, Attributes</div>
+        <h3>Syntax Rules of XML Tags, Elements, and Attributes</h3>
+        <p><strong>Tag Rules:</strong></p>
+        <ul>
+          <li>Tags are case-sensitive: &lt;Name&gt; ≠ &lt;name&gt;</li>
+          <li>All tags must be properly closed: &lt;tag&gt;...&lt;/tag&gt;</li>
+          <li>Self-closing tags are allowed: &lt;br /&gt;</li>
+          <li>Tags must be properly nested (no overlapping)</li>
+        </ul>
+        <p><strong>Element Rules:</strong></p>
+        <ul>
+          <li>Must have exactly ONE root element</li>
+          <li>Element names cannot start with a number or contain spaces</li>
+          <li>Element names are case-sensitive</li>
+          <li>Elements can have text, child elements or both</li>
+        </ul>
+        <p><strong>Attribute Rules:</strong></p>
+        <ul>
+          <li>Attribute values MUST be in quotes (single or double)</li>
+          <li>An element cannot have two attributes with the same name</li>
+          <li>Attributes cannot contain child elements</li>
+        </ul>
+        <pre><span class="tag">&lt;?xml</span> <span class="attr">version</span>=<span class="str">"1.0"</span><span class="tag">?&gt;</span>
+<span class="tag">&lt;college</span> <span class="attr">name</span>=<span class="str">"ABC College"</span><span class="tag">&gt;</span>   <span class="cm">&lt;!-- attribute in quotes --&gt;</span>
+  <span class="tag">&lt;student</span> <span class="attr">id</span>=<span class="str">"101"</span><span class="tag">&gt;</span>          <span class="cm">&lt;!-- child element --&gt;</span>
+    <span class="tag">&lt;name&gt;</span>Raj Patel<span class="tag">&lt;/name&gt;</span>    <span class="cm">&lt;!-- must close --&gt;</span>
+    <span class="tag">&lt;sem&gt;</span>4<span class="tag">&lt;/sem&gt;</span>
+  <span class="tag">&lt;/student&gt;</span>
+<span class="tag">&lt;/college&gt;</span></pre>
+      </div>
+
+      <div class="ans-card">
+        <div class="q-label">Q2-B — jQuery Insert Methods</div>
+        <h3>jQuery Insert Methods</h3>
+        <p>jQuery provides 4 main methods to insert content into the DOM:</p>
+        <table class="diff-table">
+          <tr><th>Method</th><th>Where it adds</th></tr>
+          <tr><td>append()</td><td>End of selected element (inside)</td></tr>
+          <tr><td>prepend()</td><td>Beginning of selected element (inside)</td></tr>
+          <tr><td>after()</td><td>After selected element (outside)</td></tr>
+          <tr><td>before()</td><td>Before selected element (outside)</td></tr>
+        </table>
+        <pre><span class="cm">// HTML: &lt;div id="d"&gt;&lt;p&gt;Hello&lt;/p&gt;&lt;/div&gt;</span>
+
+$(<span class="str">"#d"</span>).<span class="fn">append</span>(<span class="str">"&lt;p&gt;Appended&lt;/p&gt;"</span>);
+<span class="cm">// Result: &lt;div&gt;&lt;p&gt;Hello&lt;/p&gt;&lt;p&gt;Appended&lt;/p&gt;&lt;/div&gt;</span>
+
+$(<span class="str">"#d"</span>).<span class="fn">prepend</span>(<span class="str">"&lt;p&gt;Prepended&lt;/p&gt;"</span>);
+<span class="cm">// Result: &lt;div&gt;&lt;p&gt;Prepended&lt;/p&gt;&lt;p&gt;Hello&lt;/p&gt;&lt;/div&gt;</span>
+
+$(<span class="str">"#d"</span>).<span class="fn">after</span>(<span class="str">"&lt;p&gt;After Div&lt;/p&gt;"</span>);
+<span class="cm">// Result: &lt;div&gt;...&lt;/div&gt;&lt;p&gt;After Div&lt;/p&gt;</span>
+
+$(<span class="str">"#d"</span>).<span class="fn">before</span>(<span class="str">"&lt;p&gt;Before Div&lt;/p&gt;"</span>);
+<span class="cm">// Result: &lt;p&gt;Before Div&lt;/p&gt;&lt;div&gt;...&lt;/div&gt;</span></pre>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="q-section">
+    <div class="q-header" onclick="toggleQ(this)">
+      <div class="q-num">Q3</div>
+      <div class="q-title">A: JSON vs XML OR JSON Multi-Dim Arrays &nbsp;|&nbsp; B: Sync vs Async OR open()/send()</div>
+      <div class="q-marks">4+4 M</div>
+      <div class="chevron">▼</div>
+    </div>
+    <div class="q-body">
+
+      <div class="ans-card">
+        <div class="q-label">Q3-A — JSON Arrays with Multi-dimensional Arrays</div>
+        <h3>JSON Arrays + Multi-Dimensional Arrays with Example</h3>
+        <p><strong>JSON Array:</strong> Ordered list of values inside square brackets [ ]</p>
+        <pre><span class="cm">// 1D Array</span>
+{ <span class="str">"colors"</span>: [<span class="str">"Red"</span>, <span class="str">"Green"</span>, <span class="str">"Blue"</span>] }
+
+<span class="cm">// Array of Objects</span>
+{
+  <span class="str">"students"</span>: [
+    { <span class="str">"name"</span>: <span class="str">"Raj"</span>,   <span class="str">"grade"</span>: <span class="str">"A"</span> },
+    { <span class="str">"name"</span>: <span class="str">"Priya"</span>, <span class="str">"grade"</span>: <span class="str">"B"</span> }
+  ]
+}
+
+<span class="cm">// Multi-dimensional (nested arrays)</span>
+{
+  <span class="str">"matrix"</span>: [
+    [<span class="num">1</span>, <span class="num">2</span>, <span class="num">3</span>],
+    [<span class="num">4</span>, <span class="num">5</span>, <span class="num">6</span>],
+    [<span class="num">7</span>, <span class="num">8</span>, <span class="num">9</span>]
+  ],
+  <span class="str">"school"</span>: {
+    <span class="str">"classes"</span>: [
+      { <span class="str">"class"</span>: <span class="str">"10A"</span>, <span class="str">"students"</span>: [<span class="str">"Raj"</span>, <span class="str">"Maya"</span>] },
+      { <span class="str">"class"</span>: <span class="str">"10B"</span>, <span class="str">"students"</span>: [<span class="str">"Sam"</span>, <span class="str">"Asha"</span>] }
+    ]
+  }
+}
+
+<span class="cm">// Accessing nested values in JavaScript</span>
+<span class="kw">var</span> d = <span class="fn">JSON.parse</span>(jsonStr);
+d.school.classes[<span class="num">0</span>].students[<span class="num">1</span>]; <span class="cm">// "Maya"</span>
+d.matrix[<span class="num">1</span>][<span class="num">2</span>]; <span class="cm">// 6</span></pre>
+      </div>
+
+      <div class="ans-card">
+        <div class="q-label">Q3-B (OR) — open() and send() Methods of XHR</div>
+        <h3>open() and send() Methods of XMLHttpRequest</h3>
+        <p><strong>open(method, url, async):</strong> Initialises/specifies the request. It does NOT send the request.</p>
+        <table class="diff-table">
+          <tr><th>Parameter</th><th>Description</th><th>Values</th></tr>
+          <tr><td>method</td><td>HTTP request method</td><td>"GET" or "POST"</td></tr>
+          <tr><td>url</td><td>URL of the file/resource</td><td>Any valid URL string</td></tr>
+          <tr><td>async</td><td>Asynchronous or not</td><td>true (async) / false (sync)</td></tr>
+        </table>
+        <p><strong>send(body):</strong> Sends the request to the server.</p>
+        <ul>
+          <li>For GET requests: <code style="background:var(--code-bg);padding:0 4px;border-radius:3px;font-family:'JetBrains Mono',monospace">send()</code> or <code style="background:var(--code-bg);padding:0 4px;border-radius:3px;font-family:'JetBrains Mono',monospace">send(null)</code></li>
+          <li>For POST requests: <code style="background:var(--code-bg);padding:0 4px;border-radius:3px;font-family:'JetBrains Mono',monospace">send("param=value&param2=value2")</code></li>
+        </ul>
+        <pre><span class="kw">var</span> xhttp = <span class="kw">new</span> <span class="fn">XMLHttpRequest</span>();
+
+<span class="cm">// GET request</span>
+xhttp.<span class="fn">open</span>(<span class="str">"GET"</span>, <span class="str">"getdata.php?id=5"</span>, <span class="kw">true</span>);
+xhttp.<span class="fn">send</span>();
+
+<span class="cm">// POST request</span>
+xhttp.<span class="fn">open</span>(<span class="str">"POST"</span>, <span class="str">"submit.php"</span>, <span class="kw">true</span>);
+xhttp.<span class="fn">setRequestHeader</span>(
+  <span class="str">"Content-type"</span>, <span class="str">"application/x-www-form-urlencoded"</span>
+);
+xhttp.<span class="fn">send</span>(<span class="str">"name=Raj&city=Surat"</span>);
+
+<span class="cm">// Handle response</span>
+xhttp.onreadystatechange = <span class="kw">function</span>() {
+  <span class="kw">if</span>(<span class="kw">this</span>.readyState==<span class="num">4</span> && <span class="kw">this</span>.status==<span class="num">200</span>) {
+    <span class="kw">console</span>.<span class="fn">log</span>(<span class="kw">this</span>.responseText);
+  }
+};</pre>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Q4 -->
+  <div class="q-section">
+    <div class="q-header" onclick="toggleQ(this)">
+      <div class="q-num">Q4</div>
+      <div class="q-title">require() Function OR fs.appendFile() Method</div>
+      <div class="q-marks">4 M</div>
+      <div class="chevron">▼</div>
+    </div>
+    <div class="q-body">
+
+      <div class="ans-card">
+        <div class="q-label">Q4-A — require() Function of Node.js</div>
+        <h3>require() Function in Node.js</h3>
+        <p>The <strong>require()</strong> function is used to import modules in Node.js. It is similar to <code style="background:var(--code-bg);padding:0 4px;border-radius:3px;font-family:'JetBrains Mono',monospace">import</code> in ES6.</p>
+        <p><strong>Syntax:</strong> <code style="background:var(--code-bg);padding:0 6px;border-radius:4px;font-family:'JetBrains Mono',monospace">var varName = require('module_name');</code></p>
+        <ul>
+          <li>For core modules: use module name directly (e.g., 'fs', 'http')</li>
+          <li>For local modules: use relative path (e.g., './myModule')</li>
+          <li>For npm modules: use package name (e.g., 'express')</li>
+          <li>require() is synchronous — it loads the module completely before moving on</li>
+          <li>The returned value is cached; calling require() twice returns the same object</li>
+        </ul>
+        <pre><span class="cm">// Using Core Module</span>
+<span class="kw">var</span> http = <span class="fn">require</span>(<span class="str">'http'</span>);
+<span class="kw">var</span> server = http.<span class="fn">createServer</span>(<span class="kw">function</span>(req, res) {
+  res.<span class="fn">write</span>(<span class="str">'Hello World!'</span>);
+  res.<span class="fn">end</span>();
+});
+server.<span class="fn">listen</span>(<span class="num">8080</span>);
+
+<span class="cm">// Using Local Module</span>
+<span class="cm">// math.js</span>
+module.exports = {
+  add: <span class="kw">function</span>(a,b){ <span class="kw">return</span> a+b; },
+  mul: <span class="kw">function</span>(a,b){ <span class="kw">return</span> a*b; }
+};
+
+<span class="cm">// app.js</span>
+<span class="kw">var</span> math = <span class="fn">require</span>(<span class="str">'./math'</span>);
+<span class="kw">console</span>.<span class="fn">log</span>(math.<span class="fn">add</span>(<span class="num">5</span>,<span class="num">3</span>)); <span class="cm">// 8</span></pre>
+      </div>
+
+      <div class="ans-card">
+        <div class="q-label">Q4-A (OR) — fs.appendFile() Method</div>
+        <h3>fs.appendFile() Method of Node.js</h3>
+        <p><strong>fs.appendFile()</strong> is used to append data to an existing file. If the file does not exist, it will be created automatically.</p>
+        <p><strong>Syntax:</strong></p>
+        <pre>fs.<span class="fn">appendFile</span>(path, data [, options], callback)</pre>
+        <table class="diff-table">
+          <tr><th>Parameter</th><th>Description</th></tr>
+          <tr><td>path</td><td>File path (string or Buffer)</td></tr>
+          <tr><td>data</td><td>Data to be appended (string or Buffer)</td></tr>
+          <tr><td>options</td><td>Optional: encoding, mode, flag</td></tr>
+          <tr><td>callback</td><td>Function called after operation; receives err</td></tr>
+        </table>
+        <pre><span class="kw">var</span> fs = <span class="fn">require</span>(<span class="str">'fs'</span>);
+
+<span class="cm">// Example 1: Append to existing file</span>
+fs.<span class="fn">appendFile</span>(<span class="str">'notes.txt'</span>, <span class="str">'\nNew line added!'</span>,
+  <span class="kw">function</span>(err) {
+    <span class="kw">if</span>(err) <span class="kw">throw</span> err;
+    <span class="kw">console</span>.<span class="fn">log</span>(<span class="str">'Data was appended to file!'</span>);
+  });
+
+<span class="cm">// Example 2: If file doesn't exist, creates it</span>
+fs.<span class="fn">appendFile</span>(<span class="str">'newfile.txt'</span>, <span class="str">'First line'</span>,
+  <span class="kw">function</span>(err) {
+    <span class="kw">if</span>(err) <span class="kw">throw</span> err;
+    <span class="kw">console</span>.<span class="fn">log</span>(<span class="str">'File created and data added!'</span>);
+  });
+
+<span class="cm">// Difference from writeFile():
+// writeFile() → OVERWRITES entire file
+// appendFile() → ADDS to existing content</span></pre>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ======================= PAPER 3 : APR 2024 (70M) ======================= -->
+<div class="tab-panel" id="apr24">
+  <div class="hero">
+    <div style="margin-bottom:10px">
+      <span class="badge purple">April 2024</span>
+      <span class="badge blue">Old Scheme</span>
+      <span class="badge">70 Marks</span>
+    </div>
+    <h1>Web Designing – II (April 2024)</h1>
+    <p>Code: 2111000104050002 · BCA Fourth Semester · Complete Solutions</p>
+  </div>
+
+  <!-- Q1-A MCQ -->
+  <div class="q-section">
+    <div class="q-header open" onclick="toggleQ(this)">
+      <div class="q-num">Q1A</div>
+      <div class="q-title">MCQ (10 Questions)</div>
+      <div class="q-marks">10 M</div>
+      <div class="chevron">▼</div>
+    </div>
+    <div class="q-body open">
+      <div class="mcq-grid">
+        <div class="mcq-item">
+          <div class="mcq-q">1. Correct syntax for JSON name/value pair (string value)?</div>
+          <div class="mcq-ans"><span class="mcq-tick">✓</span><span class="mcq-val">(a) "name": "value"</span></div>
+          <p style="font-size:0.76rem;color:var(--muted);margin-top:6px">Both key and string value in double quotes, separated by colon.</p>
+        </div>
+        <div class="mcq-item">
+          <div class="mcq-q">2. XML stands for?</div>
+          <div class="mcq-ans"><span class="mcq-tick">✓</span><span class="mcq-val">(c) eXtensible Markup Language</span></div>
+        </div>
+        <div class="mcq-item">
+          <div class="mcq-q">3. Difference between remove() and empty()?</div>
+          <div class="mcq-ans"><span class="mcq-tick">✓</span><span class="mcq-val">(a) remove() removes the selected element + its children; empty() removes only children</span></div>
+        </div>
+        <div class="mcq-item">
+          <div class="mcq-q">4. Ajax stands for?</div>
+          <div class="mcq-ans"><span class="mcq-tick">✓</span><span class="mcq-val">(a) Asynchronous JavaScript and XML</span></div>
+        </div>
+        <div class="mcq-item">
+          <div class="mcq-q">5. What is Callback?</div>
+          <div class="mcq-ans"><span class="mcq-tick">✓</span><span class="mcq-val">(c) Both – technique calling back caller + async equivalent</span></div>
+        </div>
+        <div class="mcq-item">
+          <div class="mcq-q">6. Which method does NOT provide sliding effect?</div>
+          <div class="mcq-ans"><span class="mcq-tick">✓</span><span class="mcq-val">(b) fadeIn()</span></div>
+          <p style="font-size:0.76rem;color:var(--muted);margin-top:6px">fadeIn() is a fade effect, not a slide effect.</p>
+        </div>
+        <div class="mcq-item">
+          <div class="mcq-q">7. JSON array is written within?</div>
+          <div class="mcq-ans"><span class="mcq-tick">✓</span><span class="mcq-val">(a) Square brackets [ ]</span></div>
+        </div>
+        <div class="mcq-item">
+          <div class="mcq-q">8. AJAX is based on?</div>
+          <div class="mcq-ans"><span class="mcq-tick">✓</span><span class="mcq-val">(d) JavaScript and HTTP requests</span></div>
+        </div>
+        <div class="mcq-item">
+          <div class="mcq-q">9. In XML, DTD stands for?</div>
+          <div class="mcq-ans"><span class="mcq-tick">✓</span><span class="mcq-val">(c) Document Type Definition</span></div>
+        </div>
+        <div class="mcq-item">
+          <div class="mcq-q">10. Which is true about Node.js?</div>
+          <div class="mcq-ans"><span class="mcq-tick">✓</span><span class="mcq-val">(a) Node.js is a server-side language</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q1-B Short -->
+  <div class="q-section">
+    <div class="q-header" onclick="toggleQ(this)">
+      <div class="q-num">Q1B</div>
+      <div class="q-title">Short Answers (Any Five)</div>
+      <div class="q-marks">10 M</div>
+      <div class="chevron">▼</div>
+    </div>
+    <div class="q-body">
+
+      <div class="ans-card">
+        <div class="q-label">Q1B.1 — XML + Rules for Declarations</div>
+        <h3>What is XML? Rules for XML Declarations</h3>
+        <p><strong>XML (eXtensible Markup Language)</strong> is a markup language for storing and transporting data. It is hardware, software, and application-independent.</p>
+        <p><strong>Rules for XML Declarations:</strong></p>
+        <ul>
+          <li>Must be the FIRST line (no blank line or space before it)</li>
+          <li>version attribute is <strong>mandatory</strong></li>
+          <li>encoding is optional (defaults to UTF-8)</li>
+          <li>standalone is optional ("yes" or "no")</li>
+          <li>Cannot have a closing tag (it's a processing instruction)</li>
+          <li>Attribute names are lowercase</li>
+        </ul>
+        <pre><span class="tag">&lt;?xml</span> <span class="attr">version</span>=<span class="str">"1.0"</span> <span class="attr">encoding</span>=<span class="str">"UTF-8"</span> <span class="attr">standalone</span>=<span class="str">"yes"</span><span class="tag">?&gt;</span></pre>
+      </div>
+
+      <div class="ans-card">
+        <div class="q-label">Q1B.2 — wrap() vs unwrap()</div>
+        <h3>Difference between wrap() and unwrap() in jQuery</h3>
+        <table class="diff-table">
+          <tr><th>wrap()</th><th>unwrap()</th></tr>
+          <tr><td>Wraps the selected element with specified HTML element</td><td>Removes the parent wrapper of selected element</td></tr>
+          <tr><td>Adds a parent element around selected element</td><td>Removes the parent element of selected element</td></tr>
+          <tr><td>$("p").wrap("&lt;div&gt;")</td><td>$("p").unwrap()</td></tr>
+        </table>
+        <pre><span class="cm">// wrap() Example</span>
+<span class="cm">// Before: &lt;p&gt;Hello&lt;/p&gt;</span>
+$(<span class="str">"p"</span>).<span class="fn">wrap</span>(<span class="str">"&lt;div class='box'&gt;&lt;/div&gt;"</span>);
+<span class="cm">// After: &lt;div class="box"&gt;&lt;p&gt;Hello&lt;/p&gt;&lt;/div&gt;</span>
+
+<span class="cm">// unwrap() Example</span>
+<span class="cm">// Before: &lt;div&gt;&lt;p&gt;Hello&lt;/p&gt;&lt;/div&gt;</span>
+$(<span class="str">"p"</span>).<span class="fn">unwrap</span>();
+<span class="cm">// After: &lt;p&gt;Hello&lt;/p&gt;</span></pre>
+      </div>
+
+      <div class="ans-card">
+        <div class="q-label">Q1B.3 — JSON + Comments</div>
+        <h3>What is JSON? How to write comments in JSON?</h3>
+        <p><strong>JSON</strong> is a lightweight text-based data-interchange format derived from JavaScript. It is language-independent and commonly used with REST APIs and AJAX.</p>
+        <p><strong>Comments in JSON:</strong> <span style="color:var(--red);font-weight:700">JSON does NOT support comments!</span></p>
+        <p>JSON was designed purely as a data format, not a document format. Therefore, no comment syntax was included. Neither <code style="background:var(--code-bg);padding:0 4px;border-radius:3px;font-family:'JetBrains Mono',monospace">// comment</code> nor <code style="background:var(--code-bg);padding:0 4px;border-radius:3px;font-family:'JetBrains Mono',monospace">/* comment */</code> are valid.</p>
+        <div class="note"><strong>Workaround:</strong> Some developers add a dummy "_comment" key: <code style="font-family:'JetBrains Mono',monospace">"_comment": "This is a workaround"</code> — but this is NOT standard JSON.</div>
+      </div>
+
+      <div class="ans-card">
+        <div class="q-label">Q1B.4 — What is AJAX?</div>
+        <h3>What is AJAX?</h3>
+        <p><strong>AJAX (Asynchronous JavaScript And XML)</strong> is a technique used to update parts of a web page without reloading the entire page. It allows web pages to communicate with the server in the background.</p>
+        <ul>
+          <li>Not a programming language – a technique using existing technologies</li>
+          <li>Technologies used: JavaScript, XMLHttpRequest, HTML/CSS, DOM, JSON/XML</li>
+          <li>Makes web applications faster, more interactive</li>
+          <li>Examples: Gmail, Google Maps, Facebook feeds</li>
+        </ul>
+      </div>
+
+      <div class="ans-card">
+        <div class="q-label">Q1B.5 — package.json</div>
+        <h3>What is package.json?</h3>
+        <p><strong>package.json</strong> is a manifest file in every Node.js project. It holds metadata about the project and manages project dependencies.</p>
+        <ul>
+          <li>Located at the root of a Node.js project</li>
+          <li>Contains project name, version, description, entry point, scripts</li>
+          <li>Lists all npm packages the project depends on (dependencies)</li>
+          <li>Created using <code style="background:var(--code-bg);padding:0 4px;border-radius:3px;font-family:'JetBrains Mono',monospace">npm init</code> command</li>
+        </ul>
+        <pre>{
+  <span class="str">"name"</span>: <span class="str">"my-app"</span>,
+  <span class="str">"version"</span>: <span class="str">"1.0.0"</span>,
+  <span class="str">"description"</span>: <span class="str">"My Node App"</span>,
+  <span class="str">"main"</span>: <span class="str">"app.js"</span>,
+  <span class="str">"scripts"</span>: { <span class="str">"start"</span>: <span class="str">"node app.js"</span> },
+  <span class="str">"dependencies"</span>: { <span class="str">"express"</span>: <span class="str">"^4.18.0"</span> }
+}</pre>
+      </div>
+
+      <div class="ans-card">
+        <div class="q-label">Q1B.6 — .class Selector in jQuery</div>
+        <h3>What is .class selector in jQuery?</h3>
+        <p>The <strong>.class selector</strong> selects all elements with a specific class attribute. It uses a dot (.) followed by the class name.</p>
+        <p><strong>Syntax:</strong> <code style="background:var(--code-bg);padding:0 6px;border-radius:4px;font-family:'JetBrains Mono',monospace">$(".className")</code></p>
+        <pre><span class="cm">// HTML</span>
+<span class="cm">&lt;p class="intro"&gt;First paragraph&lt;/p&gt;</span>
+<span class="cm">&lt;p class="intro"&gt;Second paragraph&lt;/p&gt;</span>
+<span class="cm">&lt;p&gt;Third paragraph (no class)&lt;/p&gt;</span>
+
+<span class="cm">// jQuery – selects ALL elements with class "intro"</span>
+$(<span class="str">".intro"</span>).<span class="fn">css</span>(<span class="str">"color"</span>, <span class="str">"blue"</span>);
+<span class="cm">// Applies to first and second paragraph only</span></pre>
+      </div>
+
+      <div class="ans-card">
+        <div class="q-label">Q1B.7 — Node.js</div>
+        <h3>What is Node.js?</h3>
+        <p><strong>Node.js</strong> is an open-source, cross-platform runtime environment that allows JavaScript to run outside the browser (on the server side). It is built on Google Chrome's V8 JavaScript engine.</p>
+        <ul>
+          <li><strong>Event-driven:</strong> Uses event loop to handle requests</li>
+          <li><strong>Non-blocking I/O:</strong> Doesn't wait for file/DB operations to complete</li>
+          <li><strong>Single-threaded:</strong> Uses one thread to serve many requests</li>
+          <li><strong>NPM:</strong> Has the world's largest ecosystem of open-source libraries</li>
+          <li>Used for: web servers, REST APIs, real-time apps (chat, gaming), microservices</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Q2 Apr 2024 -->
+  <div class="q-section">
+    <div class="q-header" onclick="toggleQ(this)">
+      <div class="q-num">Q2</div>
+      <div class="q-title">Attempt the following (Any Two)</div>
+      <div class="q-marks">14 M</div>
+      <div class="chevron">▼</div>
+    </div>
+    <div class="q-body">
+
+      <div class="ans-card">
+        <div class="q-label">Q2.1 — XML Document Structure</div>
+        <h3>XML Document Structure with Example</h3>
+        <p>An XML document has the following structural components:</p>
+        <p><strong>1. Prolog (optional but recommended):</strong> Includes the XML declaration and optionally comments and processing instructions.</p>
+        <p><strong>2. Document Body:</strong> Contains the root element and all its children.</p>
+        <p><strong>3. Tree Structure:</strong> XML data is organized as a tree (parent → child → grandchild).</p>
+        <pre><span class="cm">&lt;!-- 1. PROLOG --&gt;</span>
+<span class="tag">&lt;?xml</span> <span class="attr">version</span>=<span class="str">"1.0"</span> <span class="attr">encoding</span>=<span class="str">"UTF-8"</span><span class="tag">?&gt;</span>
+<span class="cm">&lt;!-- Optional DOCTYPE declaration --&gt;</span>
+<span class="cm">&lt;!-- Optional comments --&gt;</span>
+
+<span class="cm">&lt;!-- 2. DOCUMENT BODY --&gt;</span>
+<span class="cm">&lt;!-- Root Element (mandatory, only one) --&gt;</span>
+<span class="tag">&lt;library&gt;</span>
+  <span class="cm">&lt;!-- Child Elements --&gt;</span>
+  <span class="tag">&lt;book</span> <span class="attr">id</span>=<span class="str">"B001"</span><span class="tag">&gt;</span>  <span class="cm">&lt;!-- Element with attribute --&gt;</span>
+    <span class="tag">&lt;title&gt;</span>Web Designing<span class="tag">&lt;/title&gt;</span>
+    <span class="tag">&lt;author&gt;</span>S.K. Sharma<span class="tag">&lt;/author&gt;</span>
+    <span class="tag">&lt;price</span> <span class="attr">currency</span>=<span class="str">"INR"</span><span class="tag">&gt;</span>350<span class="tag">&lt;/price&gt;</span>
+    <span class="tag">&lt;available&gt;</span>Yes<span class="tag">&lt;/available&gt;</span>
+  <span class="tag">&lt;/book&gt;</span>
+  <span class="tag">&lt;book</span> <span class="attr">id</span>=<span class="str">"B002"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;title&gt;</span>Node.js Complete<span class="tag">&lt;/title&gt;</span>
+    <span class="tag">&lt;author&gt;</span>R. Patel<span class="tag">&lt;/author&gt;</span>
+    <span class="tag">&lt;price</span> <span class="attr">currency</span>=<span class="str">"INR"</span><span class="tag">&gt;</span>450<span class="tag">&lt;/price&gt;</span>
+    <span class="tag">&lt;available&gt;</span>No<span class="tag">&lt;/available&gt;</span>
+  <span class="tag">&lt;/book&gt;</span>
+<span class="tag">&lt;/library&gt;</span></pre>
+        <div class="note"><strong>Tree Structure:</strong> library (root) → book (child) → title, author, price, available (grandchildren)</div>
+      </div>
+
+      <div class="ans-card">
+        <div class="q-label">Q2.2 — Types of Selectors in jQuery</div>
+        <h3>Types of jQuery Selectors with Examples</h3>
+        <p>jQuery selectors are based on CSS selectors. They allow you to select and manipulate HTML elements.</p>
+        <table class="diff-table">
+          <tr><th>Type</th><th>Syntax</th><th>Example</th><th>Selects</th></tr>
+          <tr><td>Element/Tag</td><td>$("tag")</td><td>$("p")</td><td>All &lt;p&gt; elements</td></tr>
+          <tr><td>ID</td><td>$("#id")</td><td>$("#main")</td><td>Element with id="main"</td></tr>
+          <tr><td>Class</td><td>$(".class")</td><td>$(".box")</td><td>All elements with class="box"</td></tr>
+          <tr><td>Universal</td><td>$("*")</td><td>$("*")</td><td>All elements in DOM</td></tr>
+          <tr><td>Multiple</td><td>$("s1,s2")</td><td>$("h1,p")</td><td>All h1 and p elements</td></tr>
+          <tr><td>Attribute</td><td>$("[attr]")</td><td>$("[href]")</td><td>Elements with href attr</td></tr>
+          <tr><td>First/Last</td><td>$(":first")</td><td>$("p:first")</td><td>First p element</td></tr>
+          <tr><td>Even/Odd</td><td>$(":even")</td><td>$("tr:even")</td><td>Even rows in table</td></tr>
+          <tr><td>Contains</td><td>$(":contains")</td><td>$("p:contains('Hello')")</td><td>p with "Hello" text</td></tr>
+          <tr><td>Hidden/Visible</td><td>$(":hidden")</td><td>$("p:visible")</td><td>Visible p elements</td></tr>
+        </table>
+        <pre><span class="cm">// Examples</span>
+$(<span class="str">"p"</span>).<span class="fn">css</span>(<span class="str">"color"</span>, <span class="str">"red"</span>);       <span class="cm">// All p</span>
+$(<span class="str">"#header"</span>).<span class="fn">hide</span>();             <span class="cm">// ID selector</span>
+$(<span class="str">".highlight"</span>).<span class="fn">show</span>();           <span class="cm">// Class selector</span>
+$(<span class="str">"[name='email']"</span>).<span class="fn">val</span>(<span class="str">""</span>);      <span class="cm">// Attribute</span>
+$(<span class="str">"li:first"</span>).<span class="fn">css</span>(<span class="str">"font-weight"</span>,<span class="str">"bold"</span>); <span class="cm">// Pseudo</span></pre>
+      </div>
+
+      <div class="ans-card">
+        <div class="q-label">Q2.3 — jQuery Events</div>
+        <h3>jQuery Events (Note)</h3>
+        <p>jQuery events are actions that can be detected by jQuery. When an event is detected, jQuery can execute a JavaScript function.</p>
+        <p><strong>Syntax:</strong> <code style="background:var(--code-bg);padding:0 6px;border-radius:4px;font-family:'JetBrains Mono',monospace">$(selector).eventName(function(){ ... });</code></p>
+        <p><strong>Mouse Events:</strong> click, dblclick, mouseenter, mouseleave, mouseover, mouseout, mousedown, mouseup</p>
+        <p><strong>Keyboard Events:</strong> keydown, keyup, keypress</p>
+        <p><strong>Form Events:</strong> submit, change, focus, blur, select</p>
+        <p><strong>Window Events:</strong> load, resize, scroll, unload</p>
+        <pre><span class="cm">// Document ready (most important event)</span>
+$(document).<span class="fn">ready</span>(<span class="kw">function</span>(){
+  <span class="cm">// Safe to work with DOM here</span>
+  $(<span class="str">"button"</span>).<span class="fn">click</span>(<span class="kw">function</span>(){
+    $(<span class="str">"p"</span>).<span class="fn">toggle</span>();
+  });
+
+  $(<span class="str">"input"</span>).<span class="fn">focus</span>(<span class="kw">function</span>(){
+    $(<span class="kw">this</span>).<span class="fn">css</span>(<span class="str">"background-color"</span>, <span class="str">"#ffffcc"</span>);
+  });
+
+  $(<span class="str">"input"</span>).<span class="fn">blur</span>(<span class="kw">function</span>(){
+    $(<span class="kw">this</span>).<span class="fn">css</span>(<span class="str">"background-color"</span>, <span class="str">"white"</span>);
+  });
+});</pre>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Q3 Apr 2024 -->
+  <div class="q-section">
+    <div class="q-header" onclick="toggleQ(this)">
+      <div class="q-num">Q3</div>
+      <div class="q-title">Attempt the following (Any Two)</div>
+      <div class="q-marks">14 M</div>
+      <div class="chevron">▼</div>
+    </div>
+    <div class="q-body">
+
+      <div class="ans-card">
+        <div class="q-label">Q3.1 — JSON Array (Note)</div>
+        <h3>Note on JSON Array</h3>
+        <p>A <strong>JSON Array</strong> is an ordered list of values. Arrays in JSON are enclosed in <strong>square brackets [ ]</strong>. Values are separated by commas. Arrays can contain strings, numbers, objects, booleans, null, or other arrays.</p>
+        <pre><span class="cm">// Array of strings</span>
+{ <span class="str">"langs"</span>: [<span class="str">"HTML"</span>, <span class="str">"CSS"</span>, <span class="str">"JavaScript"</span>] }
+
+<span class="cm">// Array of numbers</span>
+{ <span class="str">"scores"</span>: [<span class="num">95</span>, <span class="num">87</span>, <span class="num">79</span>, <span class="num">92</span>] }
+
+<span class="cm">// Array of objects (most common pattern)</span>
+{
+  <span class="str">"employees"</span>: [
+    { <span class="str">"id"</span>: <span class="num">1</span>, <span class="str">"name"</span>: <span class="str">"Alice"</span>, <span class="str">"dept"</span>: <span class="str">"IT"</span> },
+    { <span class="str">"id"</span>: <span class="num">2</span>, <span class="str">"name"</span>: <span class="str">"Bob"</span>,   <span class="str">"dept"</span>: <span class="str">"HR"</span> }
+  ]
+}
+
+<span class="cm">// Accessing in JavaScript</span>
+<span class="kw">var</span> d = <span class="fn">JSON.parse</span>(jsonStr);
+d.employees[<span class="num">0</span>].name;    <span class="cm">// "Alice"</span>
+d.employees.length;      <span class="cm">// 2</span>
+
+<span class="cm">// Modifying</span>
+d.employees.<span class="fn">push</span>({<span class="str">"id"</span>:<span class="num">3</span>,<span class="str">"name"</span>:<span class="str">"Carol"</span>,<span class="str">"dept"</span>:<span class="str">"Dev"</span>});</pre>
+      </div>
+
+      <div class="ans-card">
+        <div class="q-label">Q3.2 — Sync vs Async</div>
+        <h3>Synchronous vs Asynchronous Web Application</h3>
+        <p>Already covered in detail above (Mar 2025 Q4.3). Here's a quick consolidated reference:</p>
+        <table class="diff-table">
+          <tr><th>Aspect</th><th>Synchronous</th><th>Asynchronous (AJAX)</th></tr>
+          <tr><td>Page Reload</td><td>Full page reload per request</td><td>Partial page update, no reload</td></tr>
+          <tr><td>User waits</td><td>Page blank during processing</td><td>Page remains interactive</td></tr>
+          <tr><td>Bandwidth</td><td>Full HTML page transferred</td><td>Only data transferred</td></tr>
+          <tr><td>Server load</td><td>Higher</td><td>Lower</td></tr>
+          <tr><td>Performance</td><td>Slower</td><td>Faster</td></tr>
+          <tr><td>Technology</td><td>HTML forms + HTTP</td><td>XMLHttpRequest + JavaScript</td></tr>
+          <tr><td>Example</td><td>Traditional PHP sites</td><td>Gmail, Google Maps</td></tr>
+        </table>
+      </div>
+
+      <div class="ans-card">
+        <div class="q-label">Q3.3 — Features of JSON</div>
+        <h3>What is JSON? Features of JSON</h3>
+        <p><strong>JSON (JavaScript Object Notation)</strong> is a text-based data format used for storing and exchanging data.</p>
+        <p><strong>Features of JSON:</strong></p>
+        <ul>
+          <li><strong>Lightweight:</strong> Minimal syntax means smaller file sizes vs XML</li>
+          <li><strong>Human Readable:</strong> Easy to read and write for developers</li>
+          <li><strong>Language Independent:</strong> Though derived from JS, supported by Python, Java, PHP, C#, etc.</li>
+          <li><strong>Easy Parsing:</strong> JSON.parse() in JavaScript, json_decode() in PHP</li>
+          <li><strong>Supports Data Types:</strong> String, Number, Boolean, Null, Array, Object</li>
+          <li><strong>No Comments:</strong> Pure data format, no comment support</li>
+          <li><strong>Fast:</strong> Faster serialization/deserialization than XML</li>
+          <li><strong>Used in REST APIs:</strong> Standard format for modern web APIs</li>
+          <li><strong>Compatible with JavaScript:</strong> Directly used as JS objects</li>
+          <li><strong>Based on Key-Value pairs:</strong> Intuitive data representation</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Q4 Apr 2024 -->
+  <div class="q-section">
+    <div class="q-header" onclick="toggleQ(this)">
+      <div class="q-num">Q4</div>
+      <div class="q-title">Attempt the following (Any Two)</div>
+      <div class="q-marks">14 M</div>
+      <div class="chevron">▼</div>
+    </div>
+    <div class="q-body">
+
+      <div class="ans-card">
+        <div class="q-label">Q4.1 — Components of Node.js</div>
+        <h3>Various Components of Node.js</h3>
+        <p>Node.js architecture consists of the following key components:</p>
+        <p><strong>1. V8 JavaScript Engine:</strong> Google's open-source engine that executes JavaScript code. Compiles JS to native machine code for high performance.</p>
+        <p><strong>2. libuv:</strong> A multi-platform C library that handles asynchronous I/O operations, event loop, file system, networking, threads.</p>
+        <p><strong>3. Event Loop:</strong> The core mechanism of Node.js. It processes callbacks, handles asynchronous events, and keeps the application responsive.</p>
+        <p><strong>4. Node.js Core API / Core Modules:</strong> Built-in modules: http, fs, url, path, os, events, crypto, stream, etc.</p>
+        <p><strong>5. NPM (Node Package Manager):</strong> The world's largest software registry. Used to install, share and manage third-party packages.</p>
+        <p><strong>6. C/C++ Add-ons:</strong> Low-level functionality written in C/C++ can be used in Node.js applications through the N-API.</p>
+        <div class="diagram-box">
+<svg viewBox="0 0 500 200" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="480" height="180" rx="12" fill="rgba(79,140,255,0.06)" stroke="rgba(79,140,255,0.2)" stroke-width="1"/>
+  <text x="250" y="35" fill="#fff" font-family="Syne" font-size="12" font-weight="700" text-anchor="middle">NODE.JS COMPONENTS</text>
+  <!-- V8 -->
+  <rect x="20" y="50" width="100" height="50" rx="8" fill="rgba(6,214,160,0.15)" stroke="#06d6a0" stroke-width="1.5"/>
+  <text x="70" y="72" fill="#06d6a0" font-family="Syne" font-size="10" text-anchor="middle" font-weight="700">V8 Engine</text>
+  <text x="70" y="88" fill="#8b949e" font-family="Syne" font-size="8" text-anchor="middle">Executes JS</text>
+  <!-- libuv -->
+  <rect x="130" y="50" width="100" height="50" rx="8" fill="rgba(255,209,102,0.15)" stroke="#ffd166" stroke-width="1.5"/>
+  <text x="180" y="72" fill="#ffd166" font-family="Syne" font-size="10" text-anchor="middle" font-weight="700">libuv</text>
+  <text x="180" y="88" fill="#8b949e" font-family="Syne" font-size="8" text-anchor="middle">Async I/O</text>
+  <!-- Event Loop -->
+  <rect x="240" y="50" width="100" height="50" rx="8" fill="rgba(79,140,255,0.15)" stroke="#4f8cff" stroke-width="1.5"/>
+  <text x="290" y="72" fill="#4f8cff" font-family="Syne" font-size="10" text-anchor="middle" font-weight="700">Event Loop</text>
+  <text x="290" y="88" fill="#8b949e" font-family="Syne" font-size="8" text-anchor="middle">Core Mechanism</text>
+  <!-- NPM -->
+  <rect x="350" y="50" width="100" height="50" rx="8" fill="rgba(162,89,255,0.15)" stroke="#a259ff" stroke-width="1.5"/>
+  <text x="400" y="72" fill="#a259ff" font-family="Syne" font-size="10" text-anchor="middle" font-weight="700">NPM</text>
+  <text x="400" y="88" fill="#8b949e" font-family="Syne" font-size="8" text-anchor="middle">Package Manager</text>
+  <!-- Core Modules -->
+  <rect x="20" y="115" width="430" height="45" rx="8" fill="rgba(0,229,255,0.08)" stroke="rgba(0,229,255,0.25)" stroke-width="1.5"/>
+  <text x="235" y="132" fill="#00e5ff" font-family="Syne" font-size="10" text-anchor="middle" font-weight="700">Core Modules</text>
+  <text x="235" y="150" fill="#8b949e" font-family="Syne" font-size="9" text-anchor="middle">http · fs · url · path · os · events · crypto · stream</text>
+</svg>
+        </div>
+      </div>
+
+      <div class="ans-card">
+        <div class="q-label">Q4.2 — User-defined Modules in Node.js</div>
+        <h3>Create and Include User-defined Modules</h3>
+        <p>User-defined (local) modules are custom JavaScript files created by the developer to organize code into reusable units.</p>
+        <p><strong>Step 1: Create a module file</strong></p>
+        <pre><span class="cm">// File: calculator.js</span>
+<span class="kw">var</span> add = <span class="kw">function</span>(a, b) { <span class="kw">return</span> a + b; };
+<span class="kw">var</span> sub = <span class="kw">function</span>(a, b) { <span class="kw">return</span> a - b; };
+<span class="kw">var</span> mul = <span class="kw">function</span>(a, b) { <span class="kw">return</span> a * b; };
+<span class="kw">var</span> div = <span class="kw">function</span>(a, b) { <span class="kw">return</span> a / b; };
+
+<span class="cm">// Export all functions</span>
+module.exports = { add, sub, mul, div };</pre>
+        <p><strong>Step 2: Include the module in another file</strong></p>
+        <pre><span class="cm">// File: app.js</span>
+<span class="kw">var</span> calc = <span class="fn">require</span>(<span class="str">'./calculator'</span>);
+
+<span class="kw">console</span>.<span class="fn">log</span>(calc.<span class="fn">add</span>(<span class="num">10</span>, <span class="num">5</span>)); <span class="cm">// 15</span>
+<span class="kw">console</span>.<span class="fn">log</span>(calc.<span class="fn">sub</span>(<span class="num">10</span>, <span class="num">5</span>)); <span class="cm">// 5</span>
+<span class="kw">console</span>.<span class="fn">log</span>(calc.<span class="fn">mul</span>(<span class="num">10</span>, <span class="num">5</span>)); <span class="cm">// 50</span>
+<span class="kw">console</span>.<span class="fn">log</span>(calc.<span class="fn">div</span>(<span class="num">10</span>, <span class="num">5</span>)); <span class="cm">// 2</span>
+
+<span class="cm">// Run: node app.js</span></pre>
+        <div class="tip"><strong>Note:</strong> Use <code style="font-family:'JetBrains Mono',monospace">./</code> prefix for local modules. Core modules don't need the <code style="font-family:'JetBrains Mono',monospace">./</code> prefix.</div>
+      </div>
+
+      <div class="ans-card">
+        <div class="q-label">Q4.3 — Node as a Server</div>
+        <h3>Node.js as a Web Server</h3>
+        <p>Node.js can act as a web server using its built-in <strong>http</strong> module. It can listen to server ports and give a response back to the client.</p>
+        <pre><span class="kw">var</span> http = <span class="fn">require</span>(<span class="str">'http'</span>);
+
+<span class="cm">// Create server</span>
+<span class="kw">var</span> server = http.<span class="fn">createServer</span>(<span class="kw">function</span>(req, res) {
+  <span class="cm">// Set response headers</span>
+  res.<span class="fn">writeHead</span>(<span class="num">200</span>, {
+    <span class="str">'Content-Type'</span>: <span class="str">'text/html'</span>
+  });
+
+  <span class="cm">// Write response body</span>
+  res.<span class="fn">write</span>(<span class="str">'&lt;h1&gt;Welcome to Node.js Server!&lt;/h1&gt;'</span>);
+
+  <span class="cm">// End response</span>
+  res.<span class="fn">end</span>();
+});
+
+<span class="cm">// Listen on port 3000</span>
+server.<span class="fn">listen</span>(<span class="num">3000</span>, <span class="kw">function</span>() {
+  <span class="kw">console</span>.<span class="fn">log</span>(<span class="str">'Server running at http://localhost:3000/'</span>);
+});</pre>
+        <ul>
+          <li><strong>createServer(callback):</strong> Creates an HTTP server. The callback receives req (request) and res (response) objects</li>
+          <li><strong>req:</strong> Contains request URL, method, headers, query params</li>
+          <li><strong>res:</strong> Used to send back response to client</li>
+          <li><strong>listen(port):</strong> Starts the server on specified port</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Q5 Apr 2024 -->
+  <div class="q-section">
+    <div class="q-header" onclick="toggleQ(this)">
+      <div class="q-num">Q5</div>
+      <div class="q-title">Do as directed (Any Two)</div>
+      <div class="q-marks">8 M</div>
+      <div class="chevron">▼</div>
+    </div>
+    <div class="q-body">
+
+      <div class="ans-card">
+        <div class="q-label">Q5.1 — XML Doctor File</div>
+        <h3>XML File: Doctor Information</h3>
+        <pre><span class="tag">&lt;?xml</span> <span class="attr">version</span>=<span class="str">"1.0"</span> <span class="attr">encoding</span>=<span class="str">"UTF-8"</span><span class="tag">?&gt;</span>
+<span class="tag">&lt;hospital&gt;</span>
+  <span class="tag">&lt;doctor</span> <span class="attr">Doctor_Id</span>=<span class="str">"D001"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;Doctor_Id&gt;</span>D001<span class="tag">&lt;/Doctor_Id&gt;</span>
+    <span class="tag">&lt;Doctor_Name&gt;</span>Dr. Anita Sharma<span class="tag">&lt;/Doctor_Name&gt;</span>
+    <span class="tag">&lt;Doctor_ContactNo&gt;</span>+91-9876543210<span class="tag">&lt;/Doctor_ContactNo&gt;</span>
+    <span class="tag">&lt;Doctor_Specialization&gt;</span>Cardiology<span class="tag">&lt;/Doctor_Specialization&gt;</span>
+  <span class="tag">&lt;/doctor&gt;</span>
+  <span class="tag">&lt;doctor</span> <span class="attr">Doctor_Id</span>=<span class="str">"D002"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;Doctor_Id&gt;</span>D002<span class="tag">&lt;/Doctor_Id&gt;</span>
+    <span class="tag">&lt;Doctor_Name&gt;</span>Dr. Rajesh Patel<span class="tag">&lt;/Doctor_Name&gt;</span>
+    <span class="tag">&lt;Doctor_ContactNo&gt;</span>+91-9876501234<span class="tag">&lt;/Doctor_ContactNo&gt;</span>
+    <span class="tag">&lt;Doctor_Specialization&gt;</span>Neurology<span class="tag">&lt;/Doctor_Specialization&gt;</span>
+  <span class="tag">&lt;/doctor&gt;</span>
+  <span class="tag">&lt;doctor</span> <span class="attr">Doctor_Id</span>=<span class="str">"D003"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;Doctor_Id&gt;</span>D003<span class="tag">&lt;/Doctor_Id&gt;</span>
+    <span class="tag">&lt;Doctor_Name&gt;</span>Dr. Meera Joshi<span class="tag">&lt;/Doctor_Name&gt;</span>
+    <span class="tag">&lt;Doctor_ContactNo&gt;</span>+91-9812345678<span class="tag">&lt;/Doctor_ContactNo&gt;</span>
+    <span class="tag">&lt;Doctor_Specialization&gt;</span>Orthopedics<span class="tag">&lt;/Doctor_Specialization&gt;</span>
+  <span class="tag">&lt;/doctor&gt;</span>
+<span class="tag">&lt;/hospital&gt;</span></pre>
+      </div>
+
+      <div class="ans-card">
+        <div class="q-label">Q5.2 — Features of AJAX</div>
+        <h3>Features of AJAX</h3>
+        <ul>
+          <li><strong>Asynchronous Communication:</strong> Data is exchanged with server in background without blocking user interaction</li>
+          <li><strong>No Full Page Reload:</strong> Only part of the page updates, improving user experience dramatically</li>
+          <li><strong>Reduced Bandwidth:</strong> Only required data is sent/received, not entire HTML pages</li>
+          <li><strong>Faster Response:</strong> Server processes only data requests, making response much quicker</li>
+          <li><strong>Multiple Format Support:</strong> Works with JSON, XML, HTML, and plain text</li>
+          <li><strong>Client-side Processing:</strong> Data processing happens in browser, reducing server load</li>
+          <li><strong>Improved UX:</strong> Forms, live search, dynamic content create desktop-app-like experience</li>
+          <li><strong>Works with Existing Technologies:</strong> Uses HTML, CSS, JS, DOM, XMLHttpRequest</li>
+          <li><strong>Platform Independent:</strong> Works on all modern browsers</li>
+        </ul>
+      </div>
+
+      <div class="ans-card">
+        <div class="q-label">Q5.3 — XMLHttpRequest Object</div>
+        <h3>Note on XMLHttpRequest Object</h3>
+        <p>The <strong>XMLHttpRequest (XHR)</strong> object is a built-in browser object used to exchange data with a web server behind the scenes. It is the foundation of AJAX.</p>
+        <p>See detailed answer with properties and methods in <strong>Q3.3 of Mar 2025 paper</strong> above — same content applies here.</p>
+        <pre><span class="cm">// Complete AJAX example using XHR</span>
+<span class="kw">function</span> <span class="fn">loadData</span>() {
+  <span class="kw">var</span> xhttp = <span class="kw">new</span> <span class="fn">XMLHttpRequest</span>();
+
+  xhttp.onreadystatechange = <span class="kw">function</span>() {
+    <span class="kw">if</span>(<span class="kw">this</span>.readyState === <span class="num">4</span>) {
+      <span class="kw">if</span>(<span class="kw">this</span>.status === <span class="num">200</span>) {
+        <span class="cm">// Success</span>
+        document.<span class="fn">getElementById</span>(<span class="str">"result"</span>).innerHTML
+          = <span class="kw">this</span>.responseText;
+      } <span class="kw">else</span> {
+        <span class="cm">// Error</span>
+        <span class="kw">console</span>.<span class="fn">log</span>(<span class="str">"Error: "</span> + <span class="kw">this</span>.status);
+      }
+    }
+  };
+
+  xhttp.<span class="fn">open</span>(<span class="str">"GET"</span>, <span class="str">"data.json"</span>, <span class="kw">true</span>);
+  xhttp.<span class="fn">send</span>();
+}</pre>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ======================= ASSIGNMENTS ======================= -->
+<div class="tab-panel" id="assign">
+  <div class="hero">
+    <div style="margin-bottom:10px">
+      <span class="badge green">Assignments</span>
+      <span class="badge blue">4 Assignments</span>
+    </div>
+    <h1>Web Designing Theory – All 4 Assignments</h1>
+    <p>Complete solutions for Assignments 1–4 covering XML, jQuery, JSON, and AJAX</p>
+  </div>
+
+  <!-- ASSIGNMENT 1 -->
+  <div class="q-section">
+    <div class="q-header open" onclick="toggleQ(this)">
+      <div class="q-num">A1</div>
+      <div class="q-title">Assignment 1 — XML Basics</div>
+      <div class="q-marks">Submit: 05/01/2026</div>
+      <div class="chevron">▼</div>
+    </div>
+    <div class="q-body open">
+
+      <div class="assign-card">
+        <h4>Q1. What is XML? Write characteristics of XML?</h4>
+        <p style="color:var(--muted);font-size:0.87rem;line-height:1.7"><strong>XML (eXtensible Markup Language)</strong> is a flexible markup language for storing and transporting data. Unlike HTML, which has fixed tags, XML lets you define your own tags to describe data meaningfully.</p>
+        <p style="color:var(--muted);font-size:0.87rem;line-height:1.7"><strong>Characteristics:</strong></p>
+        <ul style="color:var(--muted);font-size:0.87rem;line-height:1.8;padding-left:20px">
+          <li>Self-Descriptive — tags describe the data</li>
+          <li>Extensible — you can define your own tags</li>
+          <li>Platform and software independent</li>
+          <li>Hierarchical tree-like structure</li>
+          <li>Case-sensitive</li>
+          <li>Strict syntax — all tags must be properly closed and nested</li>
+          <li>Supports Unicode (international characters)</li>
+          <li>Can be validated using DTD or XML Schema</li>
+          <li>Separates data from presentation</li>
+        </ul>
+      </div>
+
+      <div class="assign-card">
+        <h4>Q2. How to declare XML tag? Explain XML tags.</h4>
+        <p style="color:var(--muted);font-size:0.87rem;line-height:1.7">An XML tag is declared using angle brackets &lt; &gt;. Tags come in pairs — an opening tag and a closing tag (with a forward slash).</p>
+        <pre><span class="cm">&lt;!-- Opening tag --&gt;    &lt;tagname&gt;</span>
+<span class="cm">&lt;!-- Closing tag --&gt;    &lt;/tagname&gt;</span>
+<span class="cm">&lt;!-- Self-closing --&gt;   &lt;tagname /&gt;</span>
+
+<span class="cm">&lt;!-- Tag with attribute --&gt;</span>
+<span class="tag">&lt;student</span> <span class="attr">id</span>=<span class="str">"101"</span><span class="tag">&gt;</span>Raj Patel<span class="tag">&lt;/student&gt;</span>
+
+<span class="cm">&lt;!-- Types of XML Tags --&gt;</span>
+<span class="cm">&lt;!-- 1. Start Tag: &lt;name&gt; --&gt;</span>
+<span class="cm">&lt;!-- 2. End Tag: &lt;/name&gt; --&gt;</span>
+<span class="cm">&lt;!-- 3. Empty Tag: &lt;br /&gt; --&gt;</span>
+<span class="cm">&lt;!-- 4. Tag with attribute: &lt;tag attr="val"&gt; --&gt;</span></pre>
+      </div>
+
+      <div class="assign-card">
+        <h4>Q3. Rules of XML tags</h4>
+        <ul style="color:var(--muted);font-size:0.87rem;line-height:1.8;padding-left:20px">
+          <li>All XML elements must have a closing tag</li>
+          <li>XML tags are case-sensitive (&lt;Name&gt; ≠ &lt;name&gt;)</li>
+          <li>XML elements must be properly nested (no crossing tags)</li>
+          <li>XML documents must have exactly one root element</li>
+          <li>XML attribute values must be quoted</li>
+          <li>Comments: &lt;!-- comment --&gt;</li>
+          <li>Special characters must use entities: &amp; = &amp;amp;, &lt; = &amp;lt;, &gt; = &amp;gt;</li>
+          <li>Tag names cannot start with a number or hyphen or contain spaces</li>
+        </ul>
+      </div>
+
+      <div class="assign-card">
+        <h4>Q4. Structure of XML</h4>
+        <p style="color:var(--muted);font-size:0.87rem;line-height:1.7">XML document structure has two parts:</p>
+        <ul style="color:var(--muted);font-size:0.87rem;line-height:1.8;padding-left:20px">
+          <li><strong>Prolog:</strong> XML declaration + optional DOCTYPE</li>
+          <li><strong>Document Body:</strong> Root element + child elements + text/attribute nodes</li>
+        </ul>
+        <pre><span class="tag">&lt;?xml</span> <span class="attr">version</span>=<span class="str">"1.0"</span> <span class="attr">encoding</span>=<span class="str">"UTF-8"</span><span class="tag">?&gt;</span>  <span class="cm">&lt;!-- Prolog --&gt;</span>
+<span class="tag">&lt;root&gt;</span>                                        <span class="cm">&lt;!-- Root --&gt;</span>
+  <span class="tag">&lt;child&gt;</span>
+    <span class="tag">&lt;subchild&gt;</span>Data<span class="tag">&lt;/subchild&gt;</span>
+  <span class="tag">&lt;/child&gt;</span>
+<span class="tag">&lt;/root&gt;</span></pre>
+      </div>
+
+      <div class="assign-card">
+        <h4>Q5. MCQ: XML stands for?</h4>
+        <div class="mcq-ans" style="display:inline-flex;margin-top:4px"><span class="mcq-tick">✓</span><span class="mcq-val">2. eXtensible Markup Language</span></div>
+      </div>
+
+      <div class="assign-card">
+        <h4>Q6. MCQ: Correct syntax of defining XML version?</h4>
+        <div class="mcq-ans" style="display:inline-flex;margin-top:4px"><span class="mcq-tick">✓</span><span class="mcq-val">2. &lt;?xml version="version_no" ?&gt;</span></div>
+      </div>
+
+      <div class="assign-card">
+        <h4>Q7. MCQ: Comment in XML document?</h4>
+        <div class="mcq-ans" style="display:inline-flex;margin-top:4px"><span class="mcq-tick">✓</span><span class="mcq-val">3. &lt;!-- --&gt;</span></div>
+      </div>
+
+      <div class="assign-card">
+        <h4>Q8. MCQ: DTD stands for?</h4>
+        <div class="mcq-ans" style="display:inline-flex;margin-top:4px"><span class="mcq-tick">✓</span><span class="mcq-val">2. Document Type Definition</span></div>
+      </div>
+
+      <div class="assign-card">
+        <h4>Q9. MCQ: Which is true about XML?</h4>
+        <div class="mcq-ans" style="display:inline-flex;margin-top:4px"><span class="mcq-tick">✓</span><span class="mcq-val">1. All XML elements must have a closing tag</span></div>
+      </div>
+
+      <div class="assign-card">
+        <h4>Q10. XML file for Doctor Information</h4>
+        <pre><span class="tag">&lt;?xml</span> <span class="attr">version</span>=<span class="str">"1.0"</span> <span class="attr">encoding</span>=<span class="str">"UTF-8"</span><span class="tag">?&gt;</span>
+<span class="tag">&lt;hospital&gt;</span>
+  <span class="tag">&lt;doctor&gt;</span>
+    <span class="tag">&lt;Doctor_Id&gt;</span>D001<span class="tag">&lt;/Doctor_Id&gt;</span>
+    <span class="tag">&lt;Doctor_Name&gt;</span>Dr. Anita Sharma<span class="tag">&lt;/Doctor_Name&gt;</span>
+    <span class="tag">&lt;Doctor_ContactNo&gt;</span>9876543210<span class="tag">&lt;/Doctor_ContactNo&gt;</span>
+    <span class="tag">&lt;Doctor_Specialization&gt;</span>Cardiology<span class="tag">&lt;/Doctor_Specialization&gt;</span>
+  <span class="tag">&lt;/doctor&gt;</span>
+  <span class="tag">&lt;doctor&gt;</span>
+    <span class="tag">&lt;Doctor_Id&gt;</span>D002<span class="tag">&lt;/Doctor_Id&gt;</span>
+    <span class="tag">&lt;Doctor_Name&gt;</span>Dr. Vikram Mehta<span class="tag">&lt;/Doctor_Name&gt;</span>
+    <span class="tag">&lt;Doctor_ContactNo&gt;</span>9823456789<span class="tag">&lt;/Doctor_ContactNo&gt;</span>
+    <span class="tag">&lt;Doctor_Specialization&gt;</span>Neurology<span class="tag">&lt;/Doctor_Specialization&gt;</span>
+  <span class="tag">&lt;/doctor&gt;</span>
+  <span class="tag">&lt;doctor&gt;</span>
+    <span class="tag">&lt;Doctor_Id&gt;</span>D003<span class="tag">&lt;/Doctor_Id&gt;</span>
+    <span class="tag">&lt;Doctor_Name&gt;</span>Dr. Priya Jain<span class="tag">&lt;/Doctor_Name&gt;</span>
+    <span class="tag">&lt;Doctor_ContactNo&gt;</span>9901234567<span class="tag">&lt;/Doctor_ContactNo&gt;</span>
+    <span class="tag">&lt;Doctor_Specialization&gt;</span>Pediatrics<span class="tag">&lt;/Doctor_Specialization&gt;</span>
+  <span class="tag">&lt;/doctor&gt;</span>
+<span class="tag">&lt;/hospital&gt;</span></pre>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ASSIGNMENT 2 -->
+  <div class="q-section">
+    <div class="q-header" onclick="toggleQ(this)">
+      <div class="q-num">A2</div>
+      <div class="q-title">Assignment 2 — jQuery</div>
+      <div class="q-marks">Submit: 05/01/2026</div>
+      <div class="chevron">▼</div>
+    </div>
+    <div class="q-body">
+
+      <div class="assign-card">
+        <h4>Q1. Element Selector in jQuery</h4>
+        <p style="color:var(--muted);font-size:0.87rem;line-height:1.7">The <strong>Element Selector</strong> selects all elements of a given HTML tag. Syntax: <code style="font-family:'JetBrains Mono',monospace;background:var(--code-bg);padding:0 4px;border-radius:3px">$("tagname")</code></p>
+        <pre>$(<span class="str">"p"</span>).<span class="fn">hide</span>();       <span class="cm">// Hides all &lt;p&gt; elements</span>
+$(<span class="str">"h1"</span>).<span class="fn">css</span>(<span class="str">"color"</span>,<span class="str">"red"</span>); <span class="cm">// All &lt;h1&gt; turn red</span></pre>
+      </div>
+
+      <div class="assign-card">
+        <h4>Q2. What is a Selector?</h4>
+        <p style="color:var(--muted);font-size:0.87rem;line-height:1.7">A <strong>jQuery Selector</strong> is used to find (select) HTML elements based on their name, id, class, type, attribute, values of attributes, etc. jQuery selectors start with the dollar sign and parentheses: <code style="font-family:'JetBrains Mono',monospace;background:var(--code-bg);padding:0 4px;border-radius:3px">$()</code>. They are based on CSS selectors.</p>
+      </div>
+
+      <div class="assign-card">
+        <h4>Q3. Get Method in jQuery</h4>
+        <p style="color:var(--muted);font-size:0.87rem;line-height:1.7">jQuery <strong>GET methods</strong> retrieve values from selected elements:</p>
+        <ul style="color:var(--muted);font-size:0.87rem;line-height:1.8;padding-left:20px">
+          <li><code style="font-family:'JetBrains Mono',monospace">text()</code> — gets text content of element</li>
+          <li><code style="font-family:'JetBrains Mono',monospace">html()</code> — gets inner HTML including tags</li>
+          <li><code style="font-family:'JetBrains Mono',monospace">val()</code> — gets value of form input</li>
+          <li><code style="font-family:'JetBrains Mono',monospace">attr("name")</code> — gets attribute value</li>
+          <li><code style="font-family:'JetBrains Mono',monospace">css("property")</code> — gets CSS property value</li>
+        </ul>
+        <pre><span class="kw">var</span> t = $(<span class="str">"p"</span>).<span class="fn">text</span>();     <span class="cm">// Get text</span>
+<span class="kw">var</span> h = $(<span class="str">"p"</span>).<span class="fn">html</span>();     <span class="cm">// Get HTML</span>
+<span class="kw">var</span> v = $(<span class="str">"#inp"</span>).<span class="fn">val</span>(); <span class="cm">// Get input value</span></pre>
+      </div>
+
+      <div class="assign-card">
+        <h4>Q4. Set Method in jQuery</h4>
+        <p style="color:var(--muted);font-size:0.87rem;line-height:1.7">jQuery <strong>SET methods</strong> set/change values of selected elements:</p>
+        <pre>$(<span class="str">"p"</span>).<span class="fn">text</span>(<span class="str">"New text"</span>);           <span class="cm">// Set text</span>
+$(<span class="str">"p"</span>).<span class="fn">html</span>(<span class="str">"&lt;b&gt;Bold&lt;/b&gt;"</span>);       <span class="cm">// Set HTML</span>
+$(<span class="str">"#inp"</span>).<span class="fn">val</span>(<span class="str">"New Value"</span>);       <span class="cm">// Set input</span>
+$(<span class="str">"a"</span>).<span class="fn">attr</span>(<span class="str">"href"</span>,<span class="str">"https://google.com"</span>); <span class="cm">// Set attr</span>
+$(<span class="str">"p"</span>).<span class="fn">css</span>(<span class="str">"color"</span>, <span class="str">"blue"</span>);     <span class="cm">// Set CSS</span></pre>
+      </div>
+
+      <div class="assign-card">
+        <h4>Q5. Chaining Effect in jQuery</h4>
+        <p style="color:var(--muted);font-size:0.87rem;line-height:1.7"><strong>Chaining</strong> allows you to run multiple jQuery methods on the same element in a single statement. This makes code shorter and cleaner. jQuery methods return the jQuery object, enabling chaining.</p>
+        <pre><span class="cm">// Without chaining (3 lines)</span>
+$(<span class="str">"#p1"</span>).<span class="fn">css</span>(<span class="str">"color"</span>, <span class="str">"red"</span>);
+$(<span class="str">"#p1"</span>).<span class="fn">slideUp</span>(<span class="num">2000</span>);
+$(<span class="str">"#p1"</span>).<span class="fn">slideDown</span>(<span class="num">2000</span>);
+
+<span class="cm">// With chaining (1 line)</span>
+$(<span class="str">"#p1"</span>).<span class="fn">css</span>(<span class="str">"color"</span>,<span class="str">"red"</span>).<span class="fn">slideUp</span>(<span class="num">2000</span>).<span class="fn">slideDown</span>(<span class="num">2000</span>);</pre>
+      </div>
+
+      <div class="assign-card">
+        <h4>Q6. Difference: wrap() vs unwrap() in jQuery</h4>
+        <table class="diff-table">
+          <tr><th>wrap()</th><th>unwrap()</th></tr>
+          <tr><td>Wraps HTML around selected element</td><td>Removes parent element of selected</td></tr>
+          <tr><td>Adds a wrapper/parent</td><td>Removes the wrapper/parent</td></tr>
+          <tr><td>$("p").wrap("&lt;div&gt;")</td><td>$("p").unwrap()</td></tr>
+          <tr><td>Content is preserved inside wrapper</td><td>Content is preserved, parent removed</td></tr>
+        </table>
+      </div>
+
+      <div class="assign-card">
+        <h4>Q7. Note on jQuery</h4>
+        <p style="color:var(--muted);font-size:0.87rem;line-height:1.7"><strong>jQuery</strong> is a fast, small, and feature-rich JavaScript library created by John Resig in 2006. Its motto is: <em>"Write Less, Do More."</em></p>
+        <ul style="color:var(--muted);font-size:0.87rem;line-height:1.8;padding-left:20px">
+          <li><strong>Cross-browser compatible:</strong> Works the same in all major browsers</li>
+          <li><strong>DOM Manipulation:</strong> Easy to select and modify HTML elements</li>
+          <li><strong>Event Handling:</strong> Simplified way to respond to user actions</li>
+          <li><strong>AJAX Support:</strong> Simplified methods for AJAX calls ($.ajax, $.get, $.post)</li>
+          <li><strong>Animations/Effects:</strong> Built-in hide, show, fade, slide, animate methods</li>
+          <li><strong>Plugin Architecture:</strong> Thousands of plugins extend its functionality</li>
+          <li><strong>Lightweight:</strong> Minified file is only ~30KB</li>
+        </ul>
+        <pre><span class="cm">&lt;!-- Include jQuery --&gt;</span>
+<span class="tag">&lt;script</span> <span class="attr">src</span>=<span class="str">"https://code.jquery.com/jquery-3.6.0.min.js"</span><span class="tag">&gt;&lt;/script&gt;</span>
+
+<span class="cm">&lt;!-- Basic Usage --&gt;</span>
+$(document).<span class="fn">ready</span>(<span class="kw">function</span>() {
+  $(<span class="str">"button"</span>).<span class="fn">click</span>(<span class="kw">function</span>() {
+    $(<span class="str">"p"</span>).<span class="fn">hide</span>();
+  });
+});</pre>
+      </div>
+
+      <div class="assign-card">
+        <h4>Q8. jQuery Events with Examples</h4>
+        <p style="color:var(--muted);font-size:0.87rem;line-height:1.7">jQuery events are user interactions (mouse, keyboard, form, window) that jQuery can respond to.</p>
+        <table class="diff-table">
+          <tr><th>Category</th><th>Events</th></tr>
+          <tr><td>Mouse</td><td>click, dblclick, mouseenter, mouseleave, hover</td></tr>
+          <tr><td>Keyboard</td><td>keydown, keyup, keypress</td></tr>
+          <tr><td>Form</td><td>submit, change, focus, blur</td></tr>
+          <tr><td>Window</td><td>load, resize, scroll</td></tr>
+        </table>
+        <pre>$(<span class="str">"#btn"</span>).<span class="fn">click</span>(<span class="kw">function</span>() { $(<span class="str">"p"</span>).<span class="fn">hide</span>(); });
+$(<span class="str">"input"</span>).<span class="fn">focus</span>(<span class="kw">function</span>() { $(<span class="kw">this</span>).<span class="fn">css</span>(<span class="str">"background"</span>,<span class="str">"yellow"</span>); });
+$(<span class="str">"p"</span>).<span class="fn">hover</span>(
+  <span class="kw">function</span>(){ $(<span class="kw">this</span>).<span class="fn">css</span>(<span class="str">"color"</span>,<span class="str">"red"</span>); },
+  <span class="kw">function</span>(){ $(<span class="kw">this</span>).<span class="fn">css</span>(<span class="str">"color"</span>,<span class="str">"black"</span>); }
+);</pre>
+      </div>
+
+      <div class="assign-card">
+        <h4>Q9. jQuery Effects with Examples</h4>
+        <p style="color:var(--muted);font-size:0.87rem;line-height:1.7">jQuery effects control the visibility and animation of elements.</p>
+        <pre><span class="cm">// Hide/Show/Toggle</span>
+$(<span class="str">"p"</span>).<span class="fn">hide</span>(<span class="num">500</span>);
+$(<span class="str">"p"</span>).<span class="fn">show</span>(<span class="num">500</span>);
+$(<span class="str">"p"</span>).<span class="fn">toggle</span>(<span class="num">500</span>);
+
+<span class="cm">// Fade</span>
+$(<span class="str">"p"</span>).<span class="fn">fadeIn</span>(<span class="str">"slow"</span>);
+$(<span class="str">"p"</span>).<span class="fn">fadeOut</span>(<span class="str">"fast"</span>);
+$(<span class="str">"p"</span>).<span class="fn">fadeTo</span>(<span class="num">1000</span>, <span class="num">0.3</span>);
+
+<span class="cm">// Slide</span>
+$(<span class="str">"p"</span>).<span class="fn">slideDown</span>(<span class="str">"slow"</span>);
+$(<span class="str">"p"</span>).<span class="fn">slideUp</span>(<span class="str">"fast"</span>);
+
+<span class="cm">// Custom Animate</span>
+$(<span class="str">"div"</span>).<span class="fn">animate</span>({width:<span class="str">"300px"</span>, opacity:<span class="num">0.5</span>}, <span class="num">1000</span>);</pre>
+      </div>
+
+      <div class="assign-card">
+        <h4>Q10. Types of Selectors in jQuery (All with Examples)</h4>
+        <table class="diff-table">
+          <tr><th>Type</th><th>Syntax</th><th>Example</th></tr>
+          <tr><td>Element</td><td>$("tag")</td><td>$("p") – all paragraphs</td></tr>
+          <tr><td>ID</td><td>$("#id")</td><td>$("#nav") – element with id=nav</td></tr>
+          <tr><td>Class</td><td>$(".class")</td><td>$(".box") – all class=box</td></tr>
+          <tr><td>Universal</td><td>$("*")</td><td>$("*") – every element</td></tr>
+          <tr><td>Multiple</td><td>$("a,b,c")</td><td>$("h1,p") – all h1 and p</td></tr>
+          <tr><td>Attribute</td><td>$("[attr]")</td><td>$("[type='text']")</td></tr>
+          <tr><td>:first / :last</td><td>$(":first")</td><td>$("li:first") – first li</td></tr>
+          <tr><td>:even / :odd</td><td>$(":even")</td><td>$("tr:odd") – odd rows</td></tr>
+          <tr><td>:not</td><td>$(":not(s)")</td><td>$("p:not(.intro)")</td></tr>
+          <tr><td>:contains</td><td>$(":contains(t)")</td><td>$("p:contains('Web')")</td></tr>
+        </table>
+      </div>
+
+      <div class="assign-card">
+        <h4>Q11. jQuery Manipulation Methods</h4>
+        <p style="color:var(--muted);font-size:0.87rem;line-height:1.7">jQuery DOM manipulation methods allow modification of HTML content and structure:</p>
+        <p style="color:var(--muted);font-size:0.87rem;margin-top:8px"><strong>Content Methods:</strong> text(), html(), val()</p>
+        <p style="color:var(--muted);font-size:0.87rem;margin-top:4px"><strong>Insert Methods:</strong> append(), prepend(), after(), before()</p>
+        <p style="color:var(--muted);font-size:0.87rem;margin-top:4px"><strong>Remove Methods:</strong> remove() – removes element + children; empty() – removes only children</p>
+        <p style="color:var(--muted);font-size:0.87rem;margin-top:4px"><strong>CSS Methods:</strong> css(), addClass(), removeClass(), toggleClass()</p>
+        <p style="color:var(--muted);font-size:0.87rem;margin-top:4px"><strong>Wrap Methods:</strong> wrap(), unwrap(), wrapAll()</p>
+        <p style="color:var(--muted);font-size:0.87rem;margin-top:4px"><strong>Attribute Methods:</strong> attr(), removeAttr(), prop()</p>
+        <pre>$(<span class="str">"p"</span>).<span class="fn">html</span>(<span class="str">"&lt;b&gt;Hello&lt;/b&gt;"</span>);         <span class="cm">// Set HTML</span>
+$(<span class="str">"ul"</span>).<span class="fn">append</span>(<span class="str">"&lt;li&gt;New Item&lt;/li&gt;"</span>); <span class="cm">// Insert</span>
+$(<span class="str">"p"</span>).<span class="fn">addClass</span>(<span class="str">"highlight"</span>);         <span class="cm">// Add class</span>
+$(<span class="str">"p"</span>).<span class="fn">remove</span>();                       <span class="cm">// Remove element</span></pre>
+      </div>
+
+      <div class="assign-card">
+        <h4>Q12. MCQ: jQuery method to set style properties?</h4>
+        <div class="mcq-ans" style="display:inline-flex;margin-top:4px"><span class="mcq-tick">✓</span><span class="mcq-val">C. The css() method</span></div>
+      </div>
+
+      <div class="assign-card">
+        <h4>Q13. MCQ: Tag used to import library file?</h4>
+        <div class="mcq-ans" style="display:inline-flex;margin-top:4px"><span class="mcq-tick">✓</span><span class="mcq-val">B. &lt;script&gt;</span></div>
+        <p style="color:var(--muted);font-size:0.76rem;margin-top:6px">jQuery is imported using: <code style="font-family:'JetBrains Mono',monospace;background:var(--code-bg);padding:0 4px;border-radius:3px">&lt;script src="jquery.min.js"&gt;&lt;/script&gt;</code></p>
+      </div>
+
+      <div class="assign-card">
+        <h4>Q14. MCQ: empty() vs remove()?</h4>
+        <div class="mcq-ans" style="display:inline-flex;margin-top:4px"><span class="mcq-tick">✓</span><span class="mcq-val">A. empty() and remove()</span></div>
+        <p style="color:var(--muted);font-size:0.76rem;margin-top:6px">empty() removes child elements; remove() removes the element itself + its children.</p>
+      </div>
+
+      <div class="assign-card">
+        <h4>Q15. MCQ: Not a jQuery event?</h4>
+        <div class="mcq-ans" style="display:inline-flex;margin-top:4px"><span class="mcq-tick">✓</span><span class="mcq-val">B. onclick()</span></div>
+        <p style="color:var(--muted);font-size:0.76rem;margin-top:6px">onclick is a plain HTML/JS event attribute. jQuery uses click() (without "on").</p>
+      </div>
+
+      <div class="assign-card">
+        <h4>Q16. MCQ: jQuery method for form control value?</h4>
+        <div class="mcq-ans" style="display:inline-flex;margin-top:4px"><span class="mcq-tick">✓</span><span class="mcq-val">D. val()</span></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ASSIGNMENT 3 -->
+  <div class="q-section">
+    <div class="q-header" onclick="toggleQ(this)">
+      <div class="q-num">A3</div>
+      <div class="q-title">Assignment 3 — JSON</div>
+      <div class="q-marks">~</div>
+      <div class="chevron">▼</div>
+    </div>
+    <div class="q-body">
+
+      <div class="assign-card">
+        <h4>Q1. What is JSON?</h4>
+        <p style="color:var(--muted);font-size:0.87rem;line-height:1.7"><strong>JSON (JavaScript Object Notation)</strong> is a lightweight, text-based, language-independent data format for storing and transporting data. It is derived from JavaScript but is language-independent. JSON is easy to read/write for humans and easy to parse/generate for machines.</p>
+        <ul style="color:var(--muted);font-size:0.87rem;padding-left:20px;line-height:1.8">
+          <li>File extension: .json</li>
+          <li>MIME type: application/json</li>
+          <li>Based on key-value pairs</li>
+          <li>No comments allowed</li>
+          <li>6 data types: string, number, boolean, null, array, object</li>
+        </ul>
+      </div>
+
+      <div class="assign-card">
+        <h4>Q2. Difference between JSON and XML</h4>
+        <table class="diff-table">
+          <tr><th>JSON</th><th>XML</th></tr>
+          <tr><td>JavaScript Object Notation</td><td>eXtensible Markup Language</td></tr>
+          <tr><td>Lighter, less verbose</td><td>Heavier, more verbose</td></tr>
+          <tr><td>Key-value pairs { }</td><td>Tag-based &lt;tag&gt;</td></tr>
+          <tr><td>Native array support</td><td>No native arrays</td></tr>
+          <tr><td>No comments allowed</td><td>Comments: &lt;!-- --&gt;</td></tr>
+          <tr><td>Parsed by JSON.parse()</td><td>Needs XML parser</td></tr>
+          <tr><td>Ideal for APIs</td><td>Ideal for document storage</td></tr>
+        </table>
+      </div>
+
+      <div class="assign-card">
+        <h4>Q3. JSON Array of JSON Objects</h4>
+        <p style="color:var(--muted);font-size:0.87rem;line-height:1.7">A JSON array can contain JSON objects. This is the most common pattern used in APIs.</p>
+        <pre>{
+  <span class="str">"courses"</span>: [
+    {
+      <span class="str">"id"</span>: <span class="num">1</span>,
+      <span class="str">"name"</span>: <span class="str">"Web Designing"</span>,
+      <span class="str">"credits"</span>: <span class="num">4</span>,
+      <span class="str">"isActive"</span>: <span class="kw">true</span>
+    },
+    {
+      <span class="str">"id"</span>: <span class="num">2</span>,
+      <span class="str">"name"</span>: <span class="str">"Database Management"</span>,
+      <span class="str">"credits"</span>: <span class="num">4</span>,
+      <span class="str">"isActive"</span>: <span class="kw">true</span>
+    },
+    {
+      <span class="str">"id"</span>: <span class="num">3</span>,
+      <span class="str">"name"</span>: <span class="str">"Operating Systems"</span>,
+      <span class="str">"credits"</span>: <span class="num">3</span>,
+      <span class="str">"isActive"</span>: <span class="kw">false</span>
+    }
+  ]
+}</pre>
+      </div>
+
+      <div class="assign-card">
+        <h4>Q4. JSON Object</h4>
+        <p style="color:var(--muted);font-size:0.87rem;line-height:1.7">A <strong>JSON Object</strong> is enclosed in curly braces { }. It contains key-value pairs. Keys must be strings in double quotes. Values can be any of the 6 JSON types.</p>
+        <pre>{
+  <span class="str">"name"</span>:    <span class="str">"Raj Patel"</span>,
+  <span class="str">"age"</span>:     <span class="num">21</span>,
+  <span class="str">"gpa"</span>:     <span class="num">8.75</span>,
+  <span class="str">"isActive"</span>:<span class="kw">true</span>,
+  <span class="str">"address"</span>: {                <span class="cm">// Nested object</span>
+    <span class="str">"city"</span>: <span class="str">"Surat"</span>,
+    <span class="str">"state"</span>: <span class="str">"Gujarat"</span>
+  },
+  <span class="str">"hobbies"</span>: [<span class="str">"coding"</span>, <span class="str">"cricket"</span>] <span class="cm">// Array inside</span>
+}</pre>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ASSIGNMENT 4 -->
+  <div class="q-section">
+    <div class="q-header" onclick="toggleQ(this)">
+      <div class="q-num">A4</div>
+      <div class="q-title">Assignment 4 — AJAX</div>
+      <div class="q-marks">~</div>
+      <div class="chevron">▼</div>
+    </div>
+    <div class="q-body">
+
+      <div class="assign-card">
+        <h4>Q1. What is AJAX?</h4>
+        <p style="color:var(--muted);font-size:0.87rem;line-height:1.7"><strong>AJAX (Asynchronous JavaScript And XML)</strong> is a technique that allows web pages to update parts of their content asynchronously by exchanging small amounts of data with the server behind the scenes. This means it is possible to update parts of a web page without reloading the whole page.</p>
+        <p style="color:var(--muted);font-size:0.87rem;line-height:1.7">AJAX is NOT a programming language. It is a combination of: Browser's built-in XMLHttpRequest object + JavaScript and HTML DOM + CSS + JSON/XML for data.</p>
+      </div>
+
+      <div class="assign-card">
+        <h4>Q2. XMLHttpRequest Objects</h4>
+        <p style="color:var(--muted);font-size:0.87rem;line-height:1.7">The <strong>XMLHttpRequest (XHR)</strong> is a built-in browser API object used to make HTTP requests from JavaScript. It is the foundation of all AJAX operations.</p>
+        <p style="color:var(--muted);font-size:0.87rem;line-height:1.7;margin-top:8px"><strong>Key Properties:</strong> readyState (0–4), status (200, 404, etc.), responseText, responseXML, onreadystatechange</p>
+        <p style="color:var(--muted);font-size:0.87rem;line-height:1.7;margin-top:8px"><strong>Key Methods:</strong> open(method, url, async), send(body), setRequestHeader(), abort()</p>
+        <pre><span class="kw">var</span> xhr = <span class="kw">new</span> <span class="fn">XMLHttpRequest</span>();
+xhr.onreadystatechange = <span class="kw">function</span>() {
+  <span class="kw">if</span>(xhr.readyState == <span class="num">4</span> && xhr.status == <span class="num">200</span>) {
+    <span class="kw">console</span>.<span class="fn">log</span>(xhr.responseText);
+  }
+};
+xhr.<span class="fn">open</span>(<span class="str">"GET"</span>, <span class="str">"api/data.json"</span>, <span class="kw">true</span>);
+xhr.<span class="fn">send</span>();</pre>
+      </div>
+
+      <div class="assign-card">
+        <h4>Q3. Working of AJAX</h4>
+        <ol style="color:var(--muted);font-size:0.87rem;line-height:1.8;padding-left:20px">
+          <li><strong>User Event:</strong> User performs an action (click, keypress, form submit)</li>
+          <li><strong>Create XHR:</strong> JavaScript creates an XMLHttpRequest object</li>
+          <li><strong>Configure:</strong> xhr.open(method, url, async) sets up the request</li>
+          <li><strong>Send:</strong> xhr.send() sends the request to the web server</li>
+          <li><strong>Server Processing:</strong> Web server processes the request (reads DB, etc.)</li>
+          <li><strong>Server Response:</strong> Server sends back a response (JSON, XML, text, HTML)</li>
+          <li><strong>Callback Fires:</strong> When readyState=4 and status=200, the callback runs</li>
+          <li><strong>DOM Update:</strong> JavaScript updates only the relevant part of the webpage</li>
+        </ol>
+        <div class="note"><strong>Key point:</strong> While steps 5–6 happen on the server, the user can still interact with the rest of the page. This is the "asynchronous" aspect of AJAX.</div>
+      </div>
+
+      <div class="assign-card">
+        <h4>Q4. Features of AJAX</h4>
+        <ul style="color:var(--muted);font-size:0.87rem;line-height:1.8;padding-left:20px">
+          <li><strong>Asynchronous:</strong> Requests happen in background; no page freeze</li>
+          <li><strong>No Full Page Reload:</strong> Only specific parts of DOM are updated</li>
+          <li><strong>Reduced Server Load:</strong> Only data is transferred, not full HTML</li>
+          <li><strong>Speed:</strong> Faster response time due to less data transfer</li>
+          <li><strong>Multi-format Support:</strong> JSON, XML, HTML, plain text</li>
+          <li><strong>Better UX:</strong> Smooth interactions like desktop applications</li>
+          <li><strong>Form Validation:</strong> Server-side validation without page reload</li>
+          <li><strong>Auto-complete:</strong> Live search suggestions (like Google)</li>
+          <li><strong>Cross-browser Support:</strong> Modern browsers support XHR natively</li>
+          <li><strong>Standard Technologies:</strong> No plugins needed — uses built-in JS features</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+</section>
+</div>
+</main>
+
+<button id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Back to top">&#8593;</button>
+<div class="mobile-sidebar-backdrop" id="sidebar-backdrop"></div>
+
+<script>
+const EXAM_MODE_STORAGE_KEY = 'wd2-exam-mode';
+const tabLabelMap = {
+  'mar25-old': 'March 2025',
+  'mar25-nep': 'NEP 2025',
+  'apr24': 'April 2024',
+  'assign': 'Assignments'
+};
+const sidebar = document.getElementById('study-sidebar');
+const sidebarTabs = document.getElementById('sidebar-tabs');
+const sectionNav = document.getElementById('section-nav');
+const activePaperLabel = document.getElementById('active-paper-label');
+const sectionCount = document.getElementById('section-count');
+const currentTopic = document.getElementById('current-topic');
+const currentTopicInline = document.getElementById('current-topic-inline');
+const progressFill = document.getElementById('progress-fill');
+const progressCount = document.getElementById('progress-count');
+const examModeToggle = document.getElementById('exam-mode');
+const expandAllButton = document.getElementById('expand-all');
+const collapseAllButton = document.getElementById('collapse-all');
+const sidebarToggle = document.getElementById('sidebar-toggle');
+const sidebarBackdrop = document.getElementById('sidebar-backdrop');
+const promoModal = document.getElementById('promo-modal');
+const promoClose = document.getElementById('promo-close');
+const promoLater = document.getElementById('promo-later');
+let scrollTicking = false;
+
+function getTopTabButtons() {
+  return Array.from(document.querySelectorAll('.tab-bar .tab-btn'));
+}
+
+function normalizeTopTabLabels() {
+  getTopTabButtons().forEach(button => {
+    const id = getTabIdFromButton(button);
+    if (tabLabelMap[id]) {
+      button.textContent = tabLabelMap[id];
+    }
+  });
+}
+
+function getTabIdFromButton(button) {
+  if (!button) {
+    return '';
+  }
+  const inlineHandler = button.getAttribute('onclick') || '';
+  const match = inlineHandler.match(/showTab\('([^']+)'/);
+  return match ? match[1] : '';
+}
+
+function findTopTabButton(id) {
+  return getTopTabButtons().find(button => getTabIdFromButton(button) === id) || null;
+}
+
+function getActivePanel() {
+  return document.querySelector('.tab-panel.active');
+}
+
+function getSectionsForPanel(panel) {
+  return panel ? Array.from(panel.querySelectorAll('.q-section')) : [];
+}
+
+function getSectionsForActivePanel() {
+  return getSectionsForPanel(getActivePanel());
+}
+
+function getSectionMeta(section, index) {
+  const num = (section.querySelector('.q-num')?.textContent || 'Section ' + (index + 1)).trim();
+  const title = (section.querySelector('.q-title')?.textContent || 'Question group').trim();
+  return {
+    num,
+    title,
+    full: num + ' - ' + title
+  };
+}
+
+function slugify(value) {
+  return value.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+}
+
+function prepareSections() {
+  document.querySelectorAll('.tab-panel').forEach(panel => {
+    getSectionsForPanel(panel).forEach((section, index) => {
+      const meta = getSectionMeta(section, index);
+      section.id = panel.id + '-' + slugify(meta.num || 'section') + '-' + (index + 1);
+      section.dataset.fullLabel = meta.full;
+      section.dataset.shortLabel = meta.num;
+      const header = section.querySelector('.q-header');
+      const body = section.querySelector('.q-body');
+      if (header) {
+        header.setAttribute('role', 'button');
+        header.setAttribute('tabindex', '0');
+        header.setAttribute('aria-expanded', header.classList.contains('open') ? 'true' : 'false');
+        header.addEventListener('keydown', event => {
+          if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            toggleQ(header);
+          }
+        });
+      }
+      if (body && !body.id) {
+        body.id = section.id + '-body';
+      }
+      if (header && body) {
+        header.setAttribute('aria-controls', body.id);
+      }
+    });
+  });
+}
+
+function buildSidebarTabs() {
+  sidebarTabs.innerHTML = '';
+  getTopTabButtons().forEach(button => {
+    const id = getTabIdFromButton(button);
+    if (!id) {
+      return;
+    }
+    const panel = document.getElementById(id);
+    const count = getSectionsForPanel(panel).length;
+    const item = document.createElement('button');
+    item.type = 'button';
+    item.className = 'sidebar-tab';
+    item.dataset.tab = id;
+
+    const title = document.createElement('strong');
+    title.textContent = button.textContent.trim();
+    const subtitle = document.createElement('span');
+    subtitle.textContent = count + ' ' + (count === 1 ? 'section' : 'sections');
+
+    item.append(title, subtitle);
+    item.addEventListener('click', () => showTab(id, item));
+    sidebarTabs.appendChild(item);
+  });
+}
+
+function buildSectionNav() {
+  const panel = getActivePanel();
+  const sections = getSectionsForPanel(panel);
+  sectionNav.innerHTML = '';
+  sectionCount.textContent = sections.length + ' ' + (sections.length === 1 ? 'section' : 'sections');
+
+  sections.forEach((section, index) => {
+    const meta = getSectionMeta(section, index);
+    const link = document.createElement('a');
+    link.className = 'section-link';
+    link.href = '#' + section.id;
+
+    const title = document.createElement('strong');
+    title.textContent = meta.num;
+    const subtitle = document.createElement('span');
+    subtitle.textContent = meta.title;
+
+    link.append(title, subtitle);
+    link.addEventListener('click', () => setSidebarOpen(false));
+    sectionNav.appendChild(link);
+  });
+}
+
+function setSidebarOpen(open) {
+  const shouldOpen = window.innerWidth <= 1080 ? open : false;
+  sidebar.classList.toggle('open', shouldOpen);
+  sidebarBackdrop.classList.toggle('show', shouldOpen);
+  document.body.classList.toggle('menu-open', shouldOpen);
+  if (sidebarToggle) {
+    sidebarToggle.setAttribute('aria-expanded', shouldOpen ? 'true' : 'false');
+  }
+}
+
+function setSectionState(section, open) {
+  if (!section) {
+    return;
+  }
+  const header = section.querySelector('.q-header');
+  const body = section.querySelector('.q-body');
+  if (!header || !body) {
+    return;
+  }
+  header.classList.toggle('open', open);
+  body.classList.toggle('open', open);
+  header.setAttribute('aria-expanded', open ? 'true' : 'false');
+}
+
+function toggleQ(header) {
+  const section = header.closest('.q-section');
+  const shouldOpen = !header.classList.contains('open');
+  setSectionState(section, shouldOpen);
+  refreshCurrentSection();
+}
+
+function setAllSections(open) {
+  getSectionsForActivePanel().forEach(section => setSectionState(section, open));
+  refreshCurrentSection();
+}
+
+function findCurrentSection() {
+  const sections = getSectionsForActivePanel();
+  if (!sections.length) {
+    return null;
+  }
+  const threshold = 190;
+  let current = sections[0];
+  sections.forEach(section => {
+    if (section.getBoundingClientRect().top <= threshold) {
+      current = section;
+    }
+  });
+  if (sections[0].getBoundingClientRect().top > threshold) {
+    current = sections[0];
+  }
+  return current;
+}
+
+function updateCurrentState(section) {
+  const sections = getSectionsForActivePanel();
+  if (!sections.length) {
+    currentTopic.textContent = 'No sections available';
+    currentTopicInline.textContent = 'No sections available';
+    progressFill.style.width = '0%';
+    progressCount.textContent = '0 / 0 sections';
+    return;
+  }
+
+  const activeSection = section || sections[0];
+  const meta = {
+    full: activeSection.dataset.fullLabel || getSectionMeta(activeSection, sections.indexOf(activeSection)).full
+  };
+  const position = Math.max(sections.indexOf(activeSection), 0) + 1;
+
+  sections.forEach(item => item.classList.toggle('is-current', item === activeSection));
+  document.querySelectorAll('.section-link').forEach(link => {
+    link.classList.toggle('active', link.getAttribute('href') === '#' + activeSection.id);
+  });
+
+  currentTopic.textContent = meta.full;
+  currentTopicInline.textContent = meta.full;
+  progressFill.style.width = ((position / sections.length) * 100) + '%';
+  progressCount.textContent = position + ' / ' + sections.length + ' sections';
+}
+
+function refreshCurrentSection() {
+  updateCurrentState(findCurrentSection());
+}
+
+function syncActiveTabState(id) {
+  getTopTabButtons().forEach(button => {
+    button.classList.toggle('active', getTabIdFromButton(button) === id);
+  });
+  document.querySelectorAll('.sidebar-tab').forEach(button => {
+    button.classList.toggle('active', button.dataset.tab === id);
+  });
+  const activeButton = findTopTabButton(id);
+  activePaperLabel.textContent = activeButton ? activeButton.textContent.trim() : id;
+}
+
+function showTab(id) {
+  const nextPanel = document.getElementById(id);
+  if (!nextPanel) {
+    return;
+  }
+  document.querySelectorAll('.tab-panel').forEach(panel => panel.classList.remove('active'));
+  nextPanel.classList.add('active');
+  syncActiveTabState(id);
+  buildSectionNav();
+  setSidebarOpen(false);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  requestAnimationFrame(refreshCurrentSection);
+}
+
+function openPromoModal() {
+  if (!promoModal) {
+    return;
+  }
+  promoModal.classList.add('show');
+  promoModal.setAttribute('aria-hidden', 'false');
+  document.body.classList.add('menu-open');
+}
+
+function closePromoModal() {
+  if (!promoModal) {
+    return;
+  }
+  promoModal.classList.remove('show');
+  promoModal.setAttribute('aria-hidden', 'true');
+  if (!sidebar.classList.contains('open')) {
+    document.body.classList.remove('menu-open');
+  }
+}
+
+function setExamMode(enabled, persist) {
+  document.body.classList.toggle('exam-mode', enabled);
+  examModeToggle.checked = enabled;
+  if (persist) {
+    try {
+      localStorage.setItem(EXAM_MODE_STORAGE_KEY, enabled ? '1' : '0');
+    } catch (error) {
+      // Ignore storage errors in local file mode.
+    }
+  }
+}
+
+function readExamMode() {
+  try {
+    return localStorage.getItem(EXAM_MODE_STORAGE_KEY) === '1';
+  } catch (error) {
+    return false;
+  }
+}
+
+function initializeStudyUI() {
+  normalizeTopTabLabels();
+  prepareSections();
+  buildSidebarTabs();
+  buildSectionNav();
+  syncActiveTabState(getActivePanel()?.id || '');
+  setExamMode(readExamMode(), false);
+  refreshCurrentSection();
+
+  expandAllButton.addEventListener('click', () => setAllSections(true));
+  collapseAllButton.addEventListener('click', () => setAllSections(false));
+  examModeToggle.addEventListener('change', event => setExamMode(event.target.checked, true));
+  sidebarToggle.addEventListener('click', () => setSidebarOpen(!sidebar.classList.contains('open')));
+  sidebarBackdrop.addEventListener('click', () => setSidebarOpen(false));
+  promoClose.addEventListener('click', closePromoModal);
+  promoLater.addEventListener('click', closePromoModal);
+  promoModal.addEventListener('click', event => {
+    if (event.target.hasAttribute('data-close-promo')) {
+      closePromoModal();
+    }
+  });
+
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 1080) {
+      setSidebarOpen(false);
+    }
+    refreshCurrentSection();
+  });
+
+  window.addEventListener('scroll', () => {
+    if (scrollTicking) {
+      return;
+    }
+    scrollTicking = true;
+    window.requestAnimationFrame(() => {
+      refreshCurrentSection();
+      scrollTicking = false;
+    });
+  }, { passive: true });
+
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape') {
+      setSidebarOpen(false);
+      closePromoModal();
+    }
+  });
+
+  window.setTimeout(openPromoModal, 350);
+}
+
+initializeStudyUI();
+</script>
+</body>
+</html>
